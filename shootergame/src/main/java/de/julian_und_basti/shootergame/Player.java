@@ -4,6 +4,7 @@ package de.julian_und_basti.shootergame;
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.collision.CircleCollider;
 import de.basti.game_framework.collision.Collider;
+import de.basti.game_framework.collision.TypeCollider;
 import de.basti.game_framework.controls.Entity;
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.drawing.Circle;
@@ -17,7 +18,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
-public class Player extends Entity<Circle, CircleCollider> implements Updatable{
+public class Player extends Entity<Circle, TypeCollider<CircleCollider,ColliderType>> implements Updatable{
 	
 	private double radius = 50;
 	
@@ -27,7 +28,7 @@ public class Player extends Entity<Circle, CircleCollider> implements Updatable{
 	private KeyInputListenerData keyData;
 	
 	
-	public Player(Vector2D position,InputListenerData inputData) { 
+	public Player(Vector2D position) { 
 		super(position, null, null);
 		
 		Circle circle = new Circle(position, radius);
@@ -37,9 +38,9 @@ public class Player extends Entity<Circle, CircleCollider> implements Updatable{
 		
 		
 		
-		this.setCollider(new CircleCollider(position,radius));
-		this.mouseData = inputData.getMouseData();
-		this.keyData = inputData.getKeyData();
+		this.setCollider(new TypeCollider<>(new CircleCollider(position,radius),ColliderType.PLAYER));
+		this.mouseData = Game.inputData.getMouseData();
+		this.keyData = Game.inputData.getKeyData();
 		
 	}
 
