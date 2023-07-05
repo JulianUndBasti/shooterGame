@@ -1,4 +1,4 @@
-package de.julian_und_basti.shootergame;
+package de.basti.game_framework;
 
 import de.basti.game_framework.collision.Collider;
 import de.basti.game_framework.collision.CollisionHandler;
