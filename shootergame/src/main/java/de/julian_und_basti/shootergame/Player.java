@@ -18,11 +18,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
-public class Player extends Entity<Circle, TypeCollider<CircleCollider,ColliderType>> implements Updatable{
+public class Player extends Entity<Rectangle, TypeCollider<BoxCollider,ColliderType>> implements Updatable{
 	
-	private double radius = 50;
+	private double width = 30;
+	private double height = 30;
 	
-	private double speed = 0.02;
+	
+	private double speed = 0.08;
 	
 	private MouseInputListenerData mouseData;
 	private KeyInputListenerData keyData;
@@ -31,14 +33,14 @@ public class Player extends Entity<Circle, TypeCollider<CircleCollider,ColliderT
 	public Player(Vector2D position) { 
 		super(position, null, null);
 		
-		Circle circle = new Circle(position, radius);
-		this.setDrawable(circle);
+		Rectangle rect = new Rectangle(position, width,height);
+		this.setDrawable(rect);
 		this.getDrawable().setFillColor(Color.BLUE);
 		this.getDrawable().setShouldFill(true);
 		
 		
 		
-		this.setCollider(new TypeCollider<>(new CircleCollider(position,radius),ColliderType.PLAYER));
+		this.setCollider(new TypeCollider<>(new BoxCollider(position,width,height),ColliderType.PLAYER));
 		this.mouseData = Game.inputData.getMouseData();
 		this.keyData = Game.inputData.getKeyData();
 		
@@ -66,7 +68,11 @@ public class Player extends Entity<Circle, TypeCollider<CircleCollider,ColliderT
 			this.translate(movement);
 		}
 		
-		
+		//transform the camera so the player stays in the middle
+		Vector2D transform = this.getPosition().clone();
+		transform.scale(-1);
+		transform.translate((Game.width - this.getDrawable().getWidth())/2,(Game.height - this.getDrawable().getHeight())/2);
+		Game.drawing.setCameraTransform(transform);
 	}
 
 }
