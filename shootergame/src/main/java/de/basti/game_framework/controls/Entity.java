@@ -41,8 +41,13 @@ public class Entity<D extends Drawable, C extends Collider>{
 		translation.translate(newPosition);
 		this.translate(translation);
 	}
+	
 
 	
+	public Vector2D getPosition() {
+		return position;
+	}
+
 	public void translate(Vector2D vector) {
 		this.position.translate(vector);
 		this.collider.translate(vector);

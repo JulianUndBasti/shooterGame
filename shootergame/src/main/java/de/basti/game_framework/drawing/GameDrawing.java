@@ -5,7 +5,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import de.basti.game_framework.controls.Updatable;
+import de.basti.game_framework.math.Vector2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.transform.Affine;
+import javafx.scene.transform.Transform;
+import javafx.scene.transform.Translate;
 
 /**
  * Wrapper around {@code GraphicsContext} and {@code Drawable}, which draws all added {@code Drawable} onto the {@code GraphicsContext} with their {@code draw(GraphicsContext)} method.
@@ -22,6 +26,8 @@ import javafx.scene.canvas.GraphicsContext;
 public class GameDrawing implements Updatable{
 	
 	private GraphicsContext graphicsContext;
+	
+	private Vector2D cameraTransform = new Vector2D(0,0);
 	
 	
 	private Set<Drawable> allDrawables = new HashSet<>();
@@ -59,12 +65,30 @@ public class GameDrawing implements Updatable{
 	@Override
 	public void update(long deltaMillis) {
 		graphicsContext.clearRect(0, 0, graphicsContext.getCanvas().getWidth(), graphicsContext.getCanvas().getHeight());
+		this.graphicsContext.save();
+		this.graphicsContext.setTransform(new Affine(Affine.translate(cameraTransform.getX(), cameraTransform.getY())));
 		drawingLayers.get(DrawingLayer.BACKGROUND).stream().forEach((d)->d.draw(graphicsContext));
 		drawingLayers.get(DrawingLayer.BACK_MIDDLE).stream().forEach((d)->d.draw(graphicsContext));
 		drawingLayers.get(DrawingLayer.MIDDLE).stream().forEach((d)->d.draw(graphicsContext));
 		drawingLayers.get(DrawingLayer.FORE_MIDDLE).stream().forEach((d)->d.draw(graphicsContext));
 		drawingLayers.get(DrawingLayer.FOREGROUND).stream().forEach((d)->d.draw(graphicsContext));
+		this.graphicsContext.restore();
 		
 	}
+
+
+	public Vector2D getCameraTransform() {
+		return cameraTransform;
+	}
+	
+	public void translateCameraTransform(Vector2D translation) {
+		this.cameraTransform.translate(translation);
+	}
+
+	public void setCameraTransform(Vector2D cameraTransform) {
+		this.cameraTransform = cameraTransform;
+	}
+	
+	
 	
 }
