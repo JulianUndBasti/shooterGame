@@ -1,5 +1,6 @@
 package de.julian_und_basti.shootergame;
 
-public enum ColliderType {
-	PLAYER;
+public enum EntityType {
+	PLAYER,
+	ENEMY;
 }

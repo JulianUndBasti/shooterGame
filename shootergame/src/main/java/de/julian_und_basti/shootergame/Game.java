@@ -1,9 +1,12 @@
 package de.julian_und_basti.shootergame;
 
 
+import de.basti.game_framework.collision.Collider;
 import de.basti.game_framework.collision.GameCollisionSystem;
-import de.basti.game_framework.collision.TypeCollider;
+
 import de.basti.game_framework.controls.GameLoop;
+import de.basti.game_framework.controls.TypeEntity;
+import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.GameDrawing;
 import de.basti.game_framework.input.InputListenerData;
 import javafx.scene.Group;
@@ -30,7 +33,7 @@ public class Game {
 	// game-framework
 	public static GameDrawing drawing = new GameDrawing(gc);
 	public static InputListenerData inputData = new InputListenerData(scene);
-	public static GameCollisionSystem<TypeCollider> collisionSystem = new GameCollisionSystem<TypeCollider>();
+	public static GameCollisionSystem<TypeEntity<? extends Drawable, ? extends Collider, EntityType>> collisionSystem = new GameCollisionSystem<>();
 	public static GameLoop loop = new GameLoop();
 
 }

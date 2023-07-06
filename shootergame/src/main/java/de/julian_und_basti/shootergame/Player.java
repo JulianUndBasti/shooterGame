@@ -2,23 +2,16 @@ package de.julian_und_basti.shootergame;
 
 
 import de.basti.game_framework.collision.BoxCollider;
-import de.basti.game_framework.collision.CircleCollider;
-import de.basti.game_framework.collision.Collider;
-import de.basti.game_framework.collision.TypeCollider;
-import de.basti.game_framework.controls.Entity;
+import de.basti.game_framework.controls.TypeEntity;
 import de.basti.game_framework.controls.Updatable;
-import de.basti.game_framework.drawing.Circle;
-import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.Rectangle;
-import de.basti.game_framework.input.InputListenerData;
 import de.basti.game_framework.input.KeyInputListenerData;
 import de.basti.game_framework.input.MouseInputListenerData;
 import de.basti.game_framework.math.Vector2D;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
-public class Player extends Entity<Rectangle, TypeCollider<BoxCollider,ColliderType>> implements Updatable{
+public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> implements Updatable{
 	
 	private double width = 30;
 	private double height = 30;
@@ -31,7 +24,7 @@ public class Player extends Entity<Rectangle, TypeCollider<BoxCollider,ColliderT
 	
 	
 	public Player(Vector2D position) { 
-		super(position, null, null);
+		super(position, null, null,EntityType.PLAYER);
 		
 		Rectangle rect = new Rectangle(position, width,height);
 		this.setDrawable(rect);
@@ -40,7 +33,7 @@ public class Player extends Entity<Rectangle, TypeCollider<BoxCollider,ColliderT
 		
 		
 		
-		this.setCollider(new TypeCollider<>(new BoxCollider(position,width,height),ColliderType.PLAYER));
+		this.setCollider(new BoxCollider(position,width,height));
 		this.mouseData = Game.inputData.getMouseData();
 		this.keyData = Game.inputData.getKeyData();
 		

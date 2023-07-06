@@ -5,7 +5,7 @@ import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.math.Vector2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public class Entity<D extends Drawable, C extends Collider>{
+public class Entity<D extends Drawable, C extends Collider> implements Drawable,Collider{
 	private Vector2D position;
 	private C collider;
 	private D drawable;
@@ -53,6 +53,21 @@ public class Entity<D extends Drawable, C extends Collider>{
 		this.collider.translate(vector);
 		this.drawable.translate(vector);
 		
+	}
+
+	@Override
+	public Vector2D[] getVectors() {
+		return this.collider.getVectors();
+	}
+
+	@Override
+	public boolean collidesWith(Vector2D vector) {
+		return this.collider.collidesWith(vector);
+	}
+
+	@Override
+	public void draw(GraphicsContext gc) {
+		this.drawable.draw(gc);
 	}
 	
 }
