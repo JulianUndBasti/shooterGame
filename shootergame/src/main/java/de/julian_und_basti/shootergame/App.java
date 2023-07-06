@@ -48,6 +48,8 @@ public class App extends Application {
 
 		stage.setScene(Game.scene);
 		stage.show();
+		
+		
 	}
 
 	public static void main(String[] args) {
