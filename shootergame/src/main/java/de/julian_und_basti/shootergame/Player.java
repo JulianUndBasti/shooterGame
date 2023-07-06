@@ -65,7 +65,7 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 		Vector2D transform = this.getPosition().clone();
 		transform.scale(-1);
 		transform.translate((Game.width - this.getDrawable().getWidth())/2,(Game.height - this.getDrawable().getHeight())/2);
-		Game.drawing.setCameraTransform(transform);
+		//Game.drawing.setCameraTransform(transform);
 	}
 
 }
