@@ -17,7 +17,7 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 	private double height = 30;
 	
 	
-	private double speed = 0.16;
+	private double speed = 0.4;
 	
 	private MouseInputListenerData mouseData;
 	private KeyInputListenerData keyData;
