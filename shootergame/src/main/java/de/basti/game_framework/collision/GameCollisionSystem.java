@@ -14,6 +14,8 @@ import de.basti.game_framework.controls.Updatable;
  * @param <T> type of {@code Collider} to use
  */
 public class GameCollisionSystem<T extends Collider> implements Updatable {
+	
+	private int updateIterations = 1; 
 	private Set<T> colliders = new HashSet<>();
 
 	private Set<CollisionPair<T>> lastCollisions = new HashSet<>();
@@ -30,6 +32,12 @@ public class GameCollisionSystem<T extends Collider> implements Updatable {
 	}
 	
 	public void update(long deltaMillis) {
+		for(int i = 0;i<updateIterations;i++) {
+			this.updateOnce();
+		}
+	}
+	
+	private void updateOnce() {
 		List<T> colliderList = new ArrayList<>(colliders);
 		Set<CollisionPair<T>> allCollisions = new HashSet<>();
 		for(int i = 0;i<colliderList.size();i++) {
@@ -85,4 +93,14 @@ public class GameCollisionSystem<T extends Collider> implements Updatable {
 		
 		this.ongoingHandler  = handler;
 	}
+
+	public int getUpdateIterations() {
+		return updateIterations;
+	}
+
+	public void setUpdateIterations(int updateIterations) {
+		this.updateIterations = updateIterations;
+	}
+	
+	
 }

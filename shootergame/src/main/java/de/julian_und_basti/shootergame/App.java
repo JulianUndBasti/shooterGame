@@ -93,14 +93,15 @@ public class App extends Application {
 	
 	@Override
 	public void start(Stage stage) {
-
+		
+		Game.collisionSystem.setUpdateIterations(4);
 		Game.collisionSystem.setOnCollisionBegin(handler);
 		Game.collisionSystem.setOnCollisionOngoing(handler);
 
 		Game.drawing.add(DrawingLayer.FOREGROUND, player);
 		Game.collisionSystem.add(player);
 		
-		for(int i = 0;i<100;i++) {
+		for(int i = 0;i<200;i++) {
 			double x = Math.random()*800;
 			double y = Math.random()*600;
 			

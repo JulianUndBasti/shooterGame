@@ -36,5 +36,8 @@ public class Game {
 	public static InputListenerData inputData = new InputListenerData(scene);
 	public static GameCollisionSystem<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> collisionSystem = new GameCollisionSystem<>();
 	public static GameLoop loop = new GameLoop();
+	
+	
+	
 
 }
