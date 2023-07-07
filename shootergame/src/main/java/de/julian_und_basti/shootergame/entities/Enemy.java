@@ -1,4 +1,4 @@
-package de.julian_und_basti.shootergame;
+package de.julian_und_basti.shootergame.entities;
 
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.TypeEntity;

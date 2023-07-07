@@ -1,4 +1,4 @@
-package de.julian_und_basti.shootergame;
+package de.julian_und_basti.shootergame.entities;
 
 public enum EntityType {
 	PLAYER(100),

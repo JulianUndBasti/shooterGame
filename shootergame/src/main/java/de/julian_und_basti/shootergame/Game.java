@@ -10,6 +10,7 @@ import de.basti.game_framework.controls.TypeEntity;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.GameDrawing;
 import de.basti.game_framework.input.InputListenerData;
+import de.julian_und_basti.shootergame.entities.EntityType;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
