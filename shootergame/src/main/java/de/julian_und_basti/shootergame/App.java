@@ -18,50 +18,41 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
-	// game
-	private Player player = new Player(new Vector2D(Game.width / 2, Game.height / 2));
-	private Enemy enemy = new Enemy(new Vector2D(200, 300), player);
-	private Circle circle = new Circle(new Vector2D(30, 30), 20);
-
 	CollisionHandler<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> handler = new CollisionHandler<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>>() {
 
 		@Override
-		public void handle(
-				CollisionPair<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> pair) {
+		public void handle(CollisionPair<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> pair) {
 			var c1 = pair.getCollider1();
 			var c2 = pair.getCollider2();
 			BoxCollider box1 = c1.getCollider();
 			BoxCollider box2 = c2.getCollider();
 
 			Vector2D displacement = this.getDisplacement(box1, box2);
-			
-			int cp1 =c1.getType().collisionPriority;
-			int cp2 =c2.getType().collisionPriority;
-			
-			
-			if(cp1<cp2) {
+
+			int cp1 = c1.getType().collisionPriority;
+			int cp2 = c2.getType().collisionPriority;
+
+			if (cp1 < cp2) {
 				c1.translate(displacement);
-			}else if(cp2<cp1) {
+			} else if (cp2 < cp1) {
 				displacement.scale(-1);
 				c2.translate(displacement);
-			}else {
+			} else {
 				displacement.scale(0.5);
 				c1.translate(displacement);
 				displacement.scale(-1);
 				c2.translate(displacement);
-				
+
 			}
 
 		}
 
 		private Vector2D getDisplacement(BoxCollider box1, BoxCollider box2) {
 			double rightLeftDiff = box1.getPosition().getX() + box1.getWidth() - box2.getPosition().getX();
-			double leftRightDiff = box1.getPosition().getX()
-					- (box2.getPosition().getX() + box2.getWidth());
+			double leftRightDiff = box1.getPosition().getX() - (box2.getPosition().getX() + box2.getWidth());
 
 			double bottomTopDiff = box1.getPosition().getY() + box1.getHeight() - box2.getPosition().getY();
-			double topBottomDiff = box1.getPosition().getY()
-					- (box2.getPosition().getY() + box2.getHeight());
+			double topBottomDiff = box1.getPosition().getY() - (box2.getPosition().getY() + box2.getHeight());
 
 			double absRightLeftDiff = Math.abs(rightLeftDiff);
 			double absLeftRightDiff = Math.abs(leftRightDiff);
@@ -86,12 +77,18 @@ public class App extends Application {
 			} else {
 				throw new RuntimeException("Error in collision!");
 			}
-			
+
 			displacement.scale(-1);
 
 			return displacement;
 		}
 	};
+
+	private Player player = new Player(new Vector2D(Game.width / 2, Game.height / 2));
+	private Enemy enemy1 = new Enemy(new Vector2D(200, 300), player);
+	private Enemy enemy2 = new Enemy(new Vector2D(600, 400), player);
+	
+	private Circle circle = new Circle(new Vector2D(30, 30), 20);
 
 	@Override
 	public void start(Stage stage) {
@@ -99,16 +96,22 @@ public class App extends Application {
 		Game.collisionSystem.setOnCollisionBegin(handler);
 		Game.collisionSystem.setOnCollisionOngoing(handler);
 
-		Game.drawing.add(DrawingLayer.FOREGROUND, player.getDrawable());
+		Game.drawing.add(DrawingLayer.FOREGROUND, player);
 		Game.collisionSystem.add(player);
 
-		Game.drawing.add(DrawingLayer.FOREGROUND, enemy.getDrawable());
-		Game.collisionSystem.add(enemy);
+		Game.drawing.add(DrawingLayer.FOREGROUND, enemy1);
+		Game.collisionSystem.add(enemy1);
+		
+		Game.drawing.add(DrawingLayer.FOREGROUND, enemy2);
+		Game.collisionSystem.add(enemy2);
+		
+		
 
 		circle.setFillColor(Color.GRAY);
 		Game.drawing.add(DrawingLayer.BACKGROUND, circle);
 
-		Game.loop.addUpdatableAfter(enemy);
+		Game.loop.addUpdatableAfter(enemy1);
+		Game.loop.addUpdatableAfter(enemy2);
 		Game.loop.addUpdatableAfter(player);
 		Game.loop.addUpdatableAfter(Game.collisionSystem);
 		Game.loop.addUpdatableAfter(Game.drawing);
