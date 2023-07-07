@@ -5,6 +5,7 @@ import de.basti.game_framework.collision.Collider;
 import de.basti.game_framework.collision.CollisionHandler;
 import de.basti.game_framework.collision.CollisionPair;
 import de.basti.game_framework.controls.TypeEntity;
+import de.basti.game_framework.controls.Updater;
 import de.basti.game_framework.drawing.Circle;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawingLayer;
@@ -85,11 +86,11 @@ public class App extends Application {
 	};
 
 	private Player player = new Player(new Vector2D(Game.width / 2, Game.height / 2));
-	private Enemy enemy1 = new Enemy(new Vector2D(200, 300), player);
-	private Enemy enemy2 = new Enemy(new Vector2D(600, 400), player);
 	
 	private Circle circle = new Circle(new Vector2D(30, 30), 20);
-
+	
+	private Updater enemyUpdater = new Updater();
+	
 	@Override
 	public void start(Stage stage) {
 
@@ -98,21 +99,25 @@ public class App extends Application {
 
 		Game.drawing.add(DrawingLayer.FOREGROUND, player);
 		Game.collisionSystem.add(player);
+		
+		for(int i = 0;i<100;i++) {
+			double x = Math.random()*800;
+			double y = Math.random()*600;
+			
+			Enemy enemy = new Enemy(new Vector2D(x,y), player);
+			Game.drawing.add(DrawingLayer.FOREGROUND, enemy);
+			Game.collisionSystem.add(enemy);
+			enemyUpdater.getList().add(enemy);
+		}
 
-		Game.drawing.add(DrawingLayer.FOREGROUND, enemy1);
-		Game.collisionSystem.add(enemy1);
-		
-		Game.drawing.add(DrawingLayer.FOREGROUND, enemy2);
-		Game.collisionSystem.add(enemy2);
-		
 		
 
 		circle.setFillColor(Color.GRAY);
 		Game.drawing.add(DrawingLayer.BACKGROUND, circle);
 
-		Game.loop.addUpdatableAfter(enemy1);
-		Game.loop.addUpdatableAfter(enemy2);
+
 		Game.loop.addUpdatableAfter(player);
+		Game.loop.addUpdatableAfter(enemyUpdater);
 		Game.loop.addUpdatableAfter(Game.collisionSystem);
 		Game.loop.addUpdatableAfter(Game.drawing);
 
