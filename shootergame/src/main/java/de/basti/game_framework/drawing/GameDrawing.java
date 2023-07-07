@@ -8,8 +8,6 @@ import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.math.Vector2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
-import javafx.scene.transform.Transform;
-import javafx.scene.transform.Translate;
 
 /**
  * Wrapper around {@code GraphicsContext} and {@code Drawable}, which draws all added {@code Drawable} onto the {@code GraphicsContext} with their {@code draw(GraphicsContext)} method.

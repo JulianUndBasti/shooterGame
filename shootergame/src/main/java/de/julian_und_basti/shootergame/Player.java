@@ -17,7 +17,7 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 	private double height = 30;
 	
 	
-	private double speed = 0.08;
+	private double speed = 0.16;
 	
 	private MouseInputListenerData mouseData;
 	private KeyInputListenerData keyData;
@@ -26,14 +26,14 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 	public Player(Vector2D position) { 
 		super(position, null, null,EntityType.PLAYER);
 		
-		Rectangle rect = new Rectangle(position, width,height);
+		Rectangle rect = new Rectangle(position.clone(), width,height);
 		this.setDrawable(rect);
 		this.getDrawable().setFillColor(Color.BLUE);
 		this.getDrawable().setShouldFill(true);
 		
 		
 		
-		this.setCollider(new BoxCollider(position,width,height));
+		this.setCollider(new BoxCollider(position.clone(),width,height));
 		this.mouseData = Game.inputData.getMouseData();
 		this.keyData = Game.inputData.getKeyData();
 		

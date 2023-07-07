@@ -1,7 +1,5 @@
 package de.basti.game_framework.collision;
 
-import java.util.Arrays;
-
 import de.basti.game_framework.math.Vector2D;
 
 public class CircleCollider implements Collider {

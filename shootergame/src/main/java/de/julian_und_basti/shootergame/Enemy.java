@@ -12,7 +12,7 @@ public class Enemy extends TypeEntity<Rectangle, BoxCollider, EntityType> implem
 	private int width = 20;
 	private int height = 20;
 
-	private double speed = 0.05;
+	private double speed = 0.15;
 
 	private Player playerToFollow;
 
@@ -21,12 +21,12 @@ public class Enemy extends TypeEntity<Rectangle, BoxCollider, EntityType> implem
 	public Enemy(Vector2D position, Player playerToFollow) {
 		super(position, null, null, EntityType.ENEMY);
 
-		Rectangle rect = new Rectangle(position, width, height);
+		Rectangle rect = new Rectangle(position.clone(), width, height);
 		this.setDrawable(rect);
 		this.getDrawable().setFillColor(Color.RED);
 		this.getDrawable().setShouldFill(true);
 
-		this.setCollider(new BoxCollider(position, width, height));
+		this.setCollider(new BoxCollider(position.clone(), width, height));
 
 		this.playerToFollow = playerToFollow;
 

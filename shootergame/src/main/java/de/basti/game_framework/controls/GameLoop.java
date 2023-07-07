@@ -1,6 +1,5 @@
 package de.basti.game_framework.controls;
 
-import java.util.ArrayList;
 import javafx.animation.AnimationTimer;
 
 

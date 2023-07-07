@@ -1,6 +1,7 @@
 package de.julian_und_basti.shootergame;
 
 
+import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.collision.Collider;
 import de.basti.game_framework.collision.GameCollisionSystem;
 
@@ -33,7 +34,7 @@ public class Game {
 	// game-framework
 	public static GameDrawing drawing = new GameDrawing(gc);
 	public static InputListenerData inputData = new InputListenerData(scene);
-	public static GameCollisionSystem<TypeEntity<? extends Drawable, ? extends Collider, EntityType>> collisionSystem = new GameCollisionSystem<>();
+	public static GameCollisionSystem<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> collisionSystem = new GameCollisionSystem<>();
 	public static GameLoop loop = new GameLoop();
 
 }
