@@ -38,10 +38,12 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 		this.keyData = Game.inputData.getKeyData();
 		
 	}
-
+	
+	private Vector2D movement = new Vector2D();
+	
 	@Override
 	public void update(long deltaMillis) {
-		Vector2D movement = new Vector2D();
+		movement.set(0, 0);
 		if(keyData.isDown(KeyCode.W)) {
 			movement.translate(0,-1);
 		}

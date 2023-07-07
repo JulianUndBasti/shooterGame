@@ -31,14 +31,18 @@ public class Enemy extends TypeEntity<Rectangle, BoxCollider, EntityType> implem
 		this.playerToFollow = playerToFollow;
 
 	}
-
+	//defined here for memory management
+	Vector2D direction = new Vector2D();
+	Vector2D playerCenter = new Vector2D();
+	
+	
 	@Override
 	public void update(long deltaMillis) {
-		Vector2D direction = this.getPosition().clone();
+		direction.set(this.getPosition().getX(), this.getPosition().getY());
 		direction.translate(this.getCollider().getWidth()/2,this.getCollider().getHeight()/2);
 		direction.scale(-1);
 		
-		Vector2D playerCenter = playerToFollow.getPosition().clone();
+		playerCenter.set(playerToFollow.getPosition().getX(), playerToFollow.getPosition().getY());
 		playerCenter.translate(playerToFollow.getCollider().getWidth()/2,playerToFollow.getCollider().getHeight()/2);
 		
 		direction.translate(playerCenter);
