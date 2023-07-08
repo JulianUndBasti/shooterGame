@@ -15,12 +15,8 @@ public class Projectile extends TypeEntity<Rectangle, BoxCollider, EntityType> i
 	private int width = 10;
 	
 	private double speed = 0.3;
-	
-	Player player;
-	
-	MouseInputListenerData mouseInput = Game.inputData.getMouseData();
-	
-	public Projectile(Vector2D position, Player player) {
+
+	public Projectile(Vector2D position, Vector2D mousePosition) {
 		super(position, null, null, EntityType.PROJECTILE);
 		
 		Rectangle rect = new Rectangle(position.clone(), width, height);
@@ -30,17 +26,16 @@ public class Projectile extends TypeEntity<Rectangle, BoxCollider, EntityType> i
 		this.getDrawable().setShouldFill(true);
 		
 		this.setCollider(new BoxCollider(position.clone(), width, height));
-	
-		this.player = player;
+		
+		this.calculateMovementDirection(mousePosition);
+		
 	}
 	
 	private Vector2D movement = new Vector2D();
 
-	public void calculateVector2D() {
+	public void calculateMovementDirection(Vector2D mousePosition) {
 		
-		System.out.println(mouseInput.getMousePosition());
-		
-		movement.set(player.getPosition().getX() - mouseInput.getMousePosition().getX(), player.getPosition().getY() - mouseInput.getMousePosition().getY());
+		movement.set(this.getPosition().getX() - mousePosition.getX(), this.getPosition().getY() - mousePosition.getY());
 		movement.normalize();
 		movement.scale(-1);
 		
