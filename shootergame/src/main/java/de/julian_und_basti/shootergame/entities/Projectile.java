@@ -42,6 +42,7 @@ public class Projectile extends TypeEntity<Rectangle, BoxCollider, EntityType> i
 		
 		movement.set(player.getPosition().getX() - mouseInput.getMousePosition().getX(), player.getPosition().getY() - mouseInput.getMousePosition().getY());
 		movement.normalize();
+		movement.scale(-1);
 		
 	}
 

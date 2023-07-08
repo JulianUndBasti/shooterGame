@@ -19,17 +19,10 @@ public class CollisionHandling {
 			BoxCollider box1 = c1.getCollider();
 			BoxCollider box2 = c2.getCollider();
 
-			if(c1.getType()==EntityType.PROJECTILE) {
-				if(c2.getType()==EntityType.PLAYER || c2.getType()==EntityType.PROJECTILE) {
-					return;
-				}
+			if(c1.getType()==EntityType.PROJECTILE || c2.getType()==EntityType.PROJECTILE) {
+				return;
 			}
-			
-			if(c2.getType()==EntityType.PROJECTILE) {
-				if(c1.getType()==EntityType.PLAYER || c1.getType()==EntityType.PROJECTILE) {
-					return;
-				}
-			}
+
 			
 			
 			
