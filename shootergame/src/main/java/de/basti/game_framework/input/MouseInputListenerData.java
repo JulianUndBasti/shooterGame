@@ -36,6 +36,8 @@ public class MouseInputListenerData {
 
 		@Override
 		public void handle(MouseEvent event) {
+			mousePosition.setX(event.getX());
+			mousePosition.setY(event.getY());
 			MouseButton b = event.getButton();
 			buttonsDown.remove(b);
 			buttonsReleased.add(b);
@@ -48,8 +50,11 @@ public class MouseInputListenerData {
 
 		@Override
 		public void handle(MouseEvent event) {
+			
+			
 			mousePosition.setX(event.getX());
 			mousePosition.setY(event.getY());
+
 		}
 		
 	};
@@ -60,11 +65,14 @@ public class MouseInputListenerData {
 		currentScene.removeEventHandler(MouseEvent.MOUSE_PRESSED, onMousePressed);
 		currentScene.removeEventHandler(MouseEvent.MOUSE_RELEASED, onMouseReleased);
 		currentScene.removeEventHandler(MouseEvent.MOUSE_RELEASED, onMouseMoved);
+		currentScene.removeEventHandler(MouseEvent.MOUSE_DRAGGED, onMouseMoved);
+		
 		
 		currentScene = newScene;
 		currentScene.addEventHandler(MouseEvent.MOUSE_PRESSED, onMousePressed);
 		currentScene.addEventHandler(MouseEvent.MOUSE_RELEASED, onMouseReleased);
 		currentScene.addEventHandler(MouseEvent.MOUSE_MOVED, onMouseMoved);
+		currentScene.addEventHandler(MouseEvent.MOUSE_DRAGGED, onMouseMoved);
 	}
 	
 	
@@ -81,6 +89,7 @@ public class MouseInputListenerData {
 	}
 	
 	public Vector2D getMousePosition() {
+		System.out.println(mousePosition);
 		return this.mousePosition.clone(); 
 	}
 

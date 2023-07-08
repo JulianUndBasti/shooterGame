@@ -2,6 +2,7 @@ package de.basti.game_framework.controls;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Implementation of {@code Updatable} which updates all given {@code Updatable} when {@code update(double)}  is called.
@@ -10,7 +11,7 @@ import java.util.List;
  * @see GameLoop
  */
 public class Updater implements Updatable{
-	private ArrayList<Updatable> list = new ArrayList<>();
+	private CopyOnWriteArrayList<Updatable> list = new CopyOnWriteArrayList<>();
 
 	@Override
 	public void update(long deltaMillis) {

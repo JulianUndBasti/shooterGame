@@ -54,11 +54,7 @@ public class App extends Application {
 		}
 		
 
-		
-
-		circle.setFillColor(Color.GRAY);
-		Game.drawing.add(DrawingLayer.BACKGROUND, circle);
-
+	
 
 		Game.loop.addUpdatableAfter(player);
 		Game.loop.addUpdatableAfter(enemyUpdater);

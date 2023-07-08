@@ -13,11 +13,26 @@ public class CollisionHandling {
 
 		@Override
 		public void handle(CollisionPair<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> pair) {
+
 			var c1 = pair.getCollider1();
 			var c2 = pair.getCollider2();
 			BoxCollider box1 = c1.getCollider();
 			BoxCollider box2 = c2.getCollider();
 
+			if(c1.getType()==EntityType.PROJECTILE) {
+				if(c2.getType()==EntityType.PLAYER || c2.getType()==EntityType.PROJECTILE) {
+					return;
+				}
+			}
+			
+			if(c2.getType()==EntityType.PROJECTILE) {
+				if(c1.getType()==EntityType.PLAYER || c1.getType()==EntityType.PROJECTILE) {
+					return;
+				}
+			}
+			
+			
+			
 			Vector2D displacement = this.getDisplacement(box1, box2);
 
 			int cp1 = c1.getType().collisionPriority;
@@ -66,7 +81,7 @@ public class CollisionHandling {
 			} else if (lowest == absBottomTopDiff) {
 				displacement.setY(bottomTopDiff);
 			} else {
-				throw new RuntimeException("Error in collision!");
+				displacement.setX(rightLeftDiff);
 			}
 
 			displacement.scale(-1);

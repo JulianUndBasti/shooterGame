@@ -18,7 +18,7 @@ public class Projectile extends TypeEntity<Rectangle, BoxCollider, EntityType> i
 	
 	Player player;
 	
-	MouseInputListenerData mouseInput = new MouseInputListenerData();
+	MouseInputListenerData mouseInput = Game.inputData.getMouseData();
 	
 	public Projectile(Vector2D position, Player player) {
 		super(position, null, null, EntityType.PROJECTILE);
@@ -41,16 +41,15 @@ public class Projectile extends TypeEntity<Rectangle, BoxCollider, EntityType> i
 		System.out.println(mouseInput.getMousePosition());
 		
 		movement.set(player.getPosition().getX() - mouseInput.getMousePosition().getX(), player.getPosition().getY() - mouseInput.getMousePosition().getY());
-		
-		System.out.println(movement);
 		movement.normalize();
 		
 	}
 
 	@Override
 	public void update(long deltaMillis) {
-
-		movement.scale(deltaMillis*speed);
-		this.translate(movement);
+		System.out.println(deltaMillis);
+		Vector2D thisFrameMovement = movement.clone();
+		thisFrameMovement.scale(deltaMillis*speed);
+		this.translate(thisFrameMovement);
 	}
 }

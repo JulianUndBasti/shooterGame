@@ -74,16 +74,16 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 		
 		
 		//shoot logic
-		if(mouseData.isDown(MouseButton.PRIMARY)) {
-			
-			App app = new App();
-			
-			Projectile projectile = new Projectile(getPosition(), app.getPlayer());
+		if(mouseData.isPressed(MouseButton.PRIMARY)) {
+
+			Projectile projectile = new Projectile(getPosition().clone(), this);
 			projectile.calculateVector2D();
-			Game.loop.addUpdatableAfter(projectile);
 			
 			Game.collisionSystem.add(projectile);
 			Game.drawing.add(DrawingLayer.MIDDLE, projectile);
+			Game.loop.addUpdatableBefore(projectile);
+			
+			
 			
 		}
 	}
