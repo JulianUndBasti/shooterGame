@@ -5,6 +5,7 @@ import de.basti.game_framework.collision.Collider;
 import de.basti.game_framework.collision.CollisionHandler;
 import de.basti.game_framework.collision.CollisionPair;
 import de.basti.game_framework.controls.TypeEntity;
+import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.controls.Updater;
 import de.basti.game_framework.drawing.Circle;
 import de.basti.game_framework.drawing.Drawable;
@@ -29,6 +30,8 @@ public class App extends Application {
 	private Circle circle = new Circle(new Vector2D(30, 30), 20);
 	
 	private Updater enemyUpdater = new Updater();
+	
+	
 	
 	@Override
 	public void start(Stage stage) {
@@ -61,16 +64,37 @@ public class App extends Application {
 		Game.loop.addUpdatableAfter(enemyUpdater);
 		Game.loop.addUpdatableAfter(Game.collisionSystem);
 		Game.loop.addUpdatableAfter(Game.drawing);
-
+		Game.loop.addUpdatableAfter(inputConsumer);
+		
 		Game.loop.start();
 
 		stage.setScene(Game.scene);
 		stage.show();
-
+		
 	}
+	
+	Updatable inputConsumer = new Updatable() {
+		
+		@Override
+		public void update(long deltaMillis) {
+			
+			Game.inputData.pressesAndReleasesConsumed();
+			
+		}
+	};
 
 	public static void main(String[] args) {
 		launch();
 	}
 
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	
+	
 }

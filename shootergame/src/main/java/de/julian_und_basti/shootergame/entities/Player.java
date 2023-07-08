@@ -1,15 +1,17 @@
 package de.julian_und_basti.shootergame.entities;
 
-
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.TypeEntity;
 import de.basti.game_framework.controls.Updatable;
+import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.input.KeyInputListenerData;
 import de.basti.game_framework.input.MouseInputListenerData;
 import de.basti.game_framework.math.Vector2D;
+import de.julian_und_basti.shootergame.App;
 import de.julian_und_basti.shootergame.Game;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 
 public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> implements Updatable{
@@ -69,6 +71,37 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 		transform.scale(-1);
 		transform.translate((Game.width - this.getDrawable().getWidth())/2,(Game.height - this.getDrawable().getHeight())/2);
 		//Game.drawing.setCameraTransform(transform);
+		
+		
+		//shoot logic
+		if(mouseData.isDown(MouseButton.PRIMARY)) {
+			
+			App app = new App();
+			
+			Projectile projectile = new Projectile(getPosition(), app.getPlayer());
+			projectile.calculateVector2D();
+			Game.loop.addUpdatableAfter(projectile);
+			
+			Game.collisionSystem.add(projectile);
+			Game.drawing.add(DrawingLayer.MIDDLE, projectile);
+			
+		}
+	}
+
+	public double getWidth() {
+		return width;
+	}
+
+	public void setWidth(double width) {
+		this.width = width;
+	}
+
+	public double getHeight() {
+		return height;
+	}
+
+	public void setHeight(double height) {
+		this.height = height;
 	}
 
 }
