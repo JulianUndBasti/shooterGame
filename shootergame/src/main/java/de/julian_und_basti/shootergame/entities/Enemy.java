@@ -13,7 +13,10 @@ public class Enemy extends TypeEntity<Rectangle, BoxCollider, EntityType> implem
 	private int height = 20;
 
 	private double speed = 0.15;
-
+	
+	private double hp = 40;
+	private double damage;
+	
 	private Player playerToFollow;
 
 	private Vector2D lastTranslate;
@@ -60,5 +63,22 @@ public class Enemy extends TypeEntity<Rectangle, BoxCollider, EntityType> implem
 	public void setPlayerToFollow(Player playerToFollow) {
 		this.playerToFollow = playerToFollow;
 	}
+
+	public double getHp() {
+		return hp;
+	}
+
+	public void setHp(double hp) {
+		this.hp = hp;
+	}
+
+	public double getDamage() {
+		return damage;
+	}
+
+	public void setDamage(double damage) {
+		this.damage = damage;
+	}
+	
 
 }

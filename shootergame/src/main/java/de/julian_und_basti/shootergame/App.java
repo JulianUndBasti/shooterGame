@@ -43,7 +43,7 @@ public class App extends Application {
 		Game.drawing.add(DrawingLayer.FOREGROUND, player);
 		Game.collisionSystem.add(player);
 		
-		for(int i = 0;i<100;i++) {
+		for(int i = 0;i<5;i++) {
 			double x = Math.random()*800;
 			double y = Math.random()*600;
 			

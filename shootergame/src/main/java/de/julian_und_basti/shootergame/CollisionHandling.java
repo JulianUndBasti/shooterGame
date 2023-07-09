@@ -6,7 +6,9 @@ import de.basti.game_framework.collision.CollisionPair;
 import de.basti.game_framework.controls.TypeEntity;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.math.Vector2D;
+import de.julian_und_basti.shootergame.entities.Enemy;
 import de.julian_und_basti.shootergame.entities.EntityType;
+import de.julian_und_basti.shootergame.entities.Projectile;
 
 public class CollisionHandling {
 	public static CollisionHandler<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> handler = new CollisionHandler<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>>() {
@@ -19,11 +21,48 @@ public class CollisionHandling {
 			BoxCollider box1 = c1.getCollider();
 			BoxCollider box2 = c2.getCollider();
 
-			if(c1.getType()==EntityType.PROJECTILE || c2.getType()==EntityType.PROJECTILE) {
+			
+			if(c1.getType() == EntityType.PROJECTILE && c2.getType() == EntityType.ENEMY) {
+				
+				Enemy enemy = (Enemy) c2;
+				Projectile projectile = (Projectile) c1;
+				
+				Game.drawing.remove(c1);
+				Game.collisionSystem.remove(c1);
+				enemy.setHp(enemy.getHp() - projectile.getDamage());
+				
+				if(enemy.getHp() < 1) {
+					
+					Game.drawing.remove(c2);
+					Game.collisionSystem.remove(c2);
+					
+				}
 				return;
 			}
-
 			
+			if(c1.getType() == EntityType.ENEMY && c2.getType() == EntityType.PROJECTILE) {
+				
+				Enemy enemy = (Enemy) c1;
+				Projectile projectile = (Projectile) c2;
+				
+				Game.drawing.remove(c2);
+				Game.collisionSystem.remove(c2);
+				enemy.setHp(enemy.getHp() - projectile.getDamage());
+				
+				if(enemy.getHp() < 1) {
+					
+					Game.drawing.remove(c1);
+					Game.collisionSystem.remove(c1);
+					
+				}
+				return;				
+			}
+			
+			if(c1.getType() == EntityType.PROJECTILE || c2.getType() == EntityType.PROJECTILE) {
+				
+				return;
+				
+			}
 			
 			
 			Vector2D displacement = this.getDisplacement(box1, box2);
