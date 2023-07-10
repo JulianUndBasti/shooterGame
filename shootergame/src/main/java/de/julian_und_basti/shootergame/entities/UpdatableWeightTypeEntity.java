@@ -10,7 +10,6 @@ public abstract class UpdatableWeightTypeEntity<D extends Drawable,C extends Box
 	//TODO add physics weight
 	public UpdatableWeightTypeEntity(Vector2D position, C collider, D drawable, EntityType type) {
 		super(position, collider, drawable, type);
-		// TODO Auto-generated constructor stub
 	}
 
 	
