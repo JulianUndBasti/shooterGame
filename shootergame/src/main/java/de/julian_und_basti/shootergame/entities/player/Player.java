@@ -10,7 +10,7 @@ import de.basti.game_framework.input.MouseInputListenerData;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.Game;
 import de.julian_und_basti.shootergame.entities.EntityType;
-import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
+import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
@@ -77,7 +77,7 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 		//shoot logic
 		if(mouseData.isPressed(MouseButton.PRIMARY)) {
 
-			PlayerProjectile projectile = new PlayerProjectile(getPosition().clone(), mouseData.getMousePosition(), width, height);
+			SimplePlayerProjectile projectile = new SimplePlayerProjectile(getPosition().clone(), mouseData.getMousePosition(), width, height);
 			Game.collisionSystem.add(projectile);
 			Game.drawing.add(DrawingLayer.MIDDLE, projectile);
 			Game.loop.addUpdatableBefore(projectile);

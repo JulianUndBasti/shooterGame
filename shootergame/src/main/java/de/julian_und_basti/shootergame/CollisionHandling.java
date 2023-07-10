@@ -8,7 +8,7 @@ import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
 import de.julian_und_basti.shootergame.entities.enemies.WalkerEnemy;
-import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
+import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
 import de.julian_und_basti.shootergame.entities.EntityType;
 
 public class CollisionHandling {
@@ -25,7 +25,7 @@ public class CollisionHandling {
 			if (c1.getType() == EntityType.PLAYER_PROJECTILE && c2.getType() == EntityType.ENEMY) {
 
 				WalkerEnemy enemy = (WalkerEnemy) c2;
-				PlayerProjectile projectile = (PlayerProjectile) c1;
+				SimplePlayerProjectile projectile = (SimplePlayerProjectile) c1;
 
 				enemyProjectileCollision(enemy, projectile);
 
@@ -35,7 +35,7 @@ public class CollisionHandling {
 			if (c1.getType() == EntityType.ENEMY && c2.getType() == EntityType.PLAYER_PROJECTILE) {
 
 				WalkerEnemy enemy = (WalkerEnemy) c1;
-				PlayerProjectile projectile = (PlayerProjectile) c2;
+				SimplePlayerProjectile projectile = (SimplePlayerProjectile) c2;
 
 				enemyProjectileCollision(enemy, projectile);
 
@@ -68,10 +68,8 @@ public class CollisionHandling {
 
 		}
 
-		private void enemyProjectileCollision(Enemy enemy, PlayerProjectile projectile) {
-			Game.drawing.remove(projectile);
-			Game.collisionSystem.remove(projectile);
-			Game.loop.removeUpdatable(projectile);
+		private void enemyProjectileCollision(Enemy enemy, SimplePlayerProjectile projectile) {
+			projectile.hit(enemy);
 			enemy.hit(projectile);
 
 		}

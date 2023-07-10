@@ -8,7 +8,7 @@ import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.Game;
 import de.julian_und_basti.shootergame.entities.EntityType;
 import de.julian_und_basti.shootergame.entities.player.Player;
-import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
+import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
 import javafx.scene.paint.Color;
 
 public class WalkerEnemy extends Enemy<Rectangle> {
@@ -54,7 +54,11 @@ public class WalkerEnemy extends Enemy<Rectangle> {
 		
 		direction.translate(playerCenter);
 
-		this.moveIntoDirection(direction,deltaMillis);
+		
+		direction = direction.clone();
+		direction.normalize();
+		direction.scale(this.getSpeed()*deltaMillis);
+		this.translate(direction);
 	}
 
 	public Player getPlayerToFollow() {
@@ -66,7 +70,7 @@ public class WalkerEnemy extends Enemy<Rectangle> {
 	}
 
 	@Override
-	public void hit(PlayerProjectile p) {
+	public void hit(SimplePlayerProjectile p) {
 		this.setHealth(this.getHealth()-p.getDamage());
 		if (this.getHealth() <= 0) {
 			Game.drawing.remove(this);
