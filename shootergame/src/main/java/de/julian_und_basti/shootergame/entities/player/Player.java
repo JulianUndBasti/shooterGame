@@ -11,6 +11,7 @@ import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.Game;
 import de.julian_und_basti.shootergame.entities.EntityType;
 import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
+import de.julian_und_basti.shootergame.weapons.Weapon;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
@@ -26,8 +27,10 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 	private MouseInputListenerData mouseData;
 	private KeyInputListenerData keyData;
 	
+	private Weapon weapon;
 	
-	public Player(Vector2D position) { 
+	
+	public Player(Vector2D position,Weapon weapon) { 
 		super(position, null, null,EntityType.PLAYER);
 		
 		Rectangle rect = new Rectangle(position.clone(), width,height);
@@ -40,6 +43,8 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 		this.setCollider(new BoxCollider(position.clone(),width,height));
 		this.mouseData = Game.inputData.getMouseData();
 		this.keyData = Game.inputData.getKeyData();
+		
+		this.weapon = weapon;
 		
 	}
 	
@@ -71,19 +76,19 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 		Vector2D transform = this.getPosition().clone();
 		transform.scale(-1);
 		transform.translate((Game.width - this.getDrawable().getWidth())/2,(Game.height - this.getDrawable().getHeight())/2);
-		//Game.drawing.setCameraTransform(transform);
+		//Game.drawing.setTransform(transform);
 		
 		
+		this.weapon.update(deltaMillis);
 		//shoot logic
 		if(mouseData.isDown(MouseButton.PRIMARY)) {
-
-			SimplePlayerProjectile projectile = new SimplePlayerProjectile(getPosition().clone(), mouseData.getMousePosition(), width, height);
-			Game.collisionSystem.add(projectile);
-			Game.drawing.add(DrawingLayer.MIDDLE, projectile);
-			Game.loop.addUpdatableBefore(projectile);
-			
+			Vector2D shootPosition = this.getPosition().clone();
+			shootPosition.translate(this.getCollider().getWidth()/2,this.getCollider().getHeight()/2);
+			this.weapon.shootIfPossible(shootPosition, mouseData.getMousePosition());
 		}
 		System.out.println(deltaMillis);
+		
+		
 	}
 
 	public double getWidth() {
@@ -100,6 +105,14 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 
 	public void setHeight(double height) {
 		this.height = height;
+	}
+
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
 	}
 
 }

@@ -15,18 +15,16 @@ public class SimplePlayerProjectile extends PlayerProjectile{
 	
 	
 
-	public SimplePlayerProjectile(Vector2D position, Vector2D mousePosition, double playerWidth, double playerHeight) {
-		super(position, null, null, EntityType.PLAYER_PROJECTILE);
-		
-		position.translate(playerWidth/2 - width/2, playerHeight/2 - height/2);
-		
-		Rectangle rect = new Rectangle(position.clone(), width, height);
+	public SimplePlayerProjectile(Vector2D shootPosition, Vector2D mousePosition) {
+		super(shootPosition, null, null, EntityType.PLAYER_PROJECTILE);
+
+		Rectangle rect = new Rectangle(shootPosition.clone(), width, height);
 		
 		this.setDrawable(rect);
 		this.getDrawable().setFillColor(Color.BLUE);
 		this.getDrawable().setShouldFill(true);
 		
-		this.setCollider(new BoxCollider(position.clone(), width, height));
+		this.setCollider(new BoxCollider(shootPosition.clone(), width, height));
 		
 		this.calculateMovementDirection(mousePosition);
 		

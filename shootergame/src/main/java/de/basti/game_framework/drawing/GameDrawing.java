@@ -83,7 +83,7 @@ public class GameDrawing implements Updatable{
 		this.cameraTransform.translate(translation);
 	}
 
-	public void setCameraTransform(Vector2D cameraTransform) {
+	public void setTransform(Vector2D cameraTransform) {
 		this.cameraTransform = cameraTransform;
 	}
 	

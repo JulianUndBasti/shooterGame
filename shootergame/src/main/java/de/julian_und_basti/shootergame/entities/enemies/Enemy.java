@@ -6,6 +6,7 @@ import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.EntityType;
+import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
 
 public abstract class Enemy<D extends Drawable> extends TypeEntity<D, BoxCollider, EntityType> implements Updatable {
@@ -37,6 +38,6 @@ public abstract class Enemy<D extends Drawable> extends TypeEntity<D, BoxCollide
 		
 	}
 
-	public abstract void hit(SimplePlayerProjectile p);
+	public abstract void hit(PlayerProjectile p);
 
 }

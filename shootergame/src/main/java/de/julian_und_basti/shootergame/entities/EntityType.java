@@ -1,13 +1,13 @@
 package de.julian_und_basti.shootergame.entities;
 
 public enum EntityType {
-	PLAYER(100),
-	ENEMY(50),
+	PLAYER(70),
+	ENEMY(30),
 	PLAYER_PROJECTILE(1);
 
-	public final int collisionPriority;
+	public final int collisionWeight;
 	
-	private EntityType(int collPrio) {
-		this.collisionPriority = collPrio;
+	private EntityType(int collWeight) {
+		this.collisionWeight = collWeight;
 	}
 }

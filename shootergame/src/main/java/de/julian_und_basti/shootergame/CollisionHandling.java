@@ -8,6 +8,7 @@ import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
 import de.julian_und_basti.shootergame.entities.enemies.WalkerEnemy;
+import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
 import de.julian_und_basti.shootergame.entities.EntityType;
 
@@ -25,7 +26,7 @@ public class CollisionHandling {
 			if (c1.getType() == EntityType.PLAYER_PROJECTILE && c2.getType() == EntityType.ENEMY) {
 
 				WalkerEnemy enemy = (WalkerEnemy) c2;
-				SimplePlayerProjectile projectile = (SimplePlayerProjectile) c1;
+				PlayerProjectile projectile = (PlayerProjectile) c1;
 
 				enemyProjectileCollision(enemy, projectile);
 
@@ -35,7 +36,7 @@ public class CollisionHandling {
 			if (c1.getType() == EntityType.ENEMY && c2.getType() == EntityType.PLAYER_PROJECTILE) {
 
 				WalkerEnemy enemy = (WalkerEnemy) c1;
-				SimplePlayerProjectile projectile = (SimplePlayerProjectile) c2;
+				PlayerProjectile projectile = (PlayerProjectile) c2;
 
 				enemyProjectileCollision(enemy, projectile);
 
@@ -50,12 +51,22 @@ public class CollisionHandling {
 
 			Vector2D displacement = this.getDisplacement(box1, box2);
 
-			int cp1 = c1.getType().collisionPriority;
-			int cp2 = c2.getType().collisionPriority;
-
-			if (cp1 < cp2) {
+			int cw1 = c1.getType().collisionWeight;
+			int cw2 = c2.getType().collisionWeight;
+			
+			double sum = cw1+cw2;
+			Vector2D c1Displacement = displacement;
+			Vector2D c2Displacement = displacement.clone();
+			c1Displacement.scale(cw2/sum);
+			c2Displacement.scale(-(cw1/sum));
+			
+			c1.translate(c1Displacement);
+			c2.translate(c2Displacement);
+			
+			/*
+			if (cw1 < cw2) {
 				c1.translate(displacement);
-			} else if (cp2 < cp1) {
+			} else if (cw2 < cw1) {
 				displacement.scale(-1);
 				c2.translate(displacement);
 			} else {
@@ -65,10 +76,11 @@ public class CollisionHandling {
 				c2.translate(displacement);
 
 			}
+			*/
 
 		}
 
-		private void enemyProjectileCollision(Enemy<?> enemy, SimplePlayerProjectile projectile) {
+		private void enemyProjectileCollision(Enemy<?> enemy, PlayerProjectile projectile) {
 			projectile.hit(enemy);
 			enemy.hit(projectile);
 
