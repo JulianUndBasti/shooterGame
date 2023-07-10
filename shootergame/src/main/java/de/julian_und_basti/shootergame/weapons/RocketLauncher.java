@@ -7,11 +7,11 @@ import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProject
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectileFactory;
 import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
 
-public class Rocketlauncher<P extends PlayerProjectile> extends Weapon<P>{
+public class RocketLauncher<P extends PlayerProjectile> extends Weapon<P> {
 
-	public Rocketlauncher(PlayerProjectileFactory<P> factory) {
-		super(1000,factory);
-		
+	public RocketLauncher(PlayerProjectileFactory<P> factory) {
+		super(1000, factory);
+
 	}
 
 	@Override
@@ -19,10 +19,8 @@ public class Rocketlauncher<P extends PlayerProjectile> extends Weapon<P>{
 		PlayerProjectile projectile = this.getNewProjectile(shootPosition, mousePosition);
 		projectile.setDamage(50);
 		projectile.setSpeed(1);
-		
-		Game.collisionSystem.add(projectile);
-		Game.drawing.add(DrawingLayer.MIDDLE, projectile);
-		Game.loop.addUpdatableBefore(projectile);
-		
+
+		Game.addEntity(DrawingLayer.MIDDLE, projectile);
+
 	}
 }

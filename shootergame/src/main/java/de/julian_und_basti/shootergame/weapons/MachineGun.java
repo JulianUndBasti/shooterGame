@@ -20,10 +20,8 @@ public class MachineGun<P extends PlayerProjectile> extends Weapon<P>{
 		projectile.setDamage(5);
 		projectile.setSpeed(0.8);
 		
-		Game.collisionSystem.add(projectile);
-		Game.drawing.add(DrawingLayer.MIDDLE, projectile);
-		Game.loop.addUpdatableBefore(projectile);
 		
+		Game.addEntity(DrawingLayer.MIDDLE, projectile);
 	}
 	
 

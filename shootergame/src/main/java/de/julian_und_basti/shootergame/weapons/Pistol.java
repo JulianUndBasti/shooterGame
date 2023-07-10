@@ -20,9 +20,7 @@ public class Pistol<P extends PlayerProjectile> extends Weapon<P>{
 		projectile.setDamage(20);
 		projectile.setSpeed(0.3);
 		
-		Game.collisionSystem.add(projectile);
-		Game.drawing.add(DrawingLayer.MIDDLE, projectile);
-		Game.loop.addUpdatableBefore(projectile);
+		Game.addEntity(DrawingLayer.MIDDLE, projectile);
 		
 	}
 	

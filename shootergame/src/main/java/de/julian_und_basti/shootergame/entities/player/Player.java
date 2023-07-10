@@ -3,6 +3,7 @@ package de.julian_und_basti.shootergame.entities.player;
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.TypeEntity;
 import de.basti.game_framework.controls.Updatable;
+import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.input.KeyInputListenerData;
@@ -10,13 +11,14 @@ import de.basti.game_framework.input.MouseInputListenerData;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.Game;
 import de.julian_und_basti.shootergame.entities.EntityType;
+import de.julian_und_basti.shootergame.entities.UpdatableWeightTypeEntity;
 import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
 import de.julian_und_basti.shootergame.weapons.Weapon;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 
-public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> implements Updatable{
+public class Player extends UpdatableWeightTypeEntity<Rectangle,BoxCollider>{
 	
 	private double width = 30;
 	private double height = 30;
@@ -27,10 +29,10 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 	private MouseInputListenerData mouseData;
 	private KeyInputListenerData keyData;
 	
-	private Weapon weapon;
+	private Weapon<?> weapon;
 	
 	
-	public Player(Vector2D position,Weapon weapon) { 
+	public Player(Vector2D position,Weapon<?> weapon) { 
 		super(position, null, null,EntityType.PLAYER);
 		
 		Rectangle rect = new Rectangle(position.clone(), width,height);
@@ -107,11 +109,11 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 		this.height = height;
 	}
 
-	public Weapon getWeapon() {
+	public Weapon<?> getWeapon() {
 		return weapon;
 	}
 
-	public void setWeapon(Weapon weapon) {
+	public void setWeapon(Weapon<?> weapon) {
 		this.weapon = weapon;
 	}
 

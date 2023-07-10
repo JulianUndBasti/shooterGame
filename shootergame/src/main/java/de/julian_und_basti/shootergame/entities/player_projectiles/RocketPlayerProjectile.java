@@ -18,7 +18,7 @@ public class RocketPlayerProjectile extends PlayerProjectile{
 	public RocketPlayerProjectile(Vector2D shootPosition, Vector2D mousePosition) {
 		super(shootPosition, null, null, EntityType.PLAYER_PROJECTILE);
 		
-		shootPosition.translate(0-width/2, 0-height/2);
+		shootPosition.translate(-width/2, -height/2);
 
 		Rectangle rect = new Rectangle(shootPosition.clone(), width, height);
 		
@@ -36,7 +36,7 @@ public class RocketPlayerProjectile extends PlayerProjectile{
 
 	public void calculateMovementDirection(Vector2D mousePosition) {
 		
-		movement.set(this.getPosition().getX() - mousePosition.getX()+width/2, this.getPosition().getY() - mousePosition.getY()+height/2);
+		movement.set(this.getPosition().getX() + width/2 - mousePosition.getX() , this.getPosition().getY() - mousePosition.getY()+height/2);
 		movement.normalize();
 		movement.scale(-1);
 		
@@ -50,7 +50,7 @@ public class RocketPlayerProjectile extends PlayerProjectile{
 		
 		if(actualSpeed < this.getSpeed()) {
 			
-			actualSpeed *= 1.07;
+			actualSpeed *= 1.07;//speeding up the rocket
 			
 		}
 	}
@@ -59,7 +59,7 @@ public class RocketPlayerProjectile extends PlayerProjectile{
 	public void hit(Enemy<?> enemy) {
 		Game.drawing.remove(this);
 		Game.collisionSystem.remove(this);
-		Game.loop.removeUpdatable(this);
+		Game.loop.getUpdater().getList().remove(this);
 	}
 
 	

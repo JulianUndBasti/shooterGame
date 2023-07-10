@@ -53,7 +53,7 @@ public class SimplePlayerProjectile extends PlayerProjectile{
 	public void hit(Enemy<?> enemy) {
 		Game.drawing.remove(this);
 		Game.collisionSystem.remove(this);
-		Game.loop.removeUpdatable(this);
+		Game.loop.getUpdater().getList().remove(this);
 	}
 
 	

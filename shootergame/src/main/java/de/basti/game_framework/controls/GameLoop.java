@@ -61,18 +61,16 @@ public class GameLoop {
 	public void stop() {
 		animationTimer.stop();
 	}
-	
-	public void addUpdatableAfter(Updatable upd) {
-		this.updater.getList().add(upd);
+
+	public Updater getUpdater() {
+		return updater;
+	}
+
+	public void setUpdater(Updater updater) {
+		this.updater = updater;
 	}
 	
-	public void addUpdatableBefore(Updatable upd) {
-		this.updater.getList().add(0,upd);
-	}
 	
-	public boolean removeUpdatable(Updatable upd) {
-		return this.updater.getList().remove(upd);
-	}
 	
 	
 }

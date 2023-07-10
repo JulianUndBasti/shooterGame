@@ -11,12 +11,13 @@ import de.julian_und_basti.shootergame.entities.enemies.WalkerEnemy;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
 import de.julian_und_basti.shootergame.entities.EntityType;
+import de.julian_und_basti.shootergame.entities.UpdatableWeightTypeEntity;
 
 public class CollisionHandling {
-	public static CollisionHandler<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> handler = new CollisionHandler<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>>() {
+	public static CollisionHandler<UpdatableWeightTypeEntity<? extends Drawable, ? extends BoxCollider>> handler = new CollisionHandler<>() {
 
 		@Override
-		public void onBegin(CollisionPair<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> pair) {
+		public void onBegin(CollisionPair<UpdatableWeightTypeEntity<? extends Drawable, ? extends BoxCollider>> pair) {
 
 			var c1 = pair.getCollider1();
 			var c2 = pair.getCollider2();
@@ -123,13 +124,13 @@ public class CollisionHandling {
 		}
 
 		@Override
-		public void onOngoing(CollisionPair<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> pair) {
+		public void onOngoing(CollisionPair<UpdatableWeightTypeEntity<? extends Drawable, ? extends BoxCollider>> pair) {
 			this.onBegin(pair);
 			
 		}
 
 		@Override
-		public void onEnd(CollisionPair<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> pair) {
+		public void onEnd(CollisionPair<UpdatableWeightTypeEntity<? extends Drawable, ? extends BoxCollider>> pair) {
 
 		}
 	};

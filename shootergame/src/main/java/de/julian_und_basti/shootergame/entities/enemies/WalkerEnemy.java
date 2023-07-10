@@ -72,9 +72,7 @@ public class WalkerEnemy extends Enemy<Rectangle> {
 	public void hit(PlayerProjectile p) {
 		this.setHealth(this.getHealth()-p.getDamage());
 		if (this.getHealth() <= 0) {
-			Game.drawing.remove(this);
-			Game.collisionSystem.remove(this);
-			Game.loop.removeUpdatable(this);
+			Game.removeEntity(this);
 		}
 	}
 
