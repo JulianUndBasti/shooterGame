@@ -3,7 +3,7 @@ package de.julian_und_basti.shootergame.entities;
 public enum EntityType {
 	PLAYER(100),
 	ENEMY(50),
-	PROJECTILE(1);
+	PLAYER_PROJECTILE(1);
 
 	public final int collisionPriority;
 	

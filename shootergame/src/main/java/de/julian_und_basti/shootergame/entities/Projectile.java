@@ -17,7 +17,7 @@ public class Projectile extends TypeEntity<Rectangle, BoxCollider, EntityType> i
 	private double damage = 20;
 
 	public Projectile(Vector2D position, Vector2D mousePosition, double playerWidth, double playerHeight) {
-		super(position, null, null, EntityType.PROJECTILE);
+		super(position, null, null, EntityType.PLAYER_PROJECTILE);
 		
 		position.translate(playerWidth/2 - width/2, playerHeight/2 - height/2);
 		

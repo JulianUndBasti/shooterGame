@@ -6,6 +6,7 @@ import de.basti.game_framework.collision.CollisionPair;
 import de.basti.game_framework.controls.TypeEntity;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.math.Vector2D;
+import de.julian_und_basti.shootergame.entities.WalkerEnemy;
 import de.julian_und_basti.shootergame.entities.Enemy;
 import de.julian_und_basti.shootergame.entities.EntityType;
 import de.julian_und_basti.shootergame.entities.Projectile;
@@ -21,9 +22,9 @@ public class CollisionHandling {
 			BoxCollider box1 = c1.getCollider();
 			BoxCollider box2 = c2.getCollider();
 
-			if (c1.getType() == EntityType.PROJECTILE && c2.getType() == EntityType.ENEMY) {
+			if (c1.getType() == EntityType.PLAYER_PROJECTILE && c2.getType() == EntityType.ENEMY) {
 
-				Enemy enemy = (Enemy) c2;
+				WalkerEnemy enemy = (WalkerEnemy) c2;
 				Projectile projectile = (Projectile) c1;
 
 				enemyProjectileCollision(enemy, projectile);
@@ -31,9 +32,9 @@ public class CollisionHandling {
 				return;
 			}
 
-			if (c1.getType() == EntityType.ENEMY && c2.getType() == EntityType.PROJECTILE) {
+			if (c1.getType() == EntityType.ENEMY && c2.getType() == EntityType.PLAYER_PROJECTILE) {
 
-				Enemy enemy = (Enemy) c1;
+				WalkerEnemy enemy = (WalkerEnemy) c1;
 				Projectile projectile = (Projectile) c2;
 
 				enemyProjectileCollision(enemy, projectile);
@@ -41,7 +42,7 @@ public class CollisionHandling {
 				return;
 			}
 
-			if (c1.getType() == EntityType.PROJECTILE || c2.getType() == EntityType.PROJECTILE) {
+			if (c1.getType() == EntityType.PLAYER_PROJECTILE || c2.getType() == EntityType.PLAYER_PROJECTILE) {
 
 				return;
 
@@ -70,13 +71,8 @@ public class CollisionHandling {
 		private void enemyProjectileCollision(Enemy enemy, Projectile projectile) {
 			Game.drawing.remove(projectile);
 			Game.collisionSystem.remove(projectile);
-			enemy.setHp(enemy.getHp() - projectile.getDamage());
-			if (enemy.getHp() <= 0) {
-
-				Game.drawing.remove(enemy);
-				Game.collisionSystem.remove(enemy);
-
-			}
+			Game.loop.removeUpdatable(projectile);
+			enemy.hit(projectile);
 
 		}
 

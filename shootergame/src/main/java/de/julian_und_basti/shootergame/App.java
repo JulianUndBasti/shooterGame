@@ -11,7 +11,7 @@ import de.basti.game_framework.drawing.Circle;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.math.Vector2D;
-import de.julian_und_basti.shootergame.entities.Enemy;
+import de.julian_und_basti.shootergame.entities.WalkerEnemy;
 import de.julian_und_basti.shootergame.entities.EntityType;
 import de.julian_und_basti.shootergame.entities.Player;
 import javafx.application.Application;
@@ -47,7 +47,7 @@ public class App extends Application {
 			double x = Math.random()*800;
 			double y = Math.random()*600;
 			
-			Enemy enemy = new Enemy(new Vector2D(x,y), player);
+			WalkerEnemy enemy = new WalkerEnemy(new Vector2D(x,y), player);
 			Game.drawing.add(DrawingLayer.FOREGROUND, enemy);
 			Game.collisionSystem.add(enemy);
 			enemyUpdater.getList().add(enemy);
