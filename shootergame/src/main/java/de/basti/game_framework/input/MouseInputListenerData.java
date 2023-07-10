@@ -89,7 +89,6 @@ public class MouseInputListenerData {
 	}
 	
 	public Vector2D getMousePosition() {
-		System.out.println(mousePosition);
 		return this.mousePosition.clone(); 
 	}
 

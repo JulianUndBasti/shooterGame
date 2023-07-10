@@ -21,50 +21,32 @@ public class CollisionHandling {
 			BoxCollider box1 = c1.getCollider();
 			BoxCollider box2 = c2.getCollider();
 
-			
-			if(c1.getType() == EntityType.PROJECTILE && c2.getType() == EntityType.ENEMY) {
-				
+			if (c1.getType() == EntityType.PROJECTILE && c2.getType() == EntityType.ENEMY) {
+
 				Enemy enemy = (Enemy) c2;
 				Projectile projectile = (Projectile) c1;
-				
-				Game.drawing.remove(c1);
-				Game.collisionSystem.remove(c1);
-				enemy.setHp(enemy.getHp() - projectile.getDamage());
-				
-				if(enemy.getHp() < 1) {
-					
-					Game.drawing.remove(c2);
-					Game.collisionSystem.remove(c2);
-					
-				}
+
+				enemyProjectileCollision(enemy, projectile);
+
 				return;
 			}
-			
-			if(c1.getType() == EntityType.ENEMY && c2.getType() == EntityType.PROJECTILE) {
-				
+
+			if (c1.getType() == EntityType.ENEMY && c2.getType() == EntityType.PROJECTILE) {
+
 				Enemy enemy = (Enemy) c1;
 				Projectile projectile = (Projectile) c2;
-				
-				Game.drawing.remove(c2);
-				Game.collisionSystem.remove(c2);
-				enemy.setHp(enemy.getHp() - projectile.getDamage());
-				
-				if(enemy.getHp() < 1) {
-					
-					Game.drawing.remove(c1);
-					Game.collisionSystem.remove(c1);
-					
-				}
-				return;				
-			}
-			
-			if(c1.getType() == EntityType.PROJECTILE || c2.getType() == EntityType.PROJECTILE) {
-				
+
+				enemyProjectileCollision(enemy, projectile);
+
 				return;
-				
 			}
-			
-			
+
+			if (c1.getType() == EntityType.PROJECTILE || c2.getType() == EntityType.PROJECTILE) {
+
+				return;
+
+			}
+
 			Vector2D displacement = this.getDisplacement(box1, box2);
 
 			int cp1 = c1.getType().collisionPriority;
@@ -80,6 +62,19 @@ public class CollisionHandling {
 				c1.translate(displacement);
 				displacement.scale(-1);
 				c2.translate(displacement);
+
+			}
+
+		}
+
+		private void enemyProjectileCollision(Enemy enemy, Projectile projectile) {
+			Game.drawing.remove(projectile);
+			Game.collisionSystem.remove(projectile);
+			enemy.setHp(enemy.getHp() - projectile.getDamage());
+			if (enemy.getHp() <= 0) {
+
+				Game.drawing.remove(enemy);
+				Game.collisionSystem.remove(enemy);
 
 			}
 

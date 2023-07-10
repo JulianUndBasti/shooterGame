@@ -5,6 +5,7 @@ import de.basti.game_framework.controls.TypeEntity;
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.math.Vector2D;
+import de.julian_und_basti.shootergame.Game;
 import javafx.scene.paint.Color;
 
 public class Enemy extends TypeEntity<Rectangle, BoxCollider, EntityType> implements Updatable {
@@ -41,6 +42,14 @@ public class Enemy extends TypeEntity<Rectangle, BoxCollider, EntityType> implem
 	
 	@Override
 	public void update(long deltaMillis) {
+		
+		if(this.hp<=0) {
+			Game.loop.removeUpdatable(this);
+			Game.collisionSystem.remove(this);
+			Game.drawing.remove(this);
+			
+		}
+		
 		direction.set(this.getPosition().getX(), this.getPosition().getY());
 		direction.translate(this.getCollider().getWidth()/2,this.getCollider().getHeight()/2);
 		direction.scale(-1);

@@ -70,4 +70,9 @@ public class GameLoop {
 		this.updater.getList().add(0,upd);
 	}
 	
+	public boolean removeUpdatable(Updatable upd) {
+		return this.updater.getList().remove(upd);
+	}
+	
+	
 }
