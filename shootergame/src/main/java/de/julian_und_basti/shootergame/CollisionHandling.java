@@ -68,7 +68,7 @@ public class CollisionHandling {
 
 		}
 
-		private void enemyProjectileCollision(Enemy enemy, SimplePlayerProjectile projectile) {
+		private void enemyProjectileCollision(Enemy<?> enemy, SimplePlayerProjectile projectile) {
 			projectile.hit(enemy);
 			enemy.hit(projectile);
 

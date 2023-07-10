@@ -1,8 +1,6 @@
 package de.julian_und_basti.shootergame.entities.player_projectiles;
 
 import de.basti.game_framework.collision.BoxCollider;
-import de.basti.game_framework.controls.TypeEntity;
-import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.Game;

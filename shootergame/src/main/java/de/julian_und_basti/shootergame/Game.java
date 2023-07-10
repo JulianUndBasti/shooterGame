@@ -2,7 +2,6 @@ package de.julian_und_basti.shootergame;
 
 
 import de.basti.game_framework.collision.BoxCollider;
-import de.basti.game_framework.collision.Collider;
 import de.basti.game_framework.collision.GameCollisionSystem;
 
 import de.basti.game_framework.controls.GameLoop;

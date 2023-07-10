@@ -72,6 +72,8 @@ public class CollisionPair<T extends Collider> {
 		CollisionPair<T> other = (CollisionPair<T>) obj;
 		return this.equals(other);
 	}
+	
+	
 
 	@Override
 	public String toString() {

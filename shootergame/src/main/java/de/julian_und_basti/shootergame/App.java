@@ -1,21 +1,12 @@
 package de.julian_und_basti.shootergame;
 
-import de.basti.game_framework.collision.BoxCollider;
-import de.basti.game_framework.collision.Collider;
-import de.basti.game_framework.collision.CollisionHandler;
-import de.basti.game_framework.collision.CollisionPair;
-import de.basti.game_framework.controls.TypeEntity;
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.controls.Updater;
-import de.basti.game_framework.drawing.Circle;
-import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.math.Vector2D;
-import de.julian_und_basti.shootergame.entities.EntityType;
 import de.julian_und_basti.shootergame.entities.enemies.WalkerEnemy;
 import de.julian_und_basti.shootergame.entities.player.Player;
 import javafx.application.Application;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -26,8 +17,6 @@ public class App extends Application {
 	
 
 	private Player player = new Player(new Vector2D(Game.width / 2, Game.height / 2));
-	
-	private Circle circle = new Circle(new Vector2D(30, 30), 20);
 	
 	private Updater enemyUpdater = new Updater();
 	
