@@ -1,13 +1,14 @@
-package de.julian_und_basti.shootergame.entities;
+package de.julian_und_basti.shootergame.entities.player_projectiles;
 
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.TypeEntity;
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.math.Vector2D;
+import de.julian_und_basti.shootergame.entities.EntityType;
 import javafx.scene.paint.Color;
 
-public class Projectile extends TypeEntity<Rectangle, BoxCollider, EntityType> implements Updatable{
+public class PlayerProjectile extends TypeEntity<Rectangle, BoxCollider, EntityType> implements Updatable{
 	
 	private double height = 10;
 	private double width = 10;
@@ -16,7 +17,7 @@ public class Projectile extends TypeEntity<Rectangle, BoxCollider, EntityType> i
 	
 	private double damage = 20;
 
-	public Projectile(Vector2D position, Vector2D mousePosition, double playerWidth, double playerHeight) {
+	public PlayerProjectile(Vector2D position, Vector2D mousePosition, double playerWidth, double playerHeight) {
 		super(position, null, null, EntityType.PLAYER_PROJECTILE);
 		
 		position.translate(playerWidth/2 - width/2, playerHeight/2 - height/2);

@@ -1,4 +1,4 @@
-package de.julian_und_basti.shootergame.entities;
+package de.julian_und_basti.shootergame.entities.enemies;
 
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.TypeEntity;
@@ -6,6 +6,9 @@ import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.Game;
+import de.julian_und_basti.shootergame.entities.EntityType;
+import de.julian_und_basti.shootergame.entities.player.Player;
+import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 import javafx.scene.paint.Color;
 
 public class WalkerEnemy extends Enemy<Rectangle> {
@@ -63,7 +66,7 @@ public class WalkerEnemy extends Enemy<Rectangle> {
 	}
 
 	@Override
-	public void hit(Projectile p) {
+	public void hit(PlayerProjectile p) {
 		this.setHealth(this.getHealth()-p.getDamage());
 		if (this.getHealth() <= 0) {
 			Game.drawing.remove(this);
