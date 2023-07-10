@@ -23,7 +23,7 @@ public class RocketPlayerProjectile extends PlayerProjectile{
 		Rectangle rect = new Rectangle(shootPosition.clone(), width, height);
 		
 		this.setDrawable(rect);
-		this.getDrawable().setFillColor(Color.DARKGRAY);
+		this.getDrawable().setFillColor(Color.BLACK);
 		this.getDrawable().setShouldFill(true);
 		
 		this.setCollider(new BoxCollider(shootPosition.clone(), width, height));
