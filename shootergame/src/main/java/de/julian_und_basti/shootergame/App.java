@@ -37,8 +37,7 @@ public class App extends Application {
 	public void start(Stage stage) {
 		
 		Game.collisionSystem.setUpdateIterations(4);
-		Game.collisionSystem.setOnCollisionBegin(CollisionHandling.handler);
-		Game.collisionSystem.setOnCollisionOngoing(CollisionHandling.handler);
+		Game.collisionSystem.addHandler(CollisionHandling.handler);
 
 		Game.drawing.add(DrawingLayer.FOREGROUND, player);
 		Game.collisionSystem.add(player);

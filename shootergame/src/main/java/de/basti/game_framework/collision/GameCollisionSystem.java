@@ -49,22 +49,28 @@ public class GameCollisionSystem<T extends Collider> implements Updatable {
 	}
 	
 	private void handleAllCollisions(Set<CollisionPair<T>> allCollisions) {
-		for(CollisionPair<T> pair:allCollisions) {
-			if(lastCollisions.contains(pair)) {
-				ongoingHandler.handle(pair);
-				lastCollisions.remove(pair);
-			}else {
-				beginHandler.handle(pair);
+		for(CollisionHandler<T> handler:this.handlers) {
+			for(CollisionPair<T> pair:allCollisions) {
+				if(lastCollisions.contains(pair)) {
+					handler.onOngoing(pair);
+					lastCollisions.remove(pair);
+				}else {
+					handler.onBegin(pair);
+				}
+				
+			}
+			for(CollisionPair<T> pair:lastCollisions) {
+				handler.onEnd(pair);
 			}
 			
+			
 		}
-		for(CollisionPair<T> pair:lastCollisions) {
-			endHandler.handle(pair);
-		}
-		
 		lastCollisions = allCollisions;
+		
+		
 	}
 	
+
 	
 	public boolean add(T collider) {
 		return this.colliders.add(collider);
@@ -75,11 +81,11 @@ public class GameCollisionSystem<T extends Collider> implements Updatable {
 	}
 	
 
-	private void addHandler(CollisionHandler<T> handler) {
+	public void addHandler(CollisionHandler<T> handler) {
 		this.handlers.add(handler);
 	}
 	
-	private boolean removeHandler(CollisionHandler<T> handler) {
+	public boolean removeHandler(CollisionHandler<T> handler) {
 		return this.handlers.remove(handler);
 	}
 

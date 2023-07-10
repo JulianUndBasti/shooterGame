@@ -15,7 +15,7 @@ public class CollisionHandling {
 	public static CollisionHandler<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> handler = new CollisionHandler<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>>() {
 
 		@Override
-		public void handle(CollisionPair<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> pair) {
+		public void onBegin(CollisionPair<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> pair) {
 
 			var c1 = pair.getCollider1();
 			var c2 = pair.getCollider2();
@@ -108,6 +108,17 @@ public class CollisionHandling {
 			displacement.scale(-1);
 
 			return displacement;
+		}
+
+		@Override
+		public void onOngoing(CollisionPair<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> pair) {
+			this.onBegin(pair);
+			
+		}
+
+		@Override
+		public void onEnd(CollisionPair<TypeEntity<? extends Drawable, ? extends BoxCollider, EntityType>> pair) {
+
 		}
 	};
 }
