@@ -75,7 +75,7 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 		
 		
 		//shoot logic
-		if(mouseData.isPressed(MouseButton.PRIMARY)) {
+		if(mouseData.isDown(MouseButton.PRIMARY)) {
 
 			SimplePlayerProjectile projectile = new SimplePlayerProjectile(getPosition().clone(), mouseData.getMousePosition(), width, height);
 			Game.collisionSystem.add(projectile);
@@ -83,6 +83,7 @@ public class Player extends TypeEntity<Rectangle, BoxCollider, EntityType> imple
 			Game.loop.addUpdatableBefore(projectile);
 			
 		}
+		System.out.println(deltaMillis);
 	}
 
 	public double getWidth() {

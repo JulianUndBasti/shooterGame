@@ -11,6 +11,9 @@ package de.basti.game_framework.collision;
  * @see Collider
  * 
  */
-public interface CollisionHandler<T extends Collider> {
-	public void handle(CollisionPair<T> pair);
+public interface CollisionHandler<T extends Collider>  {
+	public void onBegin(CollisionPair<T> pair);
+	public void onOngoing(CollisionPair<T> pair);
+	public void onEnd(CollisionPair<T> pair);
+	
 }

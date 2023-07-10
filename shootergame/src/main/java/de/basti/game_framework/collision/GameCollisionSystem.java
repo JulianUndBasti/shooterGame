@@ -20,11 +20,7 @@ public class GameCollisionSystem<T extends Collider> implements Updatable {
 
 	private Set<CollisionPair<T>> lastCollisions = new HashSet<>();
 	
-	private CollisionHandler<T> beginHandler = (pair)->{};//empty CollisionHandler
-	private CollisionHandler<T> ongoingHandler = (pair)->{};//empty CollisionHandler
-	private CollisionHandler<T> endHandler = (pair)->{};//empty CollisionHandler
-	
-	
+	private Set<CollisionHandler<T>> handlers = new HashSet<>();
 	
 
 	public GameCollisionSystem() {
@@ -78,20 +74,13 @@ public class GameCollisionSystem<T extends Collider> implements Updatable {
 		return this.colliders.remove(collider);
 	}
 	
-	
-	public void setOnCollisionBegin(CollisionHandler<T> handler) {
-		
-		this.beginHandler  = handler;
+
+	private void addHandler(CollisionHandler<T> handler) {
+		this.handlers.add(handler);
 	}
 	
-	public void setOnCollisionEnd(CollisionHandler<T> handler) {
-		
-		this.endHandler  = handler;
-	}
-	
-	public void setOnCollisionOngoing(CollisionHandler<T> handler) {
-		
-		this.ongoingHandler  = handler;
+	private boolean removeHandler(CollisionHandler<T> handler) {
+		return this.handlers.remove(handler);
 	}
 
 	public int getUpdateIterations() {

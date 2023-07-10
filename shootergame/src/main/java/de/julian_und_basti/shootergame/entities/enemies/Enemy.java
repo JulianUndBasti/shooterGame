@@ -34,10 +34,7 @@ public abstract class Enemy<D extends Drawable> extends TypeEntity<D, BoxCollide
 	}
 
 	public void moveIntoDirection(Vector2D direction, double deltaMillis) {
-		direction = direction.clone();
-		direction.normalize();
-		direction.scale(this.speed*deltaMillis);
-		this.translate(direction);
+		
 	}
 
 	public abstract void hit(SimplePlayerProjectile p);
