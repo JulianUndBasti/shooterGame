@@ -8,14 +8,14 @@ import de.julian_und_basti.shootergame.entities.EntityType;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
 import javafx.scene.paint.Color;
 
-public class SimplePlayerProjectile extends PlayerProjectile{
+public class RocketPlayerProjectile extends PlayerProjectile{
 	
 	private double height = 10;
 	private double width = 10;
 	
-	
+	private double actualSpeed = 0.01;
 
-	public SimplePlayerProjectile(Vector2D shootPosition, Vector2D mousePosition) {
+	public RocketPlayerProjectile(Vector2D shootPosition, Vector2D mousePosition) {
 		super(shootPosition, null, null, EntityType.PLAYER_PROJECTILE);
 		
 		shootPosition.translate(0-width/2, 0-height/2);
@@ -23,7 +23,7 @@ public class SimplePlayerProjectile extends PlayerProjectile{
 		Rectangle rect = new Rectangle(shootPosition.clone(), width, height);
 		
 		this.setDrawable(rect);
-		this.getDrawable().setFillColor(Color.BLUE);
+		this.getDrawable().setFillColor(Color.DARKGRAY);
 		this.getDrawable().setShouldFill(true);
 		
 		this.setCollider(new BoxCollider(shootPosition.clone(), width, height));
@@ -45,8 +45,14 @@ public class SimplePlayerProjectile extends PlayerProjectile{
 	@Override
 	public void update(long deltaMillis) {
 		Vector2D thisFrameMovement = movement.clone();
-		thisFrameMovement.scale(deltaMillis*this.getSpeed());
+		thisFrameMovement.scale(deltaMillis * actualSpeed);
 		this.translate(thisFrameMovement);
+		
+		if(actualSpeed < this.getSpeed()) {
+			
+			actualSpeed *= 1.07;
+			
+		}
 	}
 
 	@Override
