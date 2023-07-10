@@ -21,6 +21,10 @@ public class MouseInputListenerData {
 	private Scene currentScene = new Scene(new Pane());//Scene is placeholder, so no null-checks are required
 	
 	
+	private Vector2D cameraTransform = new Vector2D(0,0);
+	
+	
+	
 	private EventHandler<MouseEvent> onMousePressed = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -36,8 +40,7 @@ public class MouseInputListenerData {
 
 		@Override
 		public void handle(MouseEvent event) {
-			mousePosition.setX(event.getX());
-			mousePosition.setY(event.getY());
+			
 			MouseButton b = event.getButton();
 			buttonsDown.remove(b);
 			buttonsReleased.add(b);
@@ -52,8 +55,8 @@ public class MouseInputListenerData {
 		public void handle(MouseEvent event) {
 			
 			
-			mousePosition.setX(event.getX());
-			mousePosition.setY(event.getY());
+			mousePosition.setX(event.getX()-cameraTransform.getX());
+			mousePosition.setY(event.getY()-cameraTransform.getY());
 
 		}
 		
@@ -97,5 +100,19 @@ public class MouseInputListenerData {
 		this.buttonsPressed = new HashSet<>();
 		this.buttonsReleased = new HashSet<>();
 	}
+	
+	public Vector2D getTransform() {
+		return cameraTransform;
+	}
+	
+	public void translateTransform(Vector2D translation) {
+		this.cameraTransform.translate(translation);
+	}
+
+	public void setTransform(Vector2D cameraTransform) {
+		this.cameraTransform = cameraTransform;
+	}
+	
+	
 	
 }
