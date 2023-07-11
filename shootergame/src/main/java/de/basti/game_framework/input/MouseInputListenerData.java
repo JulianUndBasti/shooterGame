@@ -55,8 +55,8 @@ public class MouseInputListenerData {
 		public void handle(MouseEvent event) {
 			
 			
-			mousePosition.setX(event.getX()-cameraTransform.getX());
-			mousePosition.setY(event.getY()-cameraTransform.getY());
+			mousePosition.setX(event.getX());
+			mousePosition.setY(event.getY());
 
 		}
 		
@@ -92,7 +92,7 @@ public class MouseInputListenerData {
 	}
 	
 	public Vector2D getMousePosition() {
-		return this.mousePosition.clone(); 
+		return this.mousePosition.translated(this.cameraTransform.scaled(-1)); 
 	}
 
 
@@ -107,10 +107,12 @@ public class MouseInputListenerData {
 	
 	public void translateTransform(Vector2D translation) {
 		this.cameraTransform.translate(translation);
+
 	}
 
 	public void setTransform(Vector2D cameraTransform) {
 		this.cameraTransform = cameraTransform;
+		
 	}
 	
 	

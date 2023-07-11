@@ -1,15 +1,13 @@
 package de.julian_und_basti.shootergame;
 
 import de.basti.game_framework.controls.Updatable;
-import de.basti.game_framework.controls.Updater;
 import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.Sprite;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.enemies.WalkerEnemy;
 import de.julian_und_basti.shootergame.entities.player.Player;
-import de.julian_und_basti.shootergame.entities.player_projectiles.RocketPlayerProjectile;
-
-import de.julian_und_basti.shootergame.weapons.RocketLauncher;
+import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
+import de.julian_und_basti.shootergame.weapons.MachineGun;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -20,7 +18,7 @@ public class App extends Application {
 
 	
 
-	private Player player = new Player(new Vector2D(Game.width / 2, Game.height / 2), new RocketLauncher<RocketPlayerProjectile>(RocketPlayerProjectile::new));
+	private Player player = new Player(new Vector2D(Game.width, Game.height), new MachineGun<SimplePlayerProjectile>((shootPosition, mousePosition) -> (new SimplePlayerProjectile(shootPosition,mousePosition))));
 	
 	private Sprite backgroundSprite = new Sprite(new Vector2D(), Sprites.background);
 	

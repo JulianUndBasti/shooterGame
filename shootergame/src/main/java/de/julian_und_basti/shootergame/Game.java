@@ -29,7 +29,7 @@ public class Game {
 	
 	private static Updater entityUpdater = new Updater();
 	
-	private static List<Runnable> endOfUpdateTasks = new ArrayList<Runnable>();
+	private static List<Runnable> endOfUpdateTasks = new ArrayList<>();
 	
 	private static Updatable endOfUpdate = new Updatable() {
 		
@@ -38,6 +38,7 @@ public class Game {
 			for(Runnable runnable:endOfUpdateTasks) {
 				runnable.run();
 			}
+			endOfUpdateTasks = new ArrayList<>();
 			
 			inputData.pressesAndReleasesConsumed();
 			
