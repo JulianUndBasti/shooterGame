@@ -88,7 +88,6 @@ public class Player extends UpdatableWeightTypeEntity<Rectangle,BoxCollider>{
 			shootPosition.translate(this.getCollider().getWidth()/2,this.getCollider().getHeight()/2);
 			this.weapon.shootIfPossible(shootPosition, mouseData.getMousePosition());
 		}
-		System.out.println(deltaMillis);
 		
 		
 	}

@@ -44,6 +44,7 @@ public class WalkerEnemy extends Enemy<Rectangle> {
 	
 	@Override
 	public void update(long deltaMillis) {
+		
 		direction.set(this.getPosition().getX(), this.getPosition().getY());
 		direction.translate(this.getCollider().getWidth()/2,this.getCollider().getHeight()/2);
 		direction.scale(-1);
@@ -58,6 +59,7 @@ public class WalkerEnemy extends Enemy<Rectangle> {
 		direction.normalize();
 		direction.scale(this.getSpeed()*deltaMillis);
 		this.translate(direction);
+	
 	}
 
 	public Player getPlayerToFollow() {

@@ -17,7 +17,7 @@ public class RocketLauncher<P extends PlayerProjectile> extends Weapon<P> {
 	@Override
 	protected void shoot(Vector2D shootPosition, Vector2D mousePosition) {
 		PlayerProjectile projectile = this.getNewProjectile(shootPosition, mousePosition);
-		projectile.setDamage(50);
+		projectile.setDamage(0);
 		projectile.setSpeed(1);
 
 		Game.addEntity(DrawingLayer.MIDDLE, projectile);

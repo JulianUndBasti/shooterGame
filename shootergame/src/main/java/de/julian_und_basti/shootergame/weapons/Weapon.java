@@ -1,7 +1,5 @@
 package de.julian_und_basti.shootergame.weapons;
 
-import java.util.function.Supplier;
-
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
