@@ -14,10 +14,11 @@ public abstract class PlayerProjectile extends UpdatableWeightTypeEntity<Rectang
 
 	private double speed = 0.3;
 
-	private double damage = 20;
+	private int damage = 20;
 
 	public PlayerProjectile(Vector2D position, BoxCollider collider, Rectangle drawable, EntityType type) {
 		super(position, collider, drawable, type);
+		this.setWeight(0);
 
 	}
 
@@ -29,11 +30,11 @@ public abstract class PlayerProjectile extends UpdatableWeightTypeEntity<Rectang
 		this.speed = speed;
 	}
 
-	public double getDamage() {
+	public int getDamage() {
 		return damage;
 	}
 
-	public void setDamage(double damage) {
+	public void setDamage(int damage) {
 		this.damage = damage;
 	}
 	

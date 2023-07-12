@@ -24,7 +24,13 @@ public class Player extends UpdatableWeightTypeEntity<Rectangle,BoxCollider>{
 	private double height = 30;
 	
 	
-	private double speed = 0.4;
+	
+	private static final double DEFAULT_SPEED = 0.4;
+	private static final int DEFAULT_WEIGHT = 100;
+	
+	
+	
+	private double speed = DEFAULT_SPEED;
 	
 	private MouseInputListenerData mouseData;
 	private KeyInputListenerData keyData;
@@ -47,6 +53,8 @@ public class Player extends UpdatableWeightTypeEntity<Rectangle,BoxCollider>{
 		this.keyData = Game.inputData.getKeyData();
 		
 		this.weapon = weapon;
+		
+		this.setWeight(DEFAULT_WEIGHT);
 		
 	}
 	

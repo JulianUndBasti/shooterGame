@@ -52,8 +52,8 @@ public class CollisionHandling {
 
 			Vector2D displacement = this.getDisplacement(box1, box2);
 
-			int cw1 = c1.getType().collisionWeight;
-			int cw2 = c2.getType().collisionWeight;
+			int cw1 = c1.getWeight();
+			int cw2 = c2.getWeight();
 			
 			double sum = cw1+cw2;
 			Vector2D c1Displacement = displacement;

@@ -12,18 +12,18 @@ import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerP
 
 public abstract class Enemy<D extends Drawable> extends UpdatableWeightTypeEntity<D, BoxCollider>{
 
-	private double health = 100;
+	private int health = 100;
 	private double speed = 0.2;
 
 	public Enemy(Vector2D position, BoxCollider collider, D drawable, EntityType type) {
 		super(position, collider, drawable, type);
 	}
 
-	public double getHealth() {
+	public int getHealth() {
 		return health;
 	}
 
-	public void setHealth(double health) {
+	public void setHealth(int health) {
 		this.health = health;
 	}
 

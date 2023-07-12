@@ -13,7 +13,8 @@ import javafx.scene.paint.Color;
 public class WalkerEnemy extends Enemy<Rectangle> {
 	
 	public static final double DEFAULT_SPEED = 0.15;
-	public static final double DEFAULT_HEALTH = 40;
+	public static final int DEFAULT_HEALTH = 40;
+	public static final int DEFAULT_WEIGHT = 40;
 	
 
 	private int width = 20;
@@ -35,6 +36,7 @@ public class WalkerEnemy extends Enemy<Rectangle> {
 		
 		this.setSpeed(DEFAULT_SPEED);
 		this.setHealth(DEFAULT_HEALTH);
+		this.setWeight(DEFAULT_WEIGHT);
 
 	}
 	//defined here for memory management
