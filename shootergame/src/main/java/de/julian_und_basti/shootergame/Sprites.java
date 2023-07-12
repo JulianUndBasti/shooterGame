@@ -1,8 +1,6 @@
 package de.julian_und_basti.shootergame;
 
 import java.io.InputStream;
-import java.net.URL;
-
 import javafx.scene.image.Image;
 
 public class Sprites {

@@ -6,7 +6,6 @@ import de.julian_und_basti.shootergame.Game;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectileFactory;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectileStats;
-import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
 
 public class RocketLauncher extends Weapon {
 	
@@ -25,8 +24,8 @@ public class RocketLauncher extends Weapon {
 	
 	
 	@Override
-	protected void shoot(Vector2D shootPosition, Vector2D mousePosition) {
-		PlayerProjectile projectile = this.getNewProjectile(shootPosition, mousePosition);
+	protected void shoot(Vector2D shootPosition, Vector2D direction) {
+		PlayerProjectile projectile = this.getNewProjectile(shootPosition, direction);
 		Game.addEntity(DrawingLayer.MIDDLE, projectile);
 
 	}

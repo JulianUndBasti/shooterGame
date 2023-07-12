@@ -8,14 +8,12 @@ import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.collision.GameCollisionSystem;
 
 import de.basti.game_framework.controls.GameLoop;
-import de.basti.game_framework.controls.TypeEntity;
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.controls.Updater;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.GameDrawing;
 import de.basti.game_framework.input.InputListenerData;
-import de.julian_und_basti.shootergame.entities.EntityType;
 import de.julian_und_basti.shootergame.entities.UpdatableWeightTypeEntity;
 import javafx.scene.Group;
 import javafx.scene.Scene;

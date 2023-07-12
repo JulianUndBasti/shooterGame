@@ -9,7 +9,6 @@ import de.julian_und_basti.shootergame.entities.enemies.SplitterEnemy;
 import de.julian_und_basti.shootergame.entities.enemies.WalkerEnemy;
 import de.julian_und_basti.shootergame.entities.player.Player;
 import de.julian_und_basti.shootergame.entities.player_projectiles.RocketPlayerProjectile;
-import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
 import de.julian_und_basti.shootergame.weapons.MachineGun;
 import javafx.application.Application;
 import javafx.stage.Stage;

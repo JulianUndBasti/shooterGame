@@ -28,15 +28,15 @@ public abstract class Weapon implements Updatable {
 
 	}
 
-	public void shootIfPossible(Vector2D shootPosition, Vector2D mousePosition) {
+	public void shootIfPossible(Vector2D shootPosition, Vector2D direction) {
 		if (timeSinceLastShot < shotDelay) {
 			return;
 		}
-		this.shoot(shootPosition,mousePosition);
+		this.shoot(shootPosition, direction);
 		this.timeSinceLastShot = 0;
 	}
 
-	protected abstract void shoot(Vector2D playerPosition, Vector2D mousePosition);
+	protected abstract void shoot(Vector2D playerPosition, Vector2D direction);
 
 	public int getShotDelay() {
 		return shotDelay;
@@ -46,8 +46,8 @@ public abstract class Weapon implements Updatable {
 		this.shotDelay = shotDelay;
 	}
 	
-	protected PlayerProjectile getNewProjectile(Vector2D shootPosition, Vector2D mousePosition) {
-		return factory.getNew(shootPosition, mousePosition, this.stats);
+	protected PlayerProjectile getNewProjectile(Vector2D shootPosition, Vector2D direction) {
+		return factory.getNew(shootPosition, direction, this.stats);
 	}
 
 	public PlayerProjectileStats getStats() {

@@ -1,9 +1,6 @@
 package de.julian_und_basti.shootergame.entities.player_projectiles;
 
 import de.basti.game_framework.collision.BoxCollider;
-import de.basti.game_framework.controls.TypeEntity;
-import de.basti.game_framework.controls.Updatable;
-import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.EntityType;
@@ -14,6 +11,8 @@ public abstract class PlayerProjectile extends UpdatableWeightTypeEntity<Rectang
 
 	private double speed;
 	private int damage;
+	
+	private Vector2D movement = new Vector2D(0,0);
 
 	public PlayerProjectile(Vector2D position, BoxCollider collider, Rectangle drawable, PlayerProjectileStats stats) {
 		super(position, collider, drawable, EntityType.PLAYER_PROJECTILE);
@@ -22,6 +21,12 @@ public abstract class PlayerProjectile extends UpdatableWeightTypeEntity<Rectang
 		this.setDamage(stats.damage);
 		
 
+	}
+	
+	@Override
+	public void update(long deltaMillis) {
+		this.translate(movement.scaled(deltaMillis*speed));
+		
 	}
 
 	public double getSpeed() {
@@ -40,6 +45,16 @@ public abstract class PlayerProjectile extends UpdatableWeightTypeEntity<Rectang
 		this.damage = damage;
 	}
 	
+	
+	
+	public Vector2D getMovement() {
+		return movement;
+	}
+
+	public void setMovement(Vector2D movement) {
+		this.movement = movement;
+	}
+
 	public abstract void hit(Enemy<?> enemy);
 
 }
