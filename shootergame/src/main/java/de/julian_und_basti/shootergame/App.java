@@ -10,6 +10,7 @@ import de.julian_und_basti.shootergame.entities.enemies.WalkerEnemy;
 import de.julian_und_basti.shootergame.entities.player.Player;
 import de.julian_und_basti.shootergame.entities.player_projectiles.RocketPlayerProjectile;
 import de.julian_und_basti.shootergame.weapons.MachineGun;
+import de.julian_und_basti.shootergame.weapons.Pistol;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -20,7 +21,7 @@ public class App extends Application {
 
 	
 
-	private Player player = new Player(new Vector2D(Game.width, Game.height), new MachineGun(RocketPlayerProjectile::new));
+	private Player player = new Player(new Vector2D(Game.width, Game.height), new Pistol(RocketPlayerProjectile::new));
 	
 	private Sprite backgroundSprite = new Sprite(new Vector2D(), Sprites.background);
 	
@@ -32,29 +33,7 @@ public class App extends Application {
 		
 		Game.addEntity(DrawingLayer.FORE_MIDDLE, player);
 		
-		for(int i = 0;i<50;i++) {
-			double x = Math.random()*800;
-			double y = Math.random()*600;
-			
-			WalkerEnemy enemy = new WalkerEnemy(new Vector2D(x,y), player);
-			Game.addEntity(DrawingLayer.MIDDLE, enemy);
-		}
-		
-		for(int i = 0;i<50;i++) {
-			double x = Math.random()*800;
-			double y = Math.random()*600;
-			
-			HeavyEnemy enemy = new HeavyEnemy(new Vector2D(x,y), player);
-			Game.addEntity(DrawingLayer.MIDDLE, enemy);
-		}
-		
-		for(int i = 0;i<50;i++) {
-			double x = Math.random()*800;
-			double y = Math.random()*600;
-			
-			SplitterEnemy enemy = new SplitterEnemy(new Vector2D(x,y), player);
-			Game.addEntity(DrawingLayer.MIDDLE, enemy);
-		}
+	
 		
 		
 		

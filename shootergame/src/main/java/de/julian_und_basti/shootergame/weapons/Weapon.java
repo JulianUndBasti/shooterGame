@@ -14,6 +14,8 @@ public abstract class Weapon implements Updatable {
 	private PlayerProjectileFactory factory;
 	
 	private PlayerProjectileStats stats = new PlayerProjectileStats(0, 0);
+	private double radiansSpread = 0;
+	
 	
 	public Weapon(int shotDelay, PlayerProjectileFactory factory, PlayerProjectileStats stats) {
 		this.shotDelay = shotDelay;
@@ -32,6 +34,11 @@ public abstract class Weapon implements Updatable {
 		if (timeSinceLastShot < shotDelay) {
 			return;
 		}
+		
+		double currAngle = Math.atan2(direction.getY(), direction.getX());
+		currAngle+=(Math.random()*this.radiansSpread)-(this.radiansSpread/2);
+		direction.set(Math.cos(currAngle),Math.sin(currAngle));
+		
 		this.shoot(shootPosition, direction);
 		this.timeSinceLastShot = 0;
 	}
@@ -57,6 +64,34 @@ public abstract class Weapon implements Updatable {
 	public void setStats(PlayerProjectileStats stats) {
 		this.stats = stats;
 	}
+
+	public int getTimeSinceLastShot() {
+		return timeSinceLastShot;
+	}
+
+	public void setTimeSinceLastShot(int timeSinceLastShot) {
+		this.timeSinceLastShot = timeSinceLastShot;
+	}
+
+	public PlayerProjectileFactory getFactory() {
+		return factory;
+	}
+
+	public void setFactory(PlayerProjectileFactory factory) {
+		this.factory = factory;
+	}
+
+	public double getRadiansSpread() {
+		return radiansSpread;
+	}
+
+	public void setRadiansSpread(double radiansSpread) {
+		this.radiansSpread = radiansSpread;
+	}
+	
+	
+	
+	
 	
 	
 

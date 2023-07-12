@@ -14,6 +14,7 @@ public class RocketLauncher extends Weapon {
 	
 	public RocketLauncher(PlayerProjectileFactory factory) {
 		super(1000, factory, DEFAULT_STATS);
+		this.setRadiansSpread(Math.toRadians(5));
 
 	}
 	

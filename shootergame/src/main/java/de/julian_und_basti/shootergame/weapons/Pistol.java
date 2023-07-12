@@ -13,6 +13,7 @@ public class Pistol extends Weapon{
 	
 	public Pistol(PlayerProjectileFactory factory) {
 		super(600,factory,DEFAULT_STATS);
+		this.setRadiansSpread(Math.toRadians(15));
 		
 	}
 	
