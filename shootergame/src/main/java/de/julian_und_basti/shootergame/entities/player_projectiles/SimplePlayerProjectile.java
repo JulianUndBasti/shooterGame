@@ -14,6 +14,7 @@ public class SimplePlayerProjectile extends PlayerProjectile{
 	private double width = 10;
 	
 	
+	
 
 	public SimplePlayerProjectile(Vector2D shootPosition, Vector2D mousePosition) {
 		super(shootPosition, null, null, EntityType.PLAYER_PROJECTILE);
@@ -29,6 +30,8 @@ public class SimplePlayerProjectile extends PlayerProjectile{
 		this.setCollider(new BoxCollider(shootPosition.clone(), width, height));
 		
 		this.calculateMovementDirection(mousePosition);
+		
+		this.setDamage(20);
 		
 	}
 	

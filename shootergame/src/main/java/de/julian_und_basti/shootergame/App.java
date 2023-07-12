@@ -5,6 +5,7 @@ import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.Sprite;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.enemies.HeavyEnemy;
+import de.julian_und_basti.shootergame.entities.enemies.SplitterEnemy;
 import de.julian_und_basti.shootergame.entities.enemies.WalkerEnemy;
 import de.julian_und_basti.shootergame.entities.player.Player;
 import de.julian_und_basti.shootergame.entities.player_projectiles.RocketPlayerProjectile;
@@ -20,7 +21,7 @@ public class App extends Application {
 
 	
 
-	private Player player = new Player(new Vector2D(Game.width, Game.height), new MachineGun<RocketPlayerProjectile>(RocketPlayerProjectile::new));
+	private Player player = new Player(new Vector2D(Game.width, Game.height), new MachineGun(SimplePlayerProjectile::new));
 	
 	private Sprite backgroundSprite = new Sprite(new Vector2D(), Sprites.background);
 	
@@ -47,6 +48,16 @@ public class App extends Application {
 			HeavyEnemy enemy = new HeavyEnemy(new Vector2D(x,y), player);
 			Game.addEntity(DrawingLayer.MIDDLE, enemy);
 		}
+		
+		for(int i = 0;i<50;i++) {
+			double x = Math.random()*800;
+			double y = Math.random()*600;
+			
+			SplitterEnemy enemy = new SplitterEnemy(new Vector2D(x,y), player);
+			Game.addEntity(DrawingLayer.MIDDLE, enemy);
+		}
+		
+		
 		
 		Game.drawing.add(DrawingLayer.BACKGROUND, backgroundSprite);
 

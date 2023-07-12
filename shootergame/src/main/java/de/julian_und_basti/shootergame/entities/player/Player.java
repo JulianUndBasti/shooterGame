@@ -35,10 +35,10 @@ public class Player extends UpdatableWeightTypeEntity<Rectangle,BoxCollider>{
 	private MouseInputListenerData mouseData;
 	private KeyInputListenerData keyData;
 	
-	private Weapon<?> weapon;
+	private Weapon weapon;
 	
 	
-	public Player(Vector2D position,Weapon<?> weapon) { 
+	public Player(Vector2D position,Weapon weapon) { 
 		super(position, null, null,EntityType.PLAYER);
 		
 		Rectangle rect = new Rectangle(position.clone(), width,height);
@@ -116,11 +116,11 @@ public class Player extends UpdatableWeightTypeEntity<Rectangle,BoxCollider>{
 		this.height = height;
 	}
 
-	public Weapon<?> getWeapon() {
+	public Weapon getWeapon() {
 		return weapon;
 	}
 
-	public void setWeapon(Weapon<?> weapon) {
+	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
 	}
 

@@ -29,7 +29,7 @@ public class RocketExplosion extends PlayerProjectile{
 		
 		this.setCollider(new BoxCollider(position.clone(), width, height));
 		
-		
+		this.setDamage(50);
 	}
 
 	@Override

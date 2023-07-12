@@ -22,8 +22,6 @@ public class RocketPlayerProjectile extends PlayerProjectile{
 	private Vector2D shootPosition;
 	private Vector2D mousePosition;
 
-	Weapon<RocketExplosion> weapon;
-	
 	public RocketPlayerProjectile(Vector2D shootPosition, Vector2D mousePosition) {
 		super(shootPosition, null, null, EntityType.PLAYER_PROJECTILE);
 		
@@ -41,6 +39,8 @@ public class RocketPlayerProjectile extends PlayerProjectile{
 		this.setCollider(new BoxCollider(shootPosition.clone(), width, height));
 		
 		this.calculateMovementDirection(mousePosition);
+		
+		this.setDamage(0);
 		
 	}
 	

@@ -7,9 +7,9 @@ import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProject
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectileFactory;
 import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
 
-public class Pistol<P extends PlayerProjectile> extends Weapon<P>{
+public class Pistol extends Weapon{
 
-	public Pistol(PlayerProjectileFactory<P> factory) {
+	public Pistol(PlayerProjectileFactory factory) {
 		super(600,factory);
 		
 	}
@@ -17,7 +17,6 @@ public class Pistol<P extends PlayerProjectile> extends Weapon<P>{
 	@Override
 	protected void shoot(Vector2D shootPosition, Vector2D mousePosition) {
 		PlayerProjectile projectile = this.getNewProjectile(shootPosition, mousePosition);
-		projectile.setDamage(20);
 		projectile.setSpeed(0.3);
 		
 		Game.addEntity(DrawingLayer.MIDDLE, projectile);
