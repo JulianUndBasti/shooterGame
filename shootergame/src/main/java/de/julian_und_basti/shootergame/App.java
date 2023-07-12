@@ -9,8 +9,10 @@ import de.julian_und_basti.shootergame.entities.enemies.SplitterEnemy;
 import de.julian_und_basti.shootergame.entities.enemies.WalkerEnemy;
 import de.julian_und_basti.shootergame.entities.player.Player;
 import de.julian_und_basti.shootergame.entities.player_projectiles.RocketPlayerProjectile;
+import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
 import de.julian_und_basti.shootergame.weapons.MachineGun;
 import de.julian_und_basti.shootergame.weapons.Pistol;
+import de.julian_und_basti.shootergame.weapons.RocketLauncher;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -21,7 +23,7 @@ public class App extends Application {
 
 	
 
-	private Player player = new Player(new Vector2D(Game.width, Game.height), new Pistol(RocketPlayerProjectile::new));
+	private Player player = new Player(new Vector2D(Game.width, Game.height), new RocketLauncher(RocketPlayerProjectile::new));
 	
 	private Sprite backgroundSprite = new Sprite(new Vector2D(), Sprites.background);
 	

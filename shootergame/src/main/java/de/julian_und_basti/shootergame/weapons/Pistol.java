@@ -9,11 +9,11 @@ import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProject
 
 public class Pistol extends Weapon{
 	
-	public static final PlayerProjectileStats DEFAULT_STATS = new PlayerProjectileStats(20, 0.3);
+	public static final PlayerProjectileStats DEFAULT_STATS = new PlayerProjectileStats(20, 0.5);
 	
 	public Pistol(PlayerProjectileFactory factory) {
 		super(600,factory,DEFAULT_STATS);
-		this.setRadiansSpread(Math.toRadians(15));
+		this.setRadiansSpread(Math.toRadians(0));
 		
 	}
 	
@@ -25,7 +25,6 @@ public class Pistol extends Weapon{
 	@Override
 	protected void shoot(Vector2D shootPosition, Vector2D direction) {
 		PlayerProjectile projectile = this.getNewProjectile(shootPosition, direction);
-		projectile.setSpeed(0.3);
 		
 		Game.addEntity(DrawingLayer.MIDDLE, projectile);
 		

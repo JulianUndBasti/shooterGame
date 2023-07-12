@@ -9,12 +9,12 @@ import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProject
 
 public class MachineGun extends Weapon{
 	
-	public static final PlayerProjectileStats DEFAULT_STATS = new PlayerProjectileStats(5, 0.27);
+	public static final PlayerProjectileStats DEFAULT_STATS = new PlayerProjectileStats(5, 0.6);
 	
 	
 	public MachineGun(PlayerProjectileFactory factory) {
 		super(60,factory,DEFAULT_STATS);
-		this.setRadiansSpread(Math.toRadians(35));
+		this.setRadiansSpread(Math.toRadians(3));
 		
 	}
 	

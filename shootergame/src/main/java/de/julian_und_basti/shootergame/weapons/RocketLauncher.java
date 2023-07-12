@@ -10,11 +10,11 @@ import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProject
 public class RocketLauncher extends Weapon {
 	
 	
-	public static final PlayerProjectileStats DEFAULT_STATS = new PlayerProjectileStats(0, 0.4);
+	public static final PlayerProjectileStats DEFAULT_STATS = new PlayerProjectileStats(0, 0.45);
 	
 	public RocketLauncher(PlayerProjectileFactory factory) {
 		super(1000, factory, DEFAULT_STATS);
-		this.setRadiansSpread(Math.toRadians(5));
+		this.setRadiansSpread(Math.toRadians(0));
 
 	}
 	
