@@ -26,7 +26,7 @@ public class CollisionHandling {
 
 			if (c1.getType() == EntityType.PLAYER_PROJECTILE && c2.getType() == EntityType.ENEMY) {
 
-				WalkerEnemy enemy = (WalkerEnemy) c2;
+				Enemy<?> enemy = (Enemy<?>) c2;
 				PlayerProjectile projectile = (PlayerProjectile) c1;
 
 				enemyProjectileCollision(enemy, projectile);
@@ -36,7 +36,7 @@ public class CollisionHandling {
 
 			if (c1.getType() == EntityType.ENEMY && c2.getType() == EntityType.PLAYER_PROJECTILE) {
 
-				WalkerEnemy enemy = (WalkerEnemy) c1;
+				Enemy<?> enemy = (Enemy<?>) c1;
 				PlayerProjectile projectile = (PlayerProjectile) c2;
 
 				enemyProjectileCollision(enemy, projectile);
