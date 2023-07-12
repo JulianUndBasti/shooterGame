@@ -21,7 +21,7 @@ public class App extends Application {
 
 	
 
-	private Player player = new Player(new Vector2D(Game.width, Game.height), new MachineGun(SimplePlayerProjectile::new));
+	private Player player = new Player(new Vector2D(Game.width, Game.height), new MachineGun(RocketPlayerProjectile::new));
 	
 	private Sprite backgroundSprite = new Sprite(new Vector2D(), Sprites.background);
 	

@@ -64,8 +64,8 @@ public class Game {
 	
 	static {
 		loop.getUpdater().getList().add(entityUpdater);
-		loop.getUpdater().getList().add(drawing);
 		loop.getUpdater().getList().add(collisionSystem);
+		loop.getUpdater().getList().add(drawing);
 		loop.getUpdater().getList().add(endOfUpdate);
 		
 		

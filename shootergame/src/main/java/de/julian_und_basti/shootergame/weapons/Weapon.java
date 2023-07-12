@@ -4,6 +4,7 @@ import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectileFactory;
+import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectileStats;
 
 public abstract class Weapon implements Updatable {
 
@@ -11,12 +12,14 @@ public abstract class Weapon implements Updatable {
 	private int timeSinceLastShot;
 	
 	private PlayerProjectileFactory factory;
-
-	public Weapon(int shotDelay, PlayerProjectileFactory factory) {
+	
+	private PlayerProjectileStats stats = new PlayerProjectileStats(0, 0);
+	
+	public Weapon(int shotDelay, PlayerProjectileFactory factory, PlayerProjectileStats stats) {
 		this.shotDelay = shotDelay;
 		this.timeSinceLastShot = shotDelay;
-		
 		this.factory = factory;
+		this.setStats(stats);
 	}
 
 	@Override
@@ -44,7 +47,17 @@ public abstract class Weapon implements Updatable {
 	}
 	
 	protected PlayerProjectile getNewProjectile(Vector2D shootPosition, Vector2D mousePosition) {
-		return factory.getNew(shootPosition, mousePosition);
+		return factory.getNew(shootPosition, mousePosition, this.stats);
 	}
+
+	public PlayerProjectileStats getStats() {
+		return stats;
+	}
+
+	public void setStats(PlayerProjectileStats stats) {
+		this.stats = stats;
+	}
+	
+	
 
 }

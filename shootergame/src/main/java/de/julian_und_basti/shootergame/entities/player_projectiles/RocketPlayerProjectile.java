@@ -22,8 +22,8 @@ public class RocketPlayerProjectile extends PlayerProjectile{
 	private Vector2D shootPosition;
 	private Vector2D mousePosition;
 
-	public RocketPlayerProjectile(Vector2D shootPosition, Vector2D mousePosition) {
-		super(shootPosition, null, null, EntityType.PLAYER_PROJECTILE);
+	public RocketPlayerProjectile(Vector2D shootPosition, Vector2D mousePosition,PlayerProjectileStats stats) {
+		super(shootPosition, null, null, stats);
 		
 		shootPosition.translate(-width/2, -height/2);
 		
@@ -70,9 +70,7 @@ public class RocketPlayerProjectile extends PlayerProjectile{
 	@Override
 	public void hit(Enemy<?> enemy) {
 		
-		PlayerProjectile projectile = new RocketExplosion(getPosition().clone(), null, null, getType(), width, height);		
-		projectile.setDamage(80);
-		projectile.setSpeed(0);
+		PlayerProjectile projectile = new RocketExplosion(getPosition().clone(), 80);		
 		Game.addTaskForEndOfUpdate(() -> {
 			Game.addEntity(DrawingLayer.FOREGROUND, projectile);
 		});

@@ -13,11 +13,8 @@ public class SimplePlayerProjectile extends PlayerProjectile{
 	private double height = 10;
 	private double width = 10;
 	
-	
-	
-
-	public SimplePlayerProjectile(Vector2D shootPosition, Vector2D mousePosition) {
-		super(shootPosition, null, null, EntityType.PLAYER_PROJECTILE);
+	public SimplePlayerProjectile(Vector2D shootPosition, Vector2D mousePosition,PlayerProjectileStats stats) {
+		super(shootPosition, null, null, stats);
 		
 		shootPosition.translate(0-width/2, 0-height/2);
 

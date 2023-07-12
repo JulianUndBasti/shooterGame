@@ -5,13 +5,21 @@ import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.Game;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectileFactory;
+import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectileStats;
 import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
 
 public class Pistol extends Weapon{
-
+	
+	public static final PlayerProjectileStats DEFAULT_STATS = new PlayerProjectileStats(20, 0.3);
+	
 	public Pistol(PlayerProjectileFactory factory) {
-		super(600,factory);
+		super(600,factory,DEFAULT_STATS);
 		
+	}
+	
+	public Pistol(PlayerProjectileFactory factory, PlayerProjectileStats stats) {
+		super(600, factory,stats);
+
 	}
 
 	@Override

@@ -5,20 +5,28 @@ import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.Game;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectileFactory;
+import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectileStats;
 import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
 
 public class RocketLauncher extends Weapon {
-
+	
+	
+	public static final PlayerProjectileStats DEFAULT_STATS = new PlayerProjectileStats(0, 0.4);
+	
 	public RocketLauncher(PlayerProjectileFactory factory) {
-		super(1000, factory);
+		super(1000, factory, DEFAULT_STATS);
 
 	}
+	
+	public RocketLauncher(PlayerProjectileFactory factory, PlayerProjectileStats stats) {
+		super(1000, factory,stats);
 
+	}
+	
+	
 	@Override
 	protected void shoot(Vector2D shootPosition, Vector2D mousePosition) {
 		PlayerProjectile projectile = this.getNewProjectile(shootPosition, mousePosition);
-		projectile.setSpeed(1);
-
 		Game.addEntity(DrawingLayer.MIDDLE, projectile);
 
 	}

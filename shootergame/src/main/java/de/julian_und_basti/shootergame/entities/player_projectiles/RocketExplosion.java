@@ -15,21 +15,20 @@ public class RocketExplosion extends PlayerProjectile{
 	private int lifespan = 500;
 	
 	private int timeAlive;
+	
+	
 
-	public RocketExplosion(Vector2D position, BoxCollider collider, Rectangle drawable, EntityType type, double rocketWidth, double rocketHeight) {
-		super(position, null, null, EntityType.PLAYER_PROJECTILE);
-
-		position.translate(0-width/2 + rocketWidth/2, 0-height/2 + rocketHeight/2);
+	public RocketExplosion(Vector2D position, int damage) {
+		super(position, null, null, new PlayerProjectileStats(damage, 0));
+		position.translate(-width/2, -height/2);
 		
 		Rectangle rect = new Rectangle(position.clone(), width, height);
 		
 		this.setDrawable(rect);
 		this.getDrawable().setFillColor(Color.BLACK);
 		this.getDrawable().setShouldFill(true);
-		
 		this.setCollider(new BoxCollider(position.clone(), width, height));
 		
-		this.setDamage(50);
 	}
 
 	@Override

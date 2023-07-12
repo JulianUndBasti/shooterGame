@@ -12,13 +12,15 @@ import de.julian_und_basti.shootergame.entities.enemies.Enemy;
 
 public abstract class PlayerProjectile extends UpdatableWeightTypeEntity<Rectangle, BoxCollider>{
 
-	private double speed = 0.3;
+	private double speed;
+	private int damage;
 
-	private int damage = 20;
-
-	public PlayerProjectile(Vector2D position, BoxCollider collider, Rectangle drawable, EntityType type) {
-		super(position, collider, drawable, type);
+	public PlayerProjectile(Vector2D position, BoxCollider collider, Rectangle drawable, PlayerProjectileStats stats) {
+		super(position, collider, drawable, EntityType.PLAYER_PROJECTILE);
 		this.setWeight(0);
+		this.setSpeed(stats.speed);
+		this.setDamage(stats.damage);
+		
 
 	}
 
