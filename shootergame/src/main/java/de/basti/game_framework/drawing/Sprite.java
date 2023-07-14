@@ -32,6 +32,10 @@ public class Sprite implements Drawable {
 		this.image = image;
 		imageView.setSmooth(false);
 		
+		this.imageView.setFitWidth(image.getWidth());
+		this.imageView.setFitHeight(image.getHeight());
+		
+		
 	}
 
 	@Override

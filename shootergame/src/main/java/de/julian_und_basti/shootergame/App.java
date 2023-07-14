@@ -4,6 +4,7 @@ import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.Sprite;
 import de.basti.game_framework.math.Vector2D;
+import de.julian_und_basti.shootergame.entities.enemies.Enemy;
 import de.julian_und_basti.shootergame.entities.enemies.HeavyEnemy;
 import de.julian_und_basti.shootergame.entities.enemies.SplitterEnemy;
 import de.julian_und_basti.shootergame.entities.enemies.WalkerEnemy;
@@ -23,9 +24,11 @@ public class App extends Application {
 
 	
 
-	private Player player = new Player(new Vector2D(Game.width, Game.height), new RocketLauncher(RocketPlayerProjectile::new));
+	private Player player = new Player(new Vector2D(Game.width/2, Game.height/2), new Pistol(SimplePlayerProjectile::new));
 	
-	private Sprite backgroundSprite = new Sprite(new Vector2D(), Sprites.background);
+	private Sprite backgroundSprite = new Sprite(new Vector2D(), Images.background);
+	
+	private Background background = new Background(backgroundSprite, player);
 	
 	@Override
 	public void start(Stage stage) {
@@ -35,11 +38,13 @@ public class App extends Application {
 		
 		Game.addEntity(DrawingLayer.FORE_MIDDLE, player);
 		
-	
 		
+		for(int i = 0;i<1;i++) {
+			Enemy<?> enemy = new SplitterEnemy(new Vector2D(Math.random()*Game.width,Math.random()*Game.height), player);
+			Game.addEntity(DrawingLayer.MIDDLE, enemy);
+		}
 		
-		
-		Game.drawing.add(DrawingLayer.BACKGROUND, backgroundSprite);
+		Game.drawing.add(DrawingLayer.BACKGROUND, background);
 
 		Game.loop.start();
 
@@ -48,15 +53,7 @@ public class App extends Application {
 		
 	}
 	
-	Updatable inputConsumer = new Updatable() {
-		
-		@Override
-		public void update(long deltaMillis) {
-			
-			Game.inputData.pressesAndReleasesConsumed();
-			
-		}
-	};
+	
 
 	public static void main(String[] args) {
 		launch();
