@@ -15,9 +15,15 @@ public class CollisionHandling {
 
 		@Override
 		public void onBegin(CollisionPair<UpdatableWeightTypeEntity<? extends Drawable, ? extends BoxCollider>> pair) {
-
+			
 			var c1 = pair.getCollider1();
 			var c2 = pair.getCollider2();
+			
+			if(c1.getType()==EntityType.WALL&&c2.getType()==EntityType.WALL) {
+				return;
+			}
+			
+			
 			BoxCollider box1 = c1.getCollider();
 			BoxCollider box2 = c2.getCollider();
 
@@ -42,15 +48,22 @@ public class CollisionHandling {
 			}
 
 			if (c1.getType() == EntityType.PLAYER_PROJECTILE || c2.getType() == EntityType.PLAYER_PROJECTILE) {
-
 				return;
-
 			}
 
 			Vector2D displacement = this.getDisplacement(box1, box2);
 
 			int cw1 = c1.getWeight();
 			int cw2 = c2.getWeight();
+			
+			if(c1.getType()==EntityType.WALL) {
+				cw1 = 1;
+				cw2 = 0;
+			}
+			if(c2.getType()==EntityType.WALL) {
+				cw1 = 0;
+				cw2 = 1;
+			}
 			
 			double sum = cw1+cw2;
 			Vector2D c1Displacement = displacement;
@@ -61,20 +74,7 @@ public class CollisionHandling {
 			c1.translate(c1Displacement);
 			c2.translate(c2Displacement);
 			
-			/*
-			if (cw1 < cw2) {
-				c1.translate(displacement);
-			} else if (cw2 < cw1) {
-				displacement.scale(-1);
-				c2.translate(displacement);
-			} else {
-				displacement.scale(0.5);
-				c1.translate(displacement);
-				displacement.scale(-1);
-				c2.translate(displacement);
-
-			}
-			*/
+			
 
 		}
 

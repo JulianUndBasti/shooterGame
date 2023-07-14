@@ -38,6 +38,7 @@ public class Game {
 			}
 			endOfUpdateTasks = new ArrayList<>();
 			
+			
 			inputData.pressesAndReleasesConsumed();
 			
 		}

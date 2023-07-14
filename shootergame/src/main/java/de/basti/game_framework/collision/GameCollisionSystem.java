@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 import de.basti.game_framework.controls.Updatable;
 
@@ -28,23 +30,26 @@ public class GameCollisionSystem<T extends Collider> implements Updatable {
 	}
 	
 	public void update(long deltaMillis) {
+		long time = System.nanoTime();
 		for(int i = 0;i<updateIterations;i++) {
 			this.updateOnce();
 		}
+		time = System.nanoTime()-time;
+		System.out.println(time);
 	}
 	
 	private void updateOnce() {
-		List<T> colliderList = new ArrayList<>(colliders);
-		Set<CollisionPair<T>> allCollisions = new HashSet<>();
-		for(int i = 0;i<colliderList.size();i++) {
-			T c1 = colliderList.get(i);
-			for(int j = i+1;j<colliderList.size();j++) {
-				T c2 = colliderList.get(j);
-				if(c1.collidesWith(c2)||c2.collidesWith(c1)) {
-					allCollisions.add(new CollisionPair<T>(c1, c2));
-				}	
+		
+		Set<CollisionPair<T>> allCollisions = ConcurrentHashMap.newKeySet(colliders.size()*colliders.size());
+		for(T c1:this.colliders) {
+			if(c1==null) {
+				System.out.println(c1==null);
 			}
+			
+			this.colliders.parallelStream().filter(c2 -> ((c1.collidesWith(c2)||c2.collidesWith(c1))&&c1!=c2)).forEach(c2 -> allCollisions.add(new CollisionPair<T>(c1, c2)));
 		}
+		
+		
 		this.handleAllCollisions(allCollisions);
 	}
 	

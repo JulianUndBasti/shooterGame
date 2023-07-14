@@ -27,12 +27,26 @@ public interface Collider {
 	public default boolean collidesWith(Collider c) {
 		if (this == c)
 			return true;
-
-		for (Vector2D v : c.getVectors()) {
+		
+		Vector2D[] vectors = c.getVectors();
+		for(int i = 0;i<vectors.length;i++) {
+			Vector2D v = vectors[i];
+			if(v==null) {
+				System.out.println(v);
+			}
 			if (this.collidesWith(v)) {
 				return true;
 			}
 		}
+		
+		/*for (Vector2D v : c.getVectors()) {
+			if(v==null) {
+				System.out.println(v);
+			}
+			if (this.collidesWith(v)) {
+				return true;
+			}
+		}*/
 		return false;
 	}
 

@@ -8,24 +8,24 @@ public class CircleCollider implements Collider {
 	private double radius;
 
 	int precision = 10;
-	
-	boolean radiusChanged = false;
+
 	private Vector2D[] vectors = new Vector2D[precision];
 
 	public CircleCollider(Vector2D position, double radius) {
 		this.setPosition(position);
 		this.setRadius(radius);
+		this.recalculateVectors();
 
 	}
 
-	private void calculateVectors() {
+	private void recalculateVectors() {
 		for (int i = 0; i < precision; i++) {
 			double a = (double) i;
 			a = a / precision;
 			a = a * 2 * Math.PI;
 			Vector2D v = new Vector2D();
-			v.set(Math.sin(a)*radius, Math.cos(a)*radius);
-			v.translate(this.position.getX()+radius,this.position.getY()+radius);
+			v.set(Math.sin(a) * radius, Math.cos(a) * radius);
+			v.translate(this.position.getX() + radius, this.position.getY() + radius);
 			this.vectors[i] = v;
 		}
 	}
@@ -35,33 +35,24 @@ public class CircleCollider implements Collider {
 		Vector2D center = this.position.clone();
 		center.translate(radius, radius);
 		center.translate(vector.scaled(-1));
-		if(center.length()<this.radius) {
+		if (center.length() < this.radius) {
 			return true;
 		}
 		return false;
-	
-		
-	
-	
-		
-		
+
 	}
 
 	@Override
 	public Vector2D[] getVectors() {
-		if(radiusChanged) {
-			this.calculateVectors();
-			radiusChanged = false;
-		}
+		this.recalculateVectors();
+
 		return this.vectors;
 	}
 
 	@Override
 	public void translate(Vector2D vector) {
-		//why does this not work
-		//Arrays.stream(this.vectors).forEach(v->v.translate(vector));
-		this.radiusChanged = true;//workaround, much slower
 		this.position.translate(vector);
+		this.recalculateVectors();
 
 	}
 
@@ -71,8 +62,8 @@ public class CircleCollider implements Collider {
 
 	public void setRadius(double radius) {
 		this.radius = radius;
-		this.radiusChanged = true;
-		
+		this.recalculateVectors();
+
 	}
 
 	public Vector2D getPosition() {
@@ -81,6 +72,7 @@ public class CircleCollider implements Collider {
 
 	public void setPosition(Vector2D position) {
 		this.position = position;
+		this.recalculateVectors();
 	}
 
 }

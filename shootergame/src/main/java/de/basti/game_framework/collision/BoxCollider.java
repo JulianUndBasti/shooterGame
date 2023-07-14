@@ -20,7 +20,6 @@ public class BoxCollider implements Collider {
 	public static int vectorDistance = 10; 
 	
 	private Vector2D[] vectors;
-	private boolean shouldRecalculateVectors = true;
 	
 
 	public BoxCollider(Vector2D position, double width, double height) {
@@ -28,6 +27,7 @@ public class BoxCollider implements Collider {
 		this.position = position;
 		this.width = width;
 		this.height = height;
+		this.recalculateVectors();
 	}
 
 	@Override
@@ -48,10 +48,6 @@ public class BoxCollider implements Collider {
 
 	@Override
 	public Vector2D[] getVectors() {
-		if(shouldRecalculateVectors)recalculateVectors();
-		
-		
-		
 		return vectors;
 
 	}
@@ -85,7 +81,7 @@ public class BoxCollider implements Collider {
 	@Override
 	public void translate(Vector2D vector) {
 		this.position.translate(vector);
-		shouldRecalculateVectors = true;
+		this.recalculateVectors();
 	}
 
 	public Vector2D getPosition() {
@@ -95,7 +91,7 @@ public class BoxCollider implements Collider {
 
 	public void setPosition(Vector2D position) {
 		this.position = position;
-		shouldRecalculateVectors = true;
+		this.recalculateVectors();
 	}
 
 	public double getWidth() {
@@ -103,8 +99,8 @@ public class BoxCollider implements Collider {
 	}
 
 	public void setWidth(double width) {
-		shouldRecalculateVectors = true;
 		this.width = width;
+		this.recalculateVectors();
 	}
 
 	public double getHeight() {
@@ -112,8 +108,8 @@ public class BoxCollider implements Collider {
 	}
 
 	public void setHeight(double height) {
-		shouldRecalculateVectors = true;
 		this.height = height;
+		this.recalculateVectors();
 	}
 	
 	
