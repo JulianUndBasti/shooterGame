@@ -30,12 +30,9 @@ public class GameCollisionSystem<T extends Collider> implements Updatable {
 	}
 	
 	public void update(long deltaMillis) {
-		long time = System.nanoTime();
 		for(int i = 0;i<updateIterations;i++) {
 			this.updateOnce();
 		}
-		time = System.nanoTime()-time;
-		System.out.println(time);
 	}
 	
 	private void updateOnce() {
