@@ -23,42 +23,45 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
+	private Player player = new Player(new Vector2D(Game.width / 2, Game.height / 2),
+			new MachineGun(SimplePlayerProjectile::new));
+
+	private Sprite backgroundSprite = new Sprite(new Vector2D(), Images.background);
+
+	private Background background = new Background(backgroundSprite, player);
+
 	
 
-	private Player player = new Player(new Vector2D(Game.width/2, Game.height/2), new MachineGun(SimplePlayerProjectile::new));
-	
-	private Sprite backgroundSprite = new Sprite(new Vector2D(), Images.background);
-	
-	private Background background = new Background(backgroundSprite, player);
-	
 	@Override
 	public void start(Stage stage) {
-		
+
 		Game.collisionSystem.setUpdateIterations(4);
 		Game.collisionSystem.addHandler(CollisionHandling.handler);
-		
+
 		Game.addEntity(DrawingLayer.FORE_MIDDLE, player);
-		
-		for(int i = 0;i<25;i++) {
-			Wall wall= new Wall(new Vector2D(Math.random()*Game.width,Math.random()*Game.height), Math.random()*20+20,Math.random()*20+20);
+
+		for (int i = 0; i < 25; i++) {
+			Wall wall = new Wall(new Vector2D(Math.random() * Game.width, Math.random() * Game.height),
+					Math.random() * 20 + 20, Math.random() * 20 + 20);
 			Game.addEntity(DrawingLayer.MIDDLE, wall);
 		}
-		
-		for(int i = 0;i<1;i++) {
-			Enemy<?> enemy = new SplitterEnemy(new Vector2D(Math.random()*Game.width,Math.random()*Game.height), player);
+
+		for (int i = 0; i < 1; i++) {
+			Enemy<?> enemy = new SplitterEnemy(new Vector2D(Math.random() * Game.width, Math.random() * Game.height),
+					player);
 			Game.addEntity(DrawingLayer.MIDDLE, enemy);
 		}
-		
-		Game.drawing.add(DrawingLayer.BACKGROUND, background);
 
+		Game.drawing.add(DrawingLayer.BACKGROUND, background);
+		
+		Game.stickCameraTo(player);
+		
 		Game.loop.start();
 
 		stage.setScene(Game.scene);
 		stage.show();
-		
+
 	}
-	
-	
 
 	public static void main(String[] args) {
 		launch();
@@ -72,6 +75,4 @@ public class App extends Application {
 		this.player = player;
 	}
 
-	
-	
 }

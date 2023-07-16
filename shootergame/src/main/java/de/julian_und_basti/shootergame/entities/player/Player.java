@@ -70,14 +70,7 @@ public class Player extends UpdatableWeightTypeEntity<Rectangle, BoxCollider> {
 			this.translate(movement);
 		}
 
-		// transform the camera so the player stays in the middle
-		Vector2D transform = this.getPosition().clone();
-		transform.scale(-1);
-		transform.translate((Game.width - this.getDrawable().getWidth()) / 2,
-				(Game.height - this.getDrawable().getHeight()) / 2);
-		Game.drawing.setTransform(transform);
-		mouseData.setTransform(transform);
-
+		
 		this.weapon.update(deltaMillis);
 		// shoot logic
 		if (mouseData.isDown(MouseButton.PRIMARY)) {
