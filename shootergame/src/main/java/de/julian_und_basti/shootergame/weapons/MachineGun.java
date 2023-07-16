@@ -14,7 +14,7 @@ public class MachineGun extends Weapon{
 	
 	public MachineGun(PlayerProjectileFactory factory) {
 		super(60,factory,DEFAULT_STATS);
-		this.setRadiansSpread(Math.toRadians(3));
+		this.setRadiansSpread(Math.toRadians(8));
 		
 	}
 	

@@ -9,8 +9,8 @@ import javafx.scene.paint.Color;
 
 public class SimplePlayerProjectile extends PlayerProjectile {
 
-	private double height = 10;
-	private double width = 10;
+	private double height = 5;
+	private double width = 5;
 
 
 	public SimplePlayerProjectile(Vector2D shootPosition, Vector2D direction, PlayerProjectileStats stats) {
