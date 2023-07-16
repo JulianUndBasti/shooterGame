@@ -48,4 +48,9 @@ public class RocketExplosion extends PlayerProjectile{
 		Game.collisionSystem.remove(this);
 
 	}
+
+	@Override
+	public void hitWall() {
+		
+	}
 }

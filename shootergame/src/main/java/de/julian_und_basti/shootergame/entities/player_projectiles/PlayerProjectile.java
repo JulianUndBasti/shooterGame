@@ -6,6 +6,7 @@ import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.EntityType;
 import de.julian_und_basti.shootergame.entities.UpdatableWeightTypeEntity;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
+import de.julian_und_basti.shootergame.entities.walls.Wall;
 
 public abstract class PlayerProjectile extends UpdatableWeightTypeEntity<Rectangle, BoxCollider>{
 
@@ -56,5 +57,7 @@ public abstract class PlayerProjectile extends UpdatableWeightTypeEntity<Rectang
 	}
 
 	public abstract void hit(Enemy<?> enemy);
+	public abstract void hitWall();
+	
 
 }

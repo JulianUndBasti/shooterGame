@@ -46,6 +46,16 @@ public class RocketPlayerProjectile extends PlayerProjectile {
 	@Override
 	public void hit(Enemy<?> enemy) {
 
+		explode();
+	}
+
+	@Override
+	public void hitWall() {
+		explode();
+		
+	}
+	
+	private void explode() {
 		PlayerProjectile projectile = new RocketExplosion(getPosition().clone(), 80);
 		Game.addTaskForEndOfUpdate(() -> {
 			Game.addEntity(DrawingLayer.FOREGROUND, projectile);

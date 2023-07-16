@@ -39,7 +39,7 @@ public class App extends Application {
 		
 		Game.addEntity(DrawingLayer.FORE_MIDDLE, player);
 		
-		for(int i = 0;i<1000;i++) {
+		for(int i = 0;i<25;i++) {
 			Wall wall= new Wall(new Vector2D(Math.random()*Game.width,Math.random()*Game.height), Math.random()*20+20,Math.random()*20+20);
 			Game.addEntity(DrawingLayer.MIDDLE, wall);
 		}
