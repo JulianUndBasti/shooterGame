@@ -1,7 +1,5 @@
 package de.julian_und_basti.shootergame;
 
-import java.util.Vector;
-
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.Sprite;
 import de.basti.game_framework.math.Vector2D;

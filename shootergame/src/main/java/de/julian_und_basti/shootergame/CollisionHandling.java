@@ -12,7 +12,7 @@ import de.julian_und_basti.shootergame.entities.enemies.Enemy;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 import javafx.util.Pair;
 import de.julian_und_basti.shootergame.entities.EntityType;
-import de.julian_und_basti.shootergame.entities.WeightEntity;
+import de.julian_und_basti.shootergame.entities.CustomEntity;
 
 public class CollisionHandling {
 
@@ -25,10 +25,10 @@ public class CollisionHandling {
 
 	}
 
-	public static CollisionHandler<WeightEntity<? extends Drawable, ? extends BoxCollider>> handler = new CollisionHandler<>() {
+	public static CollisionHandler<CustomEntity<? extends Drawable, ? extends BoxCollider>> handler = new CollisionHandler<>() {
 
 		@Override
-		public void onBegin(CollisionPair<WeightEntity<? extends Drawable, ? extends BoxCollider>> pair) {
+		public void onBegin(CollisionPair<CustomEntity<? extends Drawable, ? extends BoxCollider>> pair) {
 
 			var c1 = pair.getCollider1();
 			var c2 = pair.getCollider2();
@@ -154,13 +154,13 @@ public class CollisionHandling {
 		}
 
 		@Override
-		public void onOngoing(CollisionPair<WeightEntity<? extends Drawable, ? extends BoxCollider>> pair) {
+		public void onOngoing(CollisionPair<CustomEntity<? extends Drawable, ? extends BoxCollider>> pair) {
 			this.onBegin(pair);
 
 		}
 
 		@Override
-		public void onEnd(CollisionPair<WeightEntity<? extends Drawable, ? extends BoxCollider>> pair) {
+		public void onEnd(CollisionPair<CustomEntity<? extends Drawable, ? extends BoxCollider>> pair) {
 
 		}
 	};

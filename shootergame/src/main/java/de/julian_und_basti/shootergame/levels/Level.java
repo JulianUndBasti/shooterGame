@@ -3,31 +3,38 @@ package de.julian_und_basti.shootergame.levels;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.basti.game_framework.collision.BoxCollider;
+import de.basti.game_framework.controls.Game;
+import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawingLayer;
-import de.julian_und_basti.shootergame.Game;
+import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
 import de.julian_und_basti.shootergame.entities.player.Player;
 
 public abstract class Level {
 
+	private Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game;
 	private Player player;
 	private List<Enemy<?>> enemies = new ArrayList<>();
 	private List<Wall> walls = new ArrayList<>();
+	
+	
 
-	public Level(Player player) {
+	public Level(Player player,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		this.player = player;
+		this.game = game;
 	}
 
 	public void buildLevel() {
-		Game.addEntity(DrawingLayer.MIDDLE, player);
+		this.game.addEntity(DrawingLayer.MIDDLE, player);
 
 		for (Enemy<?> enemy : this.enemies) {
-			Game.addEntity(DrawingLayer.BACK_MIDDLE, enemy);
+			this.game.addEntity(DrawingLayer.BACK_MIDDLE, enemy);
 
 		}
 
 		for (Wall wall : this.walls) {
-			Game.addEntity(DrawingLayer.FORE_MIDDLE, wall);
+			this.game.addEntity(DrawingLayer.FORE_MIDDLE, wall);
 
 		}
 
@@ -44,6 +51,16 @@ public abstract class Level {
 	protected void setPlayer(Player Player) {
 		this.player = Player;
 	}
+
+	public Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> getGame() {
+		return game;
+	}
+
+	public void setGame(Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+		this.game = game;
+	}
+	
+	
 	
 	
 

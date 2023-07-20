@@ -1,19 +1,20 @@
 package de.julian_und_basti.shootergame.entities.player;
 
 import de.basti.game_framework.collision.BoxCollider;
+import de.basti.game_framework.controls.Game;
+import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.input.KeyInputListenerData;
 import de.basti.game_framework.input.MouseInputListenerData;
 import de.basti.game_framework.math.Vector2D;
-import de.julian_und_basti.shootergame.Game;
 import de.julian_und_basti.shootergame.entities.EntityType;
-import de.julian_und_basti.shootergame.entities.WeightEntity;
+import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.weapons.Weapon;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 
-public class Player extends WeightEntity<Rectangle, BoxCollider> {
+public class Player extends CustomEntity<Rectangle, BoxCollider> {
 
 	private double width = 30;
 	private double height = 30;
@@ -28,8 +29,8 @@ public class Player extends WeightEntity<Rectangle, BoxCollider> {
 
 	private Weapon weapon;
 
-	public Player(Vector2D position, Weapon weapon) {
-		super(position, null, null, EntityType.PLAYER);
+	public Player(Vector2D position, Weapon weapon,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+		super(position, null, null, EntityType.PLAYER,game);
 
 		Rectangle rect = new Rectangle(position.clone(), width, height);
 		this.setDrawable(rect);
@@ -37,8 +38,8 @@ public class Player extends WeightEntity<Rectangle, BoxCollider> {
 		this.getDrawable().setShouldFill(true);
 
 		this.setCollider(new BoxCollider(position.clone(), width, height));
-		this.mouseData = Game.inputData.getMouseData();
-		this.keyData = Game.inputData.getKeyData();
+		this.mouseData = this.getGame().getInputData().getMouseData();
+		this.keyData = this.getGame().getInputData().getKeyData();
 
 		this.weapon = weapon;
 

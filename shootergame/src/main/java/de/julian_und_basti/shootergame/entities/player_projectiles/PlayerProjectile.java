@@ -1,22 +1,23 @@
 package de.julian_und_basti.shootergame.entities.player_projectiles;
 
 import de.basti.game_framework.collision.BoxCollider;
+import de.basti.game_framework.controls.Game;
+import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.EntityType;
-import de.julian_und_basti.shootergame.entities.WeightEntity;
+import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
-import de.julian_und_basti.shootergame.levels.Wall;
 
-public abstract class PlayerProjectile extends WeightEntity<Rectangle, BoxCollider>{
+public abstract class PlayerProjectile extends CustomEntity<Rectangle, BoxCollider>{
 
 	private double speed;
 	private int damage;
 	
 	private Vector2D movement = new Vector2D(0,0);
 
-	public PlayerProjectile(Vector2D position, BoxCollider collider, Rectangle drawable, PlayerProjectileStats stats) {
-		super(position, collider, drawable, EntityType.PLAYER_PROJECTILE);
+	public PlayerProjectile(Vector2D position, BoxCollider collider, Rectangle drawable, PlayerProjectileStats stats,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+		super(position, collider, drawable, EntityType.PLAYER_PROJECTILE,game);
 		this.setWeight(0);
 		this.setSpeed(stats.speed);
 		this.setDamage(stats.damage);

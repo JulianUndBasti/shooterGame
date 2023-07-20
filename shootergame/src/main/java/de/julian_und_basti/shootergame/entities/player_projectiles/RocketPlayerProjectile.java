@@ -1,10 +1,12 @@
 package de.julian_und_basti.shootergame.entities.player_projectiles;
 
 import de.basti.game_framework.collision.BoxCollider;
+import de.basti.game_framework.controls.Game;
+import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.math.Vector2D;
-import de.julian_und_basti.shootergame.Game;
+import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
 import javafx.scene.paint.Color;
 
@@ -16,8 +18,8 @@ public class RocketPlayerProjectile extends PlayerProjectile {
 	private double maxSpeed;
 
 
-	public RocketPlayerProjectile(Vector2D shootPosition, Vector2D direction, PlayerProjectileStats stats) {
-		super(shootPosition, null, null, new PlayerProjectileStats(stats.damage, stats.speed/10));
+	public RocketPlayerProjectile(Vector2D shootPosition, Vector2D direction, PlayerProjectileStats stats,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+		super(shootPosition, null, null, new PlayerProjectileStats(stats.damage, stats.speed/10),game);
 		
 		
 		Rectangle rect = new Rectangle(shootPosition.clone(), width, height);
@@ -56,11 +58,11 @@ public class RocketPlayerProjectile extends PlayerProjectile {
 	}
 	
 	private void explode() {
-		PlayerProjectile projectile = new RocketExplosion(getPosition().clone(), 80);
-		Game.addTaskForEndOfUpdate(() -> {
-			Game.addEntity(DrawingLayer.FOREGROUND, projectile);
+		PlayerProjectile projectile = new RocketExplosion(getPosition().clone(), 80,this.getGame());
+		this.getGame().addTaskForEndOfUpdate(() -> {
+			this.getGame().addEntity(DrawingLayer.FOREGROUND, projectile);
 		});
 
-		Game.removeEntity(this);
+		this.getGame().removeEntity(this);
 	}
 }

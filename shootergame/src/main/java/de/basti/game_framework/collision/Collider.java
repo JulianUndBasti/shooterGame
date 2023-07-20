@@ -54,5 +54,6 @@ public interface Collider {
 	public boolean collidesWith(Vector2D vector);
 
 	public void translate(Vector2D vector);
+	
 
 }
