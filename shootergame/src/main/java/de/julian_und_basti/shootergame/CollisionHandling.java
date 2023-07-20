@@ -24,73 +24,74 @@ public class CollisionHandling {
 		noCollisions.add(new Pair<>(EntityType.PLAYER_PROJECTILE, EntityType.PLAYER));
 
 	}
+	
+	
+	//only works with valid input
+	private static boolean swapToTemplate(CollisionPair<CustomEntity<? extends Drawable, ? extends BoxCollider>> pair, EntityType type1, EntityType type2){
+		if(pair.getCollider1().getType()==type1&&pair.getCollider2().getType()==type2) {
+			return true;
+		} 
+		
+		if(pair.getCollider2().getType()==type1&&pair.getCollider1().getType()==type2) {
+			CustomEntity<? extends Drawable, ? extends BoxCollider> temp = pair.getCollider1();
+			pair.setCollider1(pair.getCollider2());
+			pair.setCollider2(temp);
+			return true;
+		}
+		
+		return false;
+		
+	}
+	
 
 	public static CollisionHandler<CustomEntity<? extends Drawable, ? extends BoxCollider>> handler = new CollisionHandler<>() {
 
 		@Override
 		public void onBegin(CollisionPair<CustomEntity<? extends Drawable, ? extends BoxCollider>> pair) {
 
-			var c1 = pair.getCollider1();
-			var c2 = pair.getCollider2();
-
 			for (Pair<EntityType, EntityType> noCollision : noCollisions) {
-				if (c1.getType() == noCollision.getKey() && c2.getType() == noCollision.getValue()) {
+				if (pair.getCollider1().getType() == noCollision.getKey() && pair.getCollider2().getType() == noCollision.getValue()) {
 					return;
 				}
-				if (c2.getType() == noCollision.getKey() && c1.getType() == noCollision.getValue()) {
+				if (pair.getCollider2().getType() == noCollision.getKey() && pair.getCollider1().getType() == noCollision.getValue()) {
 					return;
 				}
 			}
 
-			BoxCollider box1 = c1.getCollider();
-			BoxCollider box2 = c2.getCollider();
+			
+			if (swapToTemplate(pair, EntityType.ENEMY, EntityType.PLAYER_PROJECTILE)) {
 
-			if (c1.getType() == EntityType.PLAYER_PROJECTILE && c2.getType() == EntityType.ENEMY) {
-
-				Enemy<?> enemy = (Enemy<?>) c2;
-				PlayerProjectile projectile = (PlayerProjectile) c1;
+				Enemy<?> enemy = (Enemy<?>) pair.getCollider1();
+				PlayerProjectile projectile = (PlayerProjectile) pair.getCollider2();
 
 				enemyProjectileCollision(enemy, projectile);
 
 				return;
 			}
 
-			if (c1.getType() == EntityType.ENEMY && c2.getType() == EntityType.PLAYER_PROJECTILE) {
 
-				Enemy<?> enemy = (Enemy<?>) c1;
-				PlayerProjectile projectile = (PlayerProjectile) c2;
-
-				enemyProjectileCollision(enemy, projectile);
-
-				return;
-			}
-
-			if (c1.getType() == EntityType.PLAYER_PROJECTILE && c2.getType() == EntityType.WALL) {
-				PlayerProjectile projectile = (PlayerProjectile) c1;
+			if (swapToTemplate(pair, EntityType.PLAYER_PROJECTILE, EntityType.WALL)) {
+				PlayerProjectile projectile = (PlayerProjectile) pair.getCollider1();
 
 				wallProjectileCollision(projectile);
-
 				return;
 
 			}
+			
+			BoxCollider box1 = pair.getCollider1().getCollider();
+			BoxCollider box2 = pair.getCollider2().getCollider();
 
-			if (c2.getType() == EntityType.PLAYER_PROJECTILE && c1.getType() == EntityType.WALL) {
-				PlayerProjectile projectile = (PlayerProjectile) c2;
-
-				wallProjectileCollision(projectile);
-
-			}
 
 			Vector2D displacement = this.getDisplacement(box1, box2);
 
-			int cw1 = c1.getWeight();
-			int cw2 = c2.getWeight();
+			int cw1 = pair.getCollider1().getWeight();
+			int cw2 = pair.getCollider2().getWeight();
 
-			if (c1.getType() == EntityType.WALL) {
+			if (pair.getCollider1().getType() == EntityType.WALL) {
 				cw1 = 1;
 				cw2 = 0;
 			}
-			if (c2.getType() == EntityType.WALL) {
+			if (pair.getCollider2().getType() == EntityType.WALL) {
 				cw1 = 0;
 				cw2 = 1;
 			}
@@ -101,8 +102,8 @@ public class CollisionHandling {
 			c1Displacement.scale(cw2 / sum);
 			c2Displacement.scale(-(cw1 / sum));
 
-			c1.translate(c1Displacement);
-			c2.translate(c2Displacement);
+			pair.getCollider1().translate(c1Displacement);
+			pair.getCollider2().translate(c2Displacement);
 
 		}
 
