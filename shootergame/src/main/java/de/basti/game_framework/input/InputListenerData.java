@@ -1,8 +1,9 @@
 package de.basti.game_framework.input;
 
+import de.basti.game_framework.controls.Updatable;
 import javafx.scene.Scene;
 
-public class InputListenerData {
+public class InputListenerData implements Updatable{
 	private KeyInputListenerData keyData = new KeyInputListenerData();
 	private MouseInputListenerData mouseData = new MouseInputListenerData();
 	
@@ -22,9 +23,9 @@ public class InputListenerData {
 	}
 
 	
-	public void pressesAndReleasesConsumed() {
-		this.keyData.pressesAndReleasesConsumed();
-		this.mouseData.pressesAndReleasesConsumed();
+	public void update(long deltaMillis) {
+		this.keyData.update(deltaMillis);
+		this.mouseData.update(deltaMillis);
 	}
 	
 	

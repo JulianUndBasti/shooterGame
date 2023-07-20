@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.basti.game_framework.collision.BoxCollider;
-import de.basti.game_framework.collision.Collider;
 import de.basti.game_framework.collision.GameCollisionSystem;
-import de.basti.game_framework.controls.Entity;
 import de.basti.game_framework.controls.GameLoop;
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.controls.Updater;
@@ -38,8 +36,6 @@ public class Game {
 				runnable.run();
 			}
 			endOfUpdateTasks = new ArrayList<>();
-
-			inputData.pressesAndReleasesConsumed();
 
 		}
 	};
@@ -88,11 +84,12 @@ public class Game {
 	};
 
 	static {
-		loop.getUpdater().getList().add(entityUpdater);
-		loop.getUpdater().getList().add(collisionSystem);
-		loop.getUpdater().getList().add(cameraUpdate);
-		loop.getUpdater().getList().add(drawing);
-		loop.getUpdater().getList().add(endOfUpdate);
+		loop.getUpdater().add(entityUpdater);
+		loop.getUpdater().add(inputData);
+		loop.getUpdater().add(collisionSystem);
+		loop.getUpdater().add(cameraUpdate);
+		loop.getUpdater().add(drawing);
+		loop.getUpdater().add(endOfUpdate);
 
 	}
 
@@ -100,14 +97,14 @@ public class Game {
 			WeightEntity<? extends Drawable, ? extends BoxCollider> e) {
 		drawing.add(l, e);
 		collisionSystem.add(e);
-		entityUpdater.getList().add(e);
+		entityUpdater.add(e);
 
 	}
 
 	public static void removeEntity(WeightEntity<? extends Drawable, ? extends BoxCollider> e) {
 		drawing.remove(e);
 		collisionSystem.remove(e);
-		entityUpdater.getList().remove(e);
+		entityUpdater.remove(e);
 
 	}
 

@@ -19,8 +19,29 @@ public class Updater implements Updatable{
 		}
 	}
 
-	public List<Updatable> getList() {
-		return list;
-	}	
+	public Updatable get(int i) {
+		return list.get(i);
+	}
+	
+	public void add(int i,Updatable u) {
+		this.list.add(i,u);
+	}
+	
+	public void add(Updatable u) {
+		this.list.add(u);
+	}
+	
+	public boolean remove(Updatable u) {
+		return this.list.remove(u);
+	}
+	
+	public void remove(int i) {
+		this.list.remove(i);
+	}
+	
+	
+	
+	
+	
 	
 }
