@@ -10,36 +10,34 @@ import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
-import de.julian_und_basti.shootergame.entities.walls.Wall;
 import javafx.util.Pair;
 import de.julian_und_basti.shootergame.entities.EntityType;
-import de.julian_und_basti.shootergame.entities.UpdatableWeightTypeEntity;
+import de.julian_und_basti.shootergame.entities.WeightEntity;
 
 public class CollisionHandling {
-	
-	private static List<Pair<EntityType,EntityType>> noCollisions = new ArrayList<>();
-	
+
+	private static List<Pair<EntityType, EntityType>> noCollisions = new ArrayList<>();
+
 	static {
 		noCollisions.add(new Pair<>(EntityType.WALL, EntityType.WALL));
 		noCollisions.add(new Pair<>(EntityType.PLAYER_PROJECTILE, EntityType.PLAYER_PROJECTILE));
 		noCollisions.add(new Pair<>(EntityType.PLAYER_PROJECTILE, EntityType.PLAYER));
-		
-		
+
 	}
-	
-	public static CollisionHandler<UpdatableWeightTypeEntity<? extends Drawable, ? extends BoxCollider>> handler = new CollisionHandler<>() {
+
+	public static CollisionHandler<WeightEntity<? extends Drawable, ? extends BoxCollider>> handler = new CollisionHandler<>() {
 
 		@Override
-		public void onBegin(CollisionPair<UpdatableWeightTypeEntity<? extends Drawable, ? extends BoxCollider>> pair) {
+		public void onBegin(CollisionPair<WeightEntity<? extends Drawable, ? extends BoxCollider>> pair) {
 
 			var c1 = pair.getCollider1();
 			var c2 = pair.getCollider2();
 
-			for(Pair<EntityType, EntityType> noCollision : noCollisions) {
-				if(c1.getType()==noCollision.getKey()&&c2.getType()==noCollision.getValue()) {
+			for (Pair<EntityType, EntityType> noCollision : noCollisions) {
+				if (c1.getType() == noCollision.getKey() && c2.getType() == noCollision.getValue()) {
 					return;
 				}
-				if(c2.getType()==noCollision.getKey()&&c1.getType()==noCollision.getValue()) {
+				if (c2.getType() == noCollision.getKey() && c1.getType() == noCollision.getValue()) {
 					return;
 				}
 			}
@@ -66,27 +64,22 @@ public class CollisionHandling {
 
 				return;
 			}
-			
+
 			if (c1.getType() == EntityType.PLAYER_PROJECTILE && c2.getType() == EntityType.WALL) {
 				PlayerProjectile projectile = (PlayerProjectile) c1;
 
 				wallProjectileCollision(projectile);
 
 				return;
-			
+
 			}
-			
+
 			if (c2.getType() == EntityType.PLAYER_PROJECTILE && c1.getType() == EntityType.WALL) {
 				PlayerProjectile projectile = (PlayerProjectile) c2;
 
 				wallProjectileCollision(projectile);
 
-				
 			}
-			
-			
-			
-			
 
 			Vector2D displacement = this.getDisplacement(box1, box2);
 
@@ -118,14 +111,11 @@ public class CollisionHandling {
 			enemy.hit(projectile);
 
 		}
-		
-		
+
 		private void wallProjectileCollision(PlayerProjectile projectile) {
 			projectile.hitWall();
 
 		}
-		
-		
 
 		private Vector2D getDisplacement(BoxCollider box1, BoxCollider box2) {
 			double rightLeftDiff = box1.getPosition().getX() + box1.getWidth() - box2.getPosition().getX();
@@ -164,14 +154,13 @@ public class CollisionHandling {
 		}
 
 		@Override
-		public void onOngoing(
-				CollisionPair<UpdatableWeightTypeEntity<? extends Drawable, ? extends BoxCollider>> pair) {
+		public void onOngoing(CollisionPair<WeightEntity<? extends Drawable, ? extends BoxCollider>> pair) {
 			this.onBegin(pair);
 
 		}
 
 		@Override
-		public void onEnd(CollisionPair<UpdatableWeightTypeEntity<? extends Drawable, ? extends BoxCollider>> pair) {
+		public void onEnd(CollisionPair<WeightEntity<? extends Drawable, ? extends BoxCollider>> pair) {
 
 		}
 	};

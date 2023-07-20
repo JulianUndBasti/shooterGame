@@ -4,16 +4,16 @@ import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.EntityType;
-import de.julian_und_basti.shootergame.entities.UpdatableWeightTypeEntity;
+import de.julian_und_basti.shootergame.entities.WeightEntity;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 
-public abstract class Enemy<D extends Drawable> extends UpdatableWeightTypeEntity<D, BoxCollider>{
-
+public abstract class Enemy<D extends Drawable> extends WeightEntity<D, BoxCollider>{
+	
 	private int health = 100;
 	private double speed = 0.2;
 
-	public Enemy(Vector2D position, BoxCollider collider, D drawable, EntityType type) {
-		super(position, collider, drawable, type);
+	public Enemy(Vector2D position, BoxCollider collider, D drawable) {
+		super(position, collider, drawable, EntityType.ENEMY);
 	}
 
 	public int getHealth() {

@@ -15,7 +15,7 @@ import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.GameDrawing;
 import de.basti.game_framework.input.InputListenerData;
 import de.basti.game_framework.math.Vector2D;
-import de.julian_und_basti.shootergame.entities.UpdatableWeightTypeEntity;
+import de.julian_und_basti.shootergame.entities.WeightEntity;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -57,15 +57,15 @@ public class Game {
 	// game-framework
 	public static GameDrawing drawing = new GameDrawing(gc);
 	public static InputListenerData inputData = new InputListenerData(scene);
-	public static GameCollisionSystem<UpdatableWeightTypeEntity<? extends Drawable, ? extends BoxCollider>> collisionSystem = new GameCollisionSystem<>();
+	public static GameCollisionSystem<WeightEntity<? extends Drawable, ? extends BoxCollider>> collisionSystem = new GameCollisionSystem<>();
 	public static GameLoop loop = new GameLoop();
 
-	private static UpdatableWeightTypeEntity<? extends Drawable, ? extends BoxCollider> camera = new UpdatableWeightTypeEntity<Drawable, BoxCollider>(
+	private static WeightEntity<? extends Drawable, ? extends BoxCollider> camera = new WeightEntity<Drawable, BoxCollider>(
 			new Vector2D(0, 0), new BoxCollider(new Vector2D(0, 0), 0, 0), null, null) {
 
 		@Override
 		public void update(long deltaMillis) {
-			// nothing
+			
 
 		}
 
@@ -82,6 +82,7 @@ public class Game {
 					(Game.height - camera.getCollider().getHeight()) / 2);
 			Game.drawing.setTransform(transform);
 			Game.inputData.getMouseData().setTransform(transform);
+			System.out.println(deltaMillis);
 
 		}
 	};
@@ -96,21 +97,21 @@ public class Game {
 	}
 
 	public static void addEntity(DrawingLayer l,
-			UpdatableWeightTypeEntity<? extends Drawable, ? extends BoxCollider> e) {
+			WeightEntity<? extends Drawable, ? extends BoxCollider> e) {
 		drawing.add(l, e);
 		collisionSystem.add(e);
 		entityUpdater.getList().add(e);
 
 	}
 
-	public static void removeEntity(UpdatableWeightTypeEntity<? extends Drawable, ? extends BoxCollider> e) {
+	public static void removeEntity(WeightEntity<? extends Drawable, ? extends BoxCollider> e) {
 		drawing.remove(e);
 		collisionSystem.remove(e);
 		entityUpdater.getList().remove(e);
 
 	}
 
-	public static void stickCameraTo(UpdatableWeightTypeEntity<? extends Drawable, ? extends BoxCollider> e) {
+	public static void stickCameraTo(WeightEntity<? extends Drawable, ? extends BoxCollider> e) {
 		camera = e;
 	}
 

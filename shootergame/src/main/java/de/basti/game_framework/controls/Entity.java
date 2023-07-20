@@ -5,16 +5,19 @@ import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.math.Vector2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public class Entity<D extends Drawable, C extends Collider> implements Drawable,Collider{
+public abstract class Entity<D extends Drawable, C extends Collider,T extends Enum<?>> implements Drawable,Collider,Updatable{
 	private Vector2D position;
 	private C collider;
 	private D drawable;
+	private T type;
 	
-	public Entity(Vector2D position, C collider, D drawable) {
+	
+	public Entity(Vector2D position, C collider, D drawable, T type) {
 		super();
 		this.position = position;
 		this.collider = collider;
 		this.drawable = drawable;
+		this.type = type;
 	}
 	
 	public C getCollider() {
@@ -68,6 +71,14 @@ public class Entity<D extends Drawable, C extends Collider> implements Drawable,
 	@Override
 	public void draw(GraphicsContext gc) {
 		this.drawable.draw(gc);
+	}
+	
+	public T getType() {
+		return type;
+	}
+
+	public void setType(T type) {
+		this.type = type;
 	}
 	
 }

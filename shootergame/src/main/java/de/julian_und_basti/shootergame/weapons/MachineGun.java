@@ -19,7 +19,7 @@ public class MachineGun extends Weapon{
 	}
 	
 	public MachineGun(PlayerProjectileFactory factory, PlayerProjectileStats stats) {
-		super(60, factory, stats);
+		super(1, factory, stats);
 
 	}
 

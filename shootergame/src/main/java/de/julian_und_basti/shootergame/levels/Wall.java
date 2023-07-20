@@ -1,13 +1,13 @@
-package de.julian_und_basti.shootergame.entities.walls;
+package de.julian_und_basti.shootergame.levels;
 
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.EntityType;
-import de.julian_und_basti.shootergame.entities.UpdatableWeightTypeEntity;
+import de.julian_und_basti.shootergame.entities.WeightEntity;
 import javafx.scene.paint.Color;
 
-public class Wall extends UpdatableWeightTypeEntity<Rectangle, BoxCollider> {
+public class Wall extends WeightEntity<Rectangle, BoxCollider> {
 
 	public Wall(Vector2D position, double width, double height) {
 		super(position, null, null, EntityType.WALL);

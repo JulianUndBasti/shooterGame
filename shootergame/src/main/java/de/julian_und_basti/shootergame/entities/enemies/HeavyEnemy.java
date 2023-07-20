@@ -22,7 +22,7 @@ public class HeavyEnemy extends Enemy<Rectangle> {
 	private Player playerToFollow;
 	
 	public HeavyEnemy(Vector2D position, Player playerToFollow) {
-		super(position, null, null, EntityType.ENEMY);
+		super(position, null, null);
 
 		Rectangle rect = new Rectangle(position.clone(), width, height);
 		this.setDrawable(rect);

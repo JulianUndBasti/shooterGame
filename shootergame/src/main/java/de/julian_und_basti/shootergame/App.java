@@ -11,7 +11,9 @@ import de.julian_und_basti.shootergame.entities.enemies.WalkerEnemy;
 import de.julian_und_basti.shootergame.entities.player.Player;
 import de.julian_und_basti.shootergame.entities.player_projectiles.RocketPlayerProjectile;
 import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
-import de.julian_und_basti.shootergame.entities.walls.Wall;
+import de.julian_und_basti.shootergame.levels.Level;
+import de.julian_und_basti.shootergame.levels.SimpleLevel;
+import de.julian_und_basti.shootergame.levels.Wall;
 import de.julian_und_basti.shootergame.weapons.MachineGun;
 import de.julian_und_basti.shootergame.weapons.Pistol;
 import de.julian_und_basti.shootergame.weapons.RocketLauncher;
@@ -24,13 +26,13 @@ import javafx.stage.Stage;
 public class App extends Application {
 
 	private Player player = new Player(new Vector2D(Game.width / 2, Game.height / 2),
-			new MachineGun(SimplePlayerProjectile::new));
+			new RocketLauncher(RocketPlayerProjectile::new));
 
 	private Sprite backgroundSprite = new Sprite(new Vector2D(), Images.background);
 
 	private Background background = new Background(backgroundSprite, player);
 
-	
+	private Level level = new SimpleLevel(player);
 
 	@Override
 	public void start(Stage stage) {
@@ -40,17 +42,7 @@ public class App extends Application {
 
 		Game.addEntity(DrawingLayer.FORE_MIDDLE, player);
 
-		for (int i = 0; i < 25; i++) {
-			Wall wall = new Wall(new Vector2D(Math.random() * Game.width, Math.random() * Game.height),
-					Math.random() * 20 + 20, Math.random() * 20 + 20);
-			Game.addEntity(DrawingLayer.MIDDLE, wall);
-		}
-
-		for (int i = 0; i < 1; i++) {
-			Enemy<?> enemy = new SplitterEnemy(new Vector2D(Math.random() * Game.width, Math.random() * Game.height),
-					player);
-			Game.addEntity(DrawingLayer.MIDDLE, enemy);
-		}
+		level.buildLevel();
 
 		Game.drawing.add(DrawingLayer.BACKGROUND, background);
 		

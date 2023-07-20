@@ -7,13 +7,13 @@ import de.basti.game_framework.input.MouseInputListenerData;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.Game;
 import de.julian_und_basti.shootergame.entities.EntityType;
-import de.julian_und_basti.shootergame.entities.UpdatableWeightTypeEntity;
+import de.julian_und_basti.shootergame.entities.WeightEntity;
 import de.julian_und_basti.shootergame.weapons.Weapon;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 
-public class Player extends UpdatableWeightTypeEntity<Rectangle, BoxCollider> {
+public class Player extends WeightEntity<Rectangle, BoxCollider> {
 
 	private double width = 30;
 	private double height = 30;
