@@ -9,22 +9,24 @@ import de.julian_und_basti.shootergame.entities.enemies.WalkerEnemy;
 import de.julian_und_basti.shootergame.entities.player.Player;
 
 public class SimpleLevel extends Level {
-
+	
+	private double width = 5000;
+	private double height = 5000;
+	
+	
+	private Vector2D playerPosition = new Vector2D(width/2,height/2);
+	
+	private double wallWidth = 100;
+	
 	public SimpleLevel(Player player,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(player,game);
-		player.setPosition(new Vector2D(100,100));
+		player.setPosition(playerPosition);
 		
-		int wallWidth = 50;
-		
-		this.addWall(new Wall(new Vector2D(-wallWidth,-wallWidth), 800+wallWidth, wallWidth,getGame()));
-		this.addWall(new Wall(new Vector2D(-wallWidth,0), wallWidth, 600,getGame()));
-		this.addWall(new Wall(new Vector2D(800, -wallWidth), wallWidth, 600+wallWidth*2,getGame()));
-		this.addWall(new Wall(new Vector2D(-wallWidth,600), 800+wallWidth, wallWidth,getGame()));
-		
-		this.addEnemy(new WalkerEnemy(new Vector2D(600,500), player,getGame()));
-		this.addEnemy(new WalkerEnemy(new Vector2D(630,470), player,getGame()));
-		this.addEnemy(new WalkerEnemy(new Vector2D(650,530), player,getGame()));
-		
+		this.addWall(new Wall(new Vector2D(-wallWidth,-wallWidth), width+wallWidth, wallWidth,getGame()));
+		this.addWall(new Wall(new Vector2D(-wallWidth,0), wallWidth, height,getGame()));
+		this.addWall(new Wall(new Vector2D(width, -wallWidth), wallWidth, height+wallWidth*2,getGame()));
+		this.addWall(new Wall(new Vector2D(-wallWidth,height), width+wallWidth, wallWidth,getGame()));
+
 		
 		
 	

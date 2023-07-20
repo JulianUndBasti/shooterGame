@@ -15,7 +15,6 @@ public abstract class Level {
 
 	private Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game;
 	private Player player;
-	private List<Enemy<?>> enemies = new ArrayList<>();
 	private List<Wall> walls = new ArrayList<>();
 	
 	
@@ -28,11 +27,6 @@ public abstract class Level {
 	public void buildLevel() {
 		this.game.addEntity(DrawingLayer.MIDDLE, player);
 
-		for (Enemy<?> enemy : this.enemies) {
-			this.game.addEntity(DrawingLayer.BACK_MIDDLE, enemy);
-
-		}
-
 		for (Wall wall : this.walls) {
 			this.game.addEntity(DrawingLayer.FORE_MIDDLE, wall);
 
@@ -44,10 +38,6 @@ public abstract class Level {
 		this.walls.add(wall);
 	}
 
-	protected void addEnemy(Enemy<?> enemy) {
-		this.enemies.add(enemy);
-	}
-	
 	protected void setPlayer(Player Player) {
 		this.player = Player;
 	}
