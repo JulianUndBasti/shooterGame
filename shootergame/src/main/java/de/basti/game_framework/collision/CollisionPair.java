@@ -1,5 +1,8 @@
 package de.basti.game_framework.collision;
 
+import de.basti.game_framework.controls.Entity;
+import de.basti.game_framework.drawing.Drawable;
+
 /**
  * Wrapper for two Collider Objects, which have collided. 
  * The equals method returns true even if the {@code Collider}s are swapped.
@@ -11,14 +14,17 @@ package de.basti.game_framework.collision;
  * @see CollisionHandler
  *  
  */
-public class CollisionPair<T extends Collider> {
+public class CollisionPair<T extends Entity<? extends Drawable,? extends Collider,? extends Enum<?>>> {
 	private T collider1;
 	private T collider2;
+	private CollisionType type = null;
+	
 	
 	public CollisionPair(T collider1, T collider2) {
 		super();
 		this.collider1 = collider1;
 		this.collider2 = collider2;
+		
 	}
 	
 	public T getCollider1() {
@@ -78,6 +84,14 @@ public class CollisionPair<T extends Collider> {
 	@Override
 	public String toString() {
 		return "CollisionPair [collider1=" + collider1 + ", collider2=" + collider2 + "]";
+	}
+
+	public CollisionType getType() {
+		return type;
+	}
+
+	public void setType(CollisionType type) {
+		this.type = type;
 	}
 	
 	
