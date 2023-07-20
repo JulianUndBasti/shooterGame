@@ -3,6 +3,7 @@ package de.basti.game_framework.controls;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.collision.CollisionHandler;
 import de.basti.game_framework.collision.GameCollisionSystem;
 import de.basti.game_framework.drawing.Drawable;
@@ -10,61 +11,94 @@ import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.GameDrawing;
 import de.basti.game_framework.input.InputListenerData;
 import de.basti.game_framework.math.Vector2D;
+import de.julian_und_basti.shootergame.entities.CustomEntity;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Game<E extends Entity<?, ?, ?>> {
+
+	public enum UpdatePhase implements Updatable {
+		BEGIN, USER_UPDATE, INPUT_UPDATE, COLLISION_UPDATE, CAMERA_UPDATE, DRAWING_UPDATE, END;
+
+		private final Updater updater;
+
+		private UpdatePhase() {
+			this.updater = new Updater();
+		}
+
+		@Override
+		public void update(long deltaMillis) {
+			this.updater.update(deltaMillis);
+
+		}
+		
+		public void add(Updatable u) {
+			this.updater.add(u);
+		}
+		
+		public boolean remove(Updatable u) {
+			return this.updater.remove(u);
+		}
+		
+
+	}
 
 	private double width;
 	private double height;
 
 	private GameCollisionSystem<E> collisionSystem = new GameCollisionSystem<E>();
 	private GameDrawing drawing;
-	private Updater updater = new Updater();
 	private GameLoop loop = new GameLoop();
 	private InputListenerData inputData;
-
 	private List<Runnable> endOfUpdateTasks = new ArrayList<>();
-
-	private Updatable endOfUpdate = new Updatable() {
-
-		@Override
-		public void update(long deltaMillis) {
-			for (Runnable runnable : endOfUpdateTasks) {
-				runnable.run();
-			}
-			endOfUpdateTasks = new ArrayList<>();
-
-		}
-	};
-
 	private E camera = null;
-
-	private Updatable cameraUpdate = new Updatable() {
-
-		@Override
-		public void update(long deltaMillis) {
-			// transform the camera so the player stays in the middle
-			Vector2D transform = camera.getPosition().clone();
-			transform.scale(-1);
-			transform.translate(width/2,height/2);
-			drawing.setTransform(transform);
-			inputData.getMouseData().setTransform(transform);
-			System.out.println(deltaMillis);
-
-		}
-	};
-
+	
 	public Game(Scene scene, GraphicsContext gc) {
 		this.drawing = new GameDrawing(gc);
 		this.inputData = new InputListenerData(scene);
 
-		loop.getUpdater().add(this.updater);
-		loop.getUpdater().add(this.inputData);
-		loop.getUpdater().add(this.collisionSystem);
-		loop.getUpdater().add(cameraUpdate);
-		loop.getUpdater().add(drawing);
-		loop.getUpdater().add(endOfUpdate);
+		
+		
+		UpdatePhase.INPUT_UPDATE.add(inputData);
+		
+		UpdatePhase.COLLISION_UPDATE.add(collisionSystem);
+		
+		UpdatePhase.CAMERA_UPDATE.add(new Updatable() {
+
+			@Override
+			public void update(long deltaMillis) {
+				// transform the camera so the player stays in the middle
+				Vector2D transform = camera.getPosition().clone();
+				transform.scale(-1);
+				transform.translate(width / 2, height / 2);
+				getDrawing().setTransform(transform);
+				getInputData().getMouseData().setTransform(transform);
+				System.out.println(deltaMillis);
+
+			}
+		});
+		
+		UpdatePhase.DRAWING_UPDATE.add(drawing);
+		
+		UpdatePhase.END.add( new Updatable() {
+
+			@Override
+			public void update(long deltaMillis) {
+				for (Runnable runnable : endOfUpdateTasks) {
+					runnable.run();
+				}
+				endOfUpdateTasks = new ArrayList<>();
+
+			}
+		});
+		
+
+		loop.getUpdater().add(UpdatePhase.USER_UPDATE);
+		loop.getUpdater().add(UpdatePhase.INPUT_UPDATE);
+		loop.getUpdater().add(UpdatePhase.COLLISION_UPDATE);
+		loop.getUpdater().add(UpdatePhase.CAMERA_UPDATE);
+		loop.getUpdater().add(UpdatePhase.DRAWING_UPDATE);
+		loop.getUpdater().add(UpdatePhase.END);
 
 		this.width = gc.getCanvas().getWidth();
 		this.height = gc.getCanvas().getHeight();
@@ -86,11 +120,11 @@ public class Game<E extends Entity<?, ?, ?>> {
 	}
 
 	public boolean removeUpdatable(Updatable u) {
-		return this.updater.remove(u);
+		return UpdatePhase.USER_UPDATE.remove(u);
 	}
 
 	public void addUpdatable(Updatable u) {
-		this.updater.add(u);
+		UpdatePhase.USER_UPDATE.add(u);
 	}
 
 	public boolean removeDrawable(Drawable d) {
@@ -135,10 +169,6 @@ public class Game<E extends Entity<?, ?, ?>> {
 
 	public GameDrawing getDrawing() {
 		return drawing;
-	}
-
-	public Updater getUpdater() {
-		return updater;
 	}
 
 	public GameLoop getLoop() {

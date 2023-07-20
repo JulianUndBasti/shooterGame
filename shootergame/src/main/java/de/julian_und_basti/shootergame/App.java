@@ -2,6 +2,7 @@ package de.julian_und_basti.shootergame;
 
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Game;
+import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.Sprite;
@@ -36,7 +37,6 @@ public class App extends Application {
 	private Game<CustomEntity<? extends Drawable,? extends BoxCollider>> game = new Game<>(scene, gc);
 	
 	
-
 	private Player player = new Player(new Vector2D(width / 2, height / 2),
 			new RocketLauncher(RocketPlayerProjectile::new, game),game);
 
@@ -60,6 +60,7 @@ public class App extends Application {
 		
 		game.stickCameraTo(player);
 		
+	
 		game.start();
 
 		stage.setScene(this.scene);
