@@ -9,6 +9,7 @@ import de.basti.game_framework.collision.CollisionPair;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
+import de.julian_und_basti.shootergame.entities.player.Player;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 import javafx.util.Pair;
 import de.julian_und_basti.shootergame.entities.EntityType;
@@ -75,6 +76,15 @@ public class CollisionHandling {
 
 				wallProjectileCollision(projectile);
 				return;
+
+			}
+			
+			if (swapToTemplate(pair, EntityType.ENEMY, EntityType.PLAYER)) {
+				Enemy<?> enemy = (Enemy<?>) pair.getCollider1();
+				Player player = (Player) pair.getCollider2();
+
+				player.hitByEnemy(enemy);
+				//dont return here
 
 			}
 			

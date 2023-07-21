@@ -73,7 +73,6 @@ public class Game<E extends Entity<?, ?, ?>> {
 				transform.translate(width / 2, height / 2);
 				getDrawing().setTransform(transform);
 				getInputData().getMouseData().setTransform(transform);
-				System.out.println(deltaMillis);
 
 			}
 		});

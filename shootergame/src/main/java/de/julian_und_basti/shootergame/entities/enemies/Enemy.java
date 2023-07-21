@@ -12,6 +12,7 @@ public abstract class Enemy<D extends Drawable> extends CustomEntity<D, BoxColli
 	
 	private int health = 100;
 	private double speed = 0.2;
+	private int damage = 15; 
 
 	public Enemy(Vector2D position, BoxCollider collider, D drawable,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(position, collider, drawable, EntityType.ENEMY, game);
@@ -38,5 +39,15 @@ public abstract class Enemy<D extends Drawable> extends CustomEntity<D, BoxColli
 	}
 
 	public abstract void hit(PlayerProjectile p);
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+	
+	
 
 }

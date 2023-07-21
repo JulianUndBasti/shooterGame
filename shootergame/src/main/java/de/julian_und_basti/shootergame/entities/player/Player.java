@@ -8,6 +8,7 @@ import de.basti.game_framework.input.KeyInputListenerData;
 import de.basti.game_framework.input.MouseInputListenerData;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.EntityType;
+import de.julian_und_basti.shootergame.entities.enemies.Enemy;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.weapons.Weapon;
 import javafx.scene.input.KeyCode;
@@ -28,6 +29,11 @@ public class Player extends CustomEntity<Rectangle, BoxCollider> {
 	private KeyInputListenerData keyData;
 
 	private Weapon weapon;
+	
+	private int health = 100;
+	
+	private int hitDelay = 1000;
+	private int timeSinceHit = 1000;
 
 	public Player(Vector2D position, Weapon weapon,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(position, null, null, EntityType.PLAYER,game);
@@ -51,6 +57,14 @@ public class Player extends CustomEntity<Rectangle, BoxCollider> {
 
 	@Override
 	public void update(long deltaMillis) {
+		if(timeSinceHit<=hitDelay) {
+			timeSinceHit+=deltaMillis;
+			this.getDrawable().setFillColor(Color.LIGHTBLUE);
+		}else {
+			this.getDrawable().setFillColor(Color.BLUE);
+		}
+		
+		
 		movement.set(0, 0);
 		if (keyData.isDown(KeyCode.W)) {
 			movement.translate(0, -1);
@@ -90,6 +104,21 @@ public class Player extends CustomEntity<Rectangle, BoxCollider> {
 		return movement;
 
 	}
+	
+	public void hitByEnemy(Enemy<?> enemy) {
+		if(timeSinceHit>hitDelay) {
+			this.health-=enemy.getDamage();
+			if(health<0) {
+				health=0;
+				
+			}
+			System.out.println(health);
+			
+			timeSinceHit=0;
+		}
+		
+		
+	}
 
 	public double getWidth() {
 		return width;
@@ -114,5 +143,15 @@ public class Player extends CustomEntity<Rectangle, BoxCollider> {
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
 	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+	
+	
 
 }
