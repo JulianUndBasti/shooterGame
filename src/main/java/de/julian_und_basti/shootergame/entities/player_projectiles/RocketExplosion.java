@@ -1,15 +1,22 @@
 package de.julian_und_basti.shootergame.entities.player_projectiles;
 
+import java.net.URL;
+
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Game;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.math.Vector2D;
+import de.julian_und_basti.shootergame.Sounds;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 public class RocketExplosion extends PlayerProjectile{
+	
 	private double height = 50;
 	private double width = 50;
 	

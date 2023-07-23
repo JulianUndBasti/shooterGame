@@ -5,6 +5,7 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 
 /**
@@ -34,6 +35,9 @@ public class Sprite implements Drawable {
 		
 		this.imageView.setFitWidth(image.getWidth());
 		this.imageView.setFitHeight(image.getHeight());
+		
+		params.setFill(Color.TRANSPARENT);
+		
 		
 		
 	}

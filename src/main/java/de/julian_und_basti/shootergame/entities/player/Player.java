@@ -4,21 +4,25 @@ import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Game;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.Rectangle;
+import de.basti.game_framework.drawing.Sprite;
 import de.basti.game_framework.input.KeyInputListenerData;
 import de.basti.game_framework.input.MouseInputListenerData;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.EntityType;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
+import de.julian_und_basti.shootergame.Images;
+import de.julian_und_basti.shootergame.Sounds;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.weapons.Weapon;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
-public class Player extends CustomEntity<Rectangle, BoxCollider> {
+public class Player extends CustomEntity<Sprite, BoxCollider> {
 
-	private double width = 30;
-	private double height = 30;
+	private double width = 48;
+	private double height = 48;
 
 	private static final double DEFAULT_SPEED = 0.4;
 	private static final int DEFAULT_WEIGHT = 500;
@@ -34,16 +38,19 @@ public class Player extends CustomEntity<Rectangle, BoxCollider> {
 	
 	private int hitDelay = 1000;
 	private int timeSinceHit = 1000;
+	
+	private double rotation = -90;
 
 	public Player(Vector2D position, Weapon weapon,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(position, null, null, EntityType.PLAYER,game);
 
-		Rectangle rect = new Rectangle(position.clone(), width, height);
-		this.setDrawable(rect);
-		this.getDrawable().setFillColor(Color.BLUE);
-		this.getDrawable().setShouldFill(true);
+		Sprite sprite = new Sprite(position.clone(),Images.player);
+		sprite.setWidth(width);
+		sprite.setHeight(height);
+		
+		this.setDrawable(sprite);
 
-		this.setCollider(new BoxCollider(position.clone(), width, height));
+		this.setCollider(new BoxCollider(position.translated(width*0.05,height*0.05), width*0.9, height*0.9));
 		this.mouseData = this.getGame().getInputData().getMouseData();
 		this.keyData = this.getGame().getInputData().getKeyData();
 
@@ -59,9 +66,6 @@ public class Player extends CustomEntity<Rectangle, BoxCollider> {
 	public void update(long deltaMillis) {
 		if(timeSinceHit<=hitDelay) {
 			timeSinceHit+=deltaMillis;
-			this.getDrawable().setFillColor(Color.LIGHTBLUE);
-		}else {
-			this.getDrawable().setFillColor(Color.BLUE);
 		}
 		
 		
@@ -79,6 +83,12 @@ public class Player extends CustomEntity<Rectangle, BoxCollider> {
 			movement.translate(1, 0);
 		}
 		movement.normalize();
+		if(!(movement.getX()==0&&movement.getY()==0)) {
+			rotation = Math.toDegrees(Math.atan2(movement.getY(), movement.getX()))-90;
+		}
+		
+		this.getDrawable().setRotation(rotation);
+		
 		movement.scale(deltaMillis * speed);
 
 		if (movement.getX() != 0 || movement.getY() != 0) {
@@ -107,6 +117,13 @@ public class Player extends CustomEntity<Rectangle, BoxCollider> {
 	
 	public void hitByEnemy(Enemy<?> enemy) {
 		if(timeSinceHit>hitDelay) {
+			
+			this.getGame().addTaskForEndOfUpdate(() -> {
+				Sounds.hurt.seek(Duration.ZERO);
+				Sounds.hurt.play();
+				
+			});
+			
 			this.health-=enemy.getDamage();
 			if(health<0) {
 				health=0;

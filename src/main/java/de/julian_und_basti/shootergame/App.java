@@ -48,6 +48,7 @@ public class App extends Application {
 
 	@Override
 	public void start(Stage stage) {
+		Sounds.initPlayers();
 
 		game.getCollisionSystem().setUpdateIterations(4);
 		game.addCollisionHandler(CollisionHandling.handler);

@@ -6,9 +6,11 @@ import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.math.Vector2D;
+import de.julian_und_basti.shootergame.Sounds;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 public class RocketPlayerProjectile extends PlayerProjectile {
 
@@ -58,9 +60,12 @@ public class RocketPlayerProjectile extends PlayerProjectile {
 	}
 	
 	private void explode() {
+		
 		PlayerProjectile projectile = new RocketExplosion(getPosition().clone(), 80,this.getGame());
 		this.getGame().addTaskForEndOfUpdate(() -> {
 			this.getGame().addEntity(DrawingLayer.FOREGROUND, projectile);
+			Sounds.explosion.seek(Duration.ZERO);
+			Sounds.explosion.play();
 		});
 
 		this.getGame().removeEntity(this);

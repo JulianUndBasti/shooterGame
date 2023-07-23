@@ -38,6 +38,11 @@ public class Vector2D {
 		v.translate(other);
 		return v;
 	}
+	public Vector2D translated(double x, double y) {
+		Vector2D v = this.clone();
+		v.translate(x,y);
+		return v;
+	}
 	
 	public void translate(double x,double y) {
 		this.x+=x;
