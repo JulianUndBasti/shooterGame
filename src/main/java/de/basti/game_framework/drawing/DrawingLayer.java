@@ -11,5 +11,6 @@ public enum DrawingLayer {
 	BACK_MIDDLE,
 	MIDDLE,
 	FORE_MIDDLE,
-	FOREGROUND;
+	FOREGROUND,
+	ABSOLUTE;
 }

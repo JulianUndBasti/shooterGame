@@ -57,6 +57,8 @@ public class Player extends CustomEntity<Sprite, BoxCollider> {
 		this.weapon = weapon;
 
 		this.setWeight(DEFAULT_WEIGHT);
+		
+		
 
 	}
 
@@ -119,7 +121,7 @@ public class Player extends CustomEntity<Sprite, BoxCollider> {
 		if(timeSinceHit>hitDelay) {
 			
 			this.getGame().addTaskForEndOfUpdate(() -> {
-				Sounds.hurt.seek(Duration.ZERO);
+				Sounds.hurt.seek(Duration.ZERO);	
 				Sounds.hurt.play();
 				
 			});

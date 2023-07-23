@@ -40,6 +40,8 @@ public class GameDrawing implements Updatable{
 		this.drawingLayers.put(DrawingLayer.MIDDLE,new HashSet<Drawable>());
 		this.drawingLayers.put(DrawingLayer.FORE_MIDDLE,new HashSet<Drawable>());
 		this.drawingLayers.put(DrawingLayer.FOREGROUND,new HashSet<Drawable>());
+		this.drawingLayers.put(DrawingLayer.ABSOLUTE,new HashSet<Drawable>());
+		
 	}
 	
 	
@@ -70,7 +72,11 @@ public class GameDrawing implements Updatable{
 		drawingLayers.get(DrawingLayer.MIDDLE).stream().forEach((d)->d.draw(graphicsContext));
 		drawingLayers.get(DrawingLayer.FORE_MIDDLE).stream().forEach((d)->d.draw(graphicsContext));
 		drawingLayers.get(DrawingLayer.FOREGROUND).stream().forEach((d)->d.draw(graphicsContext));
+		
 		this.graphicsContext.restore();
+		
+		drawingLayers.get(DrawingLayer.ABSOLUTE).stream().forEach((d)->d.draw(graphicsContext));
+		
 		
 	}
 

@@ -21,7 +21,7 @@ private static Queue<MediaPlayer> playersNotReady = new ConcurrentLinkedQueue<Me
 	public static MediaPlayer hurt;
 	
 
-	public static void initPlayers() {
+	public static void initMediaPlayers() {
 		URL url = Sounds.class.getClassLoader().getResource("explosion.wav");
 		explosion = new MediaPlayer(new Media(url.toString()));
 		
