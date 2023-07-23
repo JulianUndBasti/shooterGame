@@ -7,7 +7,7 @@ public class Images {
 	public static Image background;
 	
 	static {
-		InputStream stream= Images.class.getClassLoader().getResourceAsStream("background.png");
+		InputStream stream= Images.class.getClassLoader().getResourceAsStream("images\background.png");
 		background = new Image(stream);
 	}
 }
