@@ -79,7 +79,7 @@ public class SplitterEnemy extends Enemy<Rectangle> {
 		this.setHealth(this.getHealth()-p.getDamage());
 		if (this.getHealth() <= 0) {
 			this.getGame().removeEntity(this);
-			WalkerEnemy e1 = new WalkerEnemy(this.getPosition(), playerToFollow,this.getGame());
+			WalkerEnemy e1 = new WalkerEnemy(this.getPosition().clone(), playerToFollow,this.getGame());
 			WalkerEnemy e2 = new WalkerEnemy(this.getPosition().clone(), playerToFollow,this.getGame());
 			e1.translate(new Vector2D(0.01,0));//translating a little bit, so they get unstuck through collision
 			this.getGame().addTaskForEndOfUpdate(() -> {
