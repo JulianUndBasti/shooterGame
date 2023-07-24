@@ -103,11 +103,12 @@ public class Player extends CustomEntity<Sprite, BoxCollider> {
 		if (mouseData.isDown(MouseButton.PRIMARY)) {
 			Vector2D shootPosition = this.getPosition().clone();
 			shootPosition.translate(this.getCollider().getWidth() / 2, this.getCollider().getHeight() / 2);
-			this.weapon.shootIfPossible(shootPosition, this.calculateProjectileDirection(mouseData.getMousePosition()));
+			this.weapon.shootIfPossible(shootPosition, this.calculateProjectileDirection(mouseData.getRelativeMousePosition()));
 		}
 
 	}
-
+	
+	
 	public Vector2D calculateProjectileDirection(Vector2D mousePosition) {
 		Vector2D movement = new Vector2D(this.getPosition().getX() + width / 2 - mousePosition.getX(),
 				this.getPosition().getY() + height / 2 - mousePosition.getY());
@@ -131,7 +132,7 @@ public class Player extends CustomEntity<Sprite, BoxCollider> {
 				health=0;
 				
 			}
-			System.out.println(health);
+			
 			
 			timeSinceHit=0;
 		}

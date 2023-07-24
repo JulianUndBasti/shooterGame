@@ -9,6 +9,9 @@ import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.Sprite;
 import de.basti.game_framework.drawing.Text;
+import de.basti.game_framework.drawing.gui.GUI;
+import de.basti.game_framework.drawing.gui.MouseListener;
+import de.basti.game_framework.drawing.gui.TextComponent;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
@@ -23,6 +26,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseButton;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -45,8 +50,8 @@ public class App extends Application {
 
 	private Player player = new Player(new Vector2D(width / 2, height / 2),
 			new RocketLauncher(RocketPlayerProjectile::new, game), game);
-	
-	private Text healthText = new Text(new Vector2D(10,10),""+player.getHealth());
+
+	private Text healthText = new Text(new Vector2D(10, 10), "" + player.getHealth());
 
 	private Sprite backgroundSprite = new Sprite(new Vector2D(), Images.background);
 
@@ -58,24 +63,22 @@ public class App extends Application {
 	private Updatable enemySpawner = new Updatable() {
 
 		Random random = new Random();
-		
+
 		private int timeSinceLastSpawn = enemyDelay;
-		
-		
+
 		@Override
 		public void update(long deltaMillis) {
-			timeSinceLastSpawn+=deltaMillis;
-			if(timeSinceLastSpawn<enemyDelay)return;
-			
+			timeSinceLastSpawn += deltaMillis;
+			if (timeSinceLastSpawn < enemyDelay)
+				return;
+
 			timeSinceLastSpawn = 0;
-			if(enemyDelay>minEnemyDelay) {
-				enemyDelay = enemyDelay-10;
-			}else {
+			if (enemyDelay > minEnemyDelay) {
+				enemyDelay = enemyDelay - 10;
+			} else {
 				enemyDelay = minEnemyDelay;
 			}
-			
-			
-			
+
 			Vector2D enemyPos = new Vector2D(random.nextDouble() * 600 + 200, random.nextDouble() * 600 + 200);
 
 			if (random.nextBoolean()) {
@@ -92,15 +95,15 @@ public class App extends Application {
 
 		}
 	};
-	
+
 	private Updatable textUpdate = new Updatable() {
-		
+
 		@Override
 		public void update(long deltaMillis) {
-			healthText.setText(player.getHealth()+"");
-			
+			healthText.setText(player.getHealth() + "");
+
 		}
-	}; 
+	};
 
 	@Override
 	public void start(Stage stage) {
@@ -112,12 +115,49 @@ public class App extends Application {
 		game.addEntity(DrawingLayer.FORE_MIDDLE, player);
 
 		game.addDrawable(DrawingLayer.BACKGROUND, background);
-		
+
 		healthText.setFont(Font.font("Calibri", FontWeight.BOLD, FontPosture.REGULAR, 36));
 		game.addDrawable(DrawingLayer.ABSOLUTE, healthText);
-		
+
 		game.addUpdatable(enemySpawner);
 		game.addUpdatable(textUpdate);
+
+		GUI gui = new GUI(new Vector2D(0, 0), game.getInputData());
+		TextComponent textComp = new TextComponent(new Vector2D(200, 200), 200, 24);
+		textComp.setBackgroundColor(Color.BLUE);
+		textComp.setBorderColor(Color.RED);
+		textComp.setBorderWidth(2);
+		textComp.setColor(Color.WHITE);
+		textComp.setFont(Font.font("Calibri", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+		textComp.setText("TEXT, DER ZU LANG IST FÜR DIE 200 PIXEL!");
+
+		textComp.addMouseListener(new MouseListener() {
+
+			@Override
+			public void onMouseReleased(MouseButton button, Vector2D position) {
+				System.out.println("Mouse Released!");
+
+			}
+
+			@Override
+			public void onMousePressed(MouseButton button, Vector2D position) {
+				System.out.println("Mouse Pressed");
+
+			}
+
+			@Override
+			public void onMouseDown(MouseButton button, Vector2D position) {
+				System.out.println("Mouse Down!");
+
+			}
+		});
+		
+		gui.add(textComp);
+		
+		
+
+		game.addDrawable(DrawingLayer.ABSOLUTE, gui);
+		game.addUpdatable(gui);
 		
 
 		game.stickCameraTo(player);

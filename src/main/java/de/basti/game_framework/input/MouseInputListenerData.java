@@ -82,8 +82,31 @@ public class MouseInputListenerData implements Updatable {
 		return this.buttonsReleased.contains(b);
 	}
 
-	public Vector2D getMousePosition() {
+	/**
+	 * @return relative position as {@code Vector2D} considering the cameraTransform
+	 */
+	public Vector2D getRelativeMousePosition() {
 		return this.mousePosition.translated(this.cameraTransform.scaled(-1));
+	}
+
+	/**
+	 * @return absolute position as {@code Vector2D} without considering the
+	 *         cameraTransform
+	 */
+	public Vector2D getAbsoluteMousePosition() {
+		return this.mousePosition.clone();
+	}
+
+	public Set<MouseButton> getButtonsDown() {
+		return buttonsDown;
+	}
+
+	public Set<MouseButton> getButtonsPressed() {
+		return buttonsPressed;
+	}
+
+	public Set<MouseButton> getButtonsReleased() {
+		return buttonsReleased;
 	}
 
 	public void update(long deltaMillis) {

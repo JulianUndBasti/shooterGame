@@ -60,6 +60,18 @@ public class KeyInputListenerData implements Updatable {
 		return this.keysReleased.contains(k);
 	}
 
+	public Set<KeyCode> getKeysDown() {
+		return keysDown;
+	}
+
+	public Set<KeyCode> getKeysPressed() {
+		return keysPressed;
+	}
+
+	public Set<KeyCode> getKeysReleased() {
+		return keysReleased;
+	}
+
 	@Override
 	public void update(long deltaMillis) {
 		this.keysPressed = new HashSet<>();
