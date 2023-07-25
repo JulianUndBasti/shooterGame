@@ -16,6 +16,7 @@ import de.basti.game_framework.drawing.gui.ButtonComponent;
 import de.basti.game_framework.drawing.gui.GUI;
 import de.basti.game_framework.drawing.gui.MouseListener;
 import de.basti.game_framework.drawing.gui.TextComponent;
+import de.basti.game_framework.input.KeyInputListenerData;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
@@ -124,29 +125,38 @@ public class App extends Application {
 		}
 	};
 
-	private Updatable textUpdate = new Updatable() {
+	
+	private Updatable healthUpdate = new Updatable() {
 
 		@Override
 		public void update(long deltaMillis) {
 			healthText.setText(player.getHealth() + "");
 
-		}
-	};
-
-	private Updatable healthUpdate = new Updatable() {
-
-		@Override
-		public void update(long deltaMillis) {
 			if (player.getHealth() <= 0) {
 				showGui();
 			}
 		}
 	};
+	
+	private Updatable escapeUpdate = new Updatable() {
+		
+		KeyInputListenerData keyData = game.getInputData().getKeyData();
+		
+		@Override
+		public void update(long deltaMillis) {
+			if(keyData.isDown(KeyCode.ESCAPE)) {
+				showGui();
+			}
+			
+		}
+	};
+	
 	private Updater generalUpdate = new Updater();
 	{
 		generalUpdate.add(healthUpdate);
-		generalUpdate.add(textUpdate);
 		generalUpdate.add(enemySpawner);
+		generalUpdate.add(escapeUpdate);
+		
 
 	}
 
@@ -167,15 +177,12 @@ public class App extends Application {
 	}
 
 	private void showGui() {
-		game.removeCollisionHandler(CollisionHandling.handler);
-		game.removeEntity(player);
-		game.removeDrawable(background);
-		game.removeDrawable(healthText);
-		game.removeUpdatable(generalUpdate);
+		game.removeCollisionHandler(CollisionHandling.handler);		
+		game.removeAllEntities();
+		game.removeAllDrawables();
+		game.removeAllColliders();
+		game.removeAllUpdatables();
 
-		for (Enemy<?> enemy : this.enemies) {
-			game.removeEntity(enemy);
-		}
 
 		game.addDrawable(DrawingLayer.ABSOLUTE, gui);
 		game.addUpdatable(gui);

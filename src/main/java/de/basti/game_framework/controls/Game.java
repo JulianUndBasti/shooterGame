@@ -1,7 +1,9 @@
 package de.basti.game_framework.controls;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.collision.CollisionHandler;
@@ -20,7 +22,7 @@ public class Game<E extends Entity<?, ?, ?>> {
 	public enum UpdatePhase implements Updatable {
 		BEGIN, USER_UPDATE, INPUT_UPDATE, COLLISION_UPDATE, CAMERA_UPDATE, DRAWING_UPDATE, END;
 
-		private final Updater updater;
+		private Updater updater;
 
 		private UpdatePhase() {
 			this.updater = new Updater();
@@ -45,7 +47,11 @@ public class Game<E extends Entity<?, ?, ?>> {
 
 	private double width;
 	private double height;
-
+	
+	private Scene scene;
+	private GraphicsContext gc;
+	
+	private Set<E> entities = new HashSet<>();
 	private GameCollisionSystem<E> collisionSystem = new GameCollisionSystem<E>();
 	private GameDrawing drawing;
 	private GameLoop loop = new GameLoop();
@@ -54,6 +60,8 @@ public class Game<E extends Entity<?, ?, ?>> {
 	private E camera = null;
 	
 	public Game(Scene scene, GraphicsContext gc) {
+		this.scene = scene;
+		this.gc = gc;
 		this.drawing = new GameDrawing(gc);
 		this.inputData = new InputListenerData(scene);
 
@@ -98,7 +106,7 @@ public class Game<E extends Entity<?, ?, ?>> {
 			}
 		});
 		
-
+		loop.getUpdater().add(UpdatePhase.BEGIN);
 		loop.getUpdater().add(UpdatePhase.USER_UPDATE);
 		loop.getUpdater().add(UpdatePhase.INPUT_UPDATE);
 		loop.getUpdater().add(UpdatePhase.COLLISION_UPDATE);
@@ -115,14 +123,41 @@ public class Game<E extends Entity<?, ?, ?>> {
 		this.addDrawable(l, e);
 		this.addCollider(e);
 		this.addUpdatable(e);
+		this.entities.add(e);
 
 	}
 
-	public void removeEntity(E e) {
+	public boolean removeEntity(E e) {
 		this.removeDrawable(e);
 		this.removeCollider(e);
 		this.removeUpdatable(e);
+		return this.entities.remove(e);
+	}
+	
+	public void removeAllEntities() {
+		for(E e:this.entities) {
+			this.removeDrawable(e);
+			this.removeCollider(e);
+			this.removeUpdatable(e);
+		}
+		this.entities = new HashSet<>();
+	}
+	
+	public void removeAllColliders() {
+		int iterations = this.collisionSystem.getUpdateIterations();
+		this.collisionSystem = new GameCollisionSystem<>();
+		this.collisionSystem.setUpdateIterations(iterations);
+	}
+	
+	public void removeAllDrawables() {
+		this.drawing.removeAll();
+		
+	}
+	
+	public void removeAllUpdatables() {
 
+		UpdatePhase.USER_UPDATE.updater = new Updater();
+		
 	}
 
 	public boolean removeUpdatable(Updatable u) {

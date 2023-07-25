@@ -106,5 +106,9 @@ public class GameCollisionSystem<T extends Entity<? extends Drawable, ? extends 
 	public void setUpdateIterations(int updateIterations) {
 		this.updateIterations = updateIterations;
 	}
+	
+	public Set<T> getAllColliders(){
+		return this.colliders;
+	}
 
 }

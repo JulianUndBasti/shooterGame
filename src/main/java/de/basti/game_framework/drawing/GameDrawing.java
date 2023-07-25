@@ -1,8 +1,11 @@
 package de.basti.game_framework.drawing;
 
-import java.util.HashMap;
+
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
+
 
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.math.Vector2D;
@@ -30,7 +33,7 @@ public class GameDrawing implements Updatable{
 	
 	private Set<Drawable> allDrawables = new HashSet<>();
 	
-	private HashMap<DrawingLayer,Set<Drawable>> drawingLayers = new HashMap<>();
+	private Map<DrawingLayer,Set<Drawable>> drawingLayers = new HashMap<>();
 	
 	public GameDrawing(GraphicsContext graphicsContext) {
 		super();
@@ -91,6 +94,12 @@ public class GameDrawing implements Updatable{
 
 	public void setTransform(Vector2D cameraTransform) {
 		this.cameraTransform = cameraTransform;
+	}
+
+
+	public void removeAll() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
