@@ -19,7 +19,7 @@ public class BoxCollider implements Collider {
 	
 	public static int vectorsPerSide = 5;
 	
-	private Vector2D[] vectors;
+	private Vector2D[] vectors = {new Vector2D(),new Vector2D(),new Vector2D(),new Vector2D(),};
 	
 
 	public BoxCollider(Vector2D position, double width, double height) {
@@ -53,35 +53,20 @@ public class BoxCollider implements Collider {
 	}
 	
 	private void recalculateVectors() {
-		int vectorXDistance = (int) (this.width/(3+1));
-		int vectorYDistance = (int) (this.height/(3+1));
-		List<Vector2D> vectorList = new ArrayList<>();
-		int length = 0;
-		while(length<this.width) {
-			vectorList.add(makeVectorAbsolute(new Vector2D(length,0)));
-			vectorList.add(makeVectorAbsolute(new Vector2D(length,height)));
-			length+=vectorXDistance;
-		}
+		double x = this.position.getX();
+		double y = this.position.getY();
+		double w = this.width;
+		double h= this.height;
 		
-		length = 0;
-		while(length<this.height) {
-			vectorList.add(makeVectorAbsolute(new Vector2D(0,length)));
-			vectorList.add(makeVectorAbsolute(new Vector2D(width,length)));
-			length+=vectorYDistance;
-		}
-		vectorList.add(position.translated(width/2,height/2));
 		
-		this.vectors = new Vector2D[vectorList.size()];
-		vectorList.toArray(this.vectors);
+		vectors[0].set(x-w/2, y-h/2);
+		vectors[1].set(x-w/2, y+h/2);
+		vectors[2].set(x+w/2, y-h/2);
+		vectors[3].set(x+w/2, y-+h/2);
+		
 
 	}
 	
-	private Vector2D makeVectorAbsolute(Vector2D vector) {
-		Vector2D newVector = vector.clone();
-		newVector.translate(this.position);
-		newVector.translate(-this.width/2,-this.height/2);
-		return newVector;
-	}
 
 	@Override
 	public void translate(Vector2D vector) {

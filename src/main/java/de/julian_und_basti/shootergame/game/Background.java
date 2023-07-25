@@ -1,5 +1,6 @@
 package de.julian_und_basti.shootergame.game;
 
+
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.Sprite;
 import de.basti.game_framework.math.Vector2D;
@@ -24,9 +25,11 @@ public class Background implements Drawable{
 	@Override
 	public void draw(GraphicsContext gc) {
 		Vector2D pos = playerToFollow.getPosition();
-		int middleIndexX = (int)Math.floor(pos.getX()/sprite.getWidth());
-		int middleIndexY = (int)Math.floor(pos.getY()/sprite.getHeight());;
+		int middleIndexX = (int)Math.round(pos.getX()/sprite.getWidth());
+		int middleIndexY = (int)Math.round(pos.getY()/sprite.getHeight());
 		
+		System.out.println(middleIndexX+"|"+middleIndexY);
+		System.out.println(pos.getX()+"|"+pos.getY());
 		
 		drawAround(gc,middleIndexX,middleIndexY);
 		

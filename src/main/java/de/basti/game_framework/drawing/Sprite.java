@@ -49,7 +49,6 @@ public class Sprite implements Drawable {
 			spriteChanged = false;
 		}
 		gc.drawImage(image, position.getX()-image.getWidth()/2, position.getY()-image.getWidth()/2);
-		System.out.println(this.imageView.getFitWidth());
 		
 
 	}
