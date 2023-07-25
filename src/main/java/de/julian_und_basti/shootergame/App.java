@@ -9,6 +9,7 @@ import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.Sprite;
 import de.basti.game_framework.drawing.Text;
+import de.basti.game_framework.drawing.gui.ButtonComponent;
 import de.basti.game_framework.drawing.gui.GUI;
 import de.basti.game_framework.drawing.gui.MouseListener;
 import de.basti.game_framework.drawing.gui.TextComponent;
@@ -131,34 +132,17 @@ public class App extends Application {
 		textComp.setFont(Font.font("Calibri", FontWeight.NORMAL, FontPosture.REGULAR, 20));
 		textComp.setText("TEXT, DER ZU LANG IST FÜR DIE 200 PIXEL!");
 
-		textComp.addMouseListener(new MouseListener() {
+		ButtonComponent buttonComp = new ButtonComponent(new Vector2D(500, 500), 100, 24);
+		buttonComp.setText("Button!?");
 
-			@Override
-			public void onMouseReleased(MouseButton button, Vector2D position) {
-				System.out.println("Mouse Released!");
+		buttonComp.addActionListener(() -> buttonComp.getPosition().set(Math.random() * (800 - buttonComp.getWidth()),
+				Math.random() * (600 - buttonComp.getHeight())));
 
-			}
-
-			@Override
-			public void onMousePressed(MouseButton button, Vector2D position) {
-				System.out.println("Mouse Pressed");
-
-			}
-
-			@Override
-			public void onMouseDown(MouseButton button, Vector2D position) {
-				System.out.println("Mouse Down!");
-
-			}
-		});
-		
 		gui.add(textComp);
-		
-		
+		gui.add(buttonComp);
 
 		game.addDrawable(DrawingLayer.ABSOLUTE, gui);
 		game.addUpdatable(gui);
-		
 
 		game.stickCameraTo(player);
 

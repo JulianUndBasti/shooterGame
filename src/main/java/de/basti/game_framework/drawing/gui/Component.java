@@ -78,6 +78,20 @@ public abstract class Component implements Drawable {
 			l.onMouseReleased(button, position);
 		}
 	}
+	
+	public void fireMouseInside() {
+		for (MouseListener l : this.mouseListeners) {
+			l.onMouseInside();
+		}
+	}
+	
+	public void fireMouseOutside() {
+		for (MouseListener l : this.mouseListeners) {
+			l.onMouseOutside();
+		}
+	}
+	
+	
 
 	public void fireKeyDown(KeyCode code) {
 		for (KeyListener l : this.keyListeners) {
