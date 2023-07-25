@@ -142,11 +142,13 @@ public class Game {
 		player.setPosition(new Vector2D(0, 0));
 		
 		this.engine.addCollisionHandler(CollisionHandling.handler);
-		this.engine.addEntity(DrawingLayer.FORE_MIDDLE, player);
+		this.engine.addEntity(DrawingLayer.BACK_MIDDLE, player);
 		this.engine.addDrawable(DrawingLayer.BACKGROUND, background);
 		this.engine.addDrawable(DrawingLayer.ABSOLUTE, healthText);
 		this.engine.addUpdatable(generalUpdate);
 		this.engine.stickCameraTo(player);
+		
+		
 	}
 
 

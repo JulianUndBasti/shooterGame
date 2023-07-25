@@ -32,9 +32,10 @@ public abstract class CustomEntity<D extends Drawable, C extends BoxCollider> ex
 	public void draw(GraphicsContext gc) {
 		super.draw(gc);
 		
+		// for debug purposes
 		for(Vector2D v:this.getCollider().getVectors()) {
 			gc.setFill(Color.LIGHTGREEN);
-			gc.fillRect(v.getX(), v.getY(), 3, 3);
+			gc.fillRect(v.getX()-1, v.getY()-1, 2, 2);
 		}
 	}
 

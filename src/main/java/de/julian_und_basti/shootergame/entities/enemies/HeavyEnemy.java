@@ -41,26 +41,19 @@ public class HeavyEnemy extends Enemy<Rectangle> {
 
 	}
 	//defined here for memory management
-	Vector2D direction = new Vector2D();
-	Vector2D playerCenter = new Vector2D();
-	
+	private Vector2D movement;
+
 	
 	@Override
 	public void update(long deltaMillis) {
 		
-		direction.set(this.getPosition().getX(), this.getPosition().getY());
-		direction.scale(-1);
 		
-		playerCenter.set(playerToFollow.getPosition().getX(), playerToFollow.getPosition().getY());
-		playerCenter.translate(playerToFollow.getCollider().getWidth()/2,playerToFollow.getCollider().getHeight()/2);
 		
-		direction.translate(playerCenter);
-
+		movement = this.getMovementDirection(playerToFollow.getPosition());
 		
-		direction = direction.clone();
-		direction.normalize();
-		direction.scale(this.getSpeed()*deltaMillis);
-		this.translate(direction);
+		movement.normalize();
+		movement.scale(this.getSpeed()*deltaMillis);
+		this.translate(movement);
 	
 	}
 

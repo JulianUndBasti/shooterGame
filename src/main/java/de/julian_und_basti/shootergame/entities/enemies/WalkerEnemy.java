@@ -12,19 +12,19 @@ import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProject
 import javafx.scene.paint.Color;
 
 public class WalkerEnemy extends Enemy<Rectangle> {
-	
+
 	public static final double DEFAULT_SPEED = 0.15;
 	public static final int DEFAULT_HEALTH = 40;
 	public static final int DEFAULT_WEIGHT = 40;
-	
 
 	private int width = 20;
 	private int height = 20;
-	
+
 	private Player playerToFollow;
-	
-	public WalkerEnemy(Vector2D position, Player playerToFollow,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
-		super(position, null, null,game);
+
+	public WalkerEnemy(Vector2D position, Player playerToFollow,
+			Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+		super(position, null, null, game);
 
 		Rectangle rect = new Rectangle(position.clone(), width, height);
 		this.setDrawable(rect);
@@ -34,35 +34,25 @@ public class WalkerEnemy extends Enemy<Rectangle> {
 		this.setCollider(new BoxCollider(position.clone(), width, height));
 
 		this.playerToFollow = playerToFollow;
-		
+
 		this.setSpeed(DEFAULT_SPEED);
 		this.setHealth(DEFAULT_HEALTH);
 		this.setWeight(DEFAULT_WEIGHT);
 
 	}
-	//defined here for memory management
-	Vector2D direction = new Vector2D();
-	Vector2D playerCenter = new Vector2D();
-	
-	
+
+	// defined here for memory management
+	private Vector2D movement;
+
 	@Override
 	public void update(long deltaMillis) {
-		
-		direction.set(this.getPosition().getX(), this.getPosition().getY());
-		direction.translate(this.getCollider().getWidth()/2,this.getCollider().getHeight()/2);
-		direction.scale(-1);
-		
-		playerCenter.set(playerToFollow.getPosition().getX(), playerToFollow.getPosition().getY());
-		playerCenter.translate(playerToFollow.getCollider().getWidth()/2,playerToFollow.getCollider().getHeight()/2);
-		
-		direction.translate(playerCenter);
 
-		
-		direction = direction.clone();
-		direction.normalize();
-		direction.scale(this.getSpeed()*deltaMillis);
-		this.translate(direction);
-	
+		movement = this.getMovementDirection(playerToFollow.getPosition());
+
+		movement.normalize();
+		movement.scale(this.getSpeed() * deltaMillis);
+		this.translate(movement);
+
 	}
 
 	public Player getPlayerToFollow() {
@@ -75,7 +65,7 @@ public class WalkerEnemy extends Enemy<Rectangle> {
 
 	@Override
 	public void hit(PlayerProjectile p) {
-		this.setHealth(this.getHealth()-p.getDamage());
+		this.setHealth(this.getHealth() - p.getDamage());
 		if (this.getHealth() <= 0) {
 			this.getEngine().removeEntity(this);
 		}

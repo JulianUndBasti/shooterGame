@@ -17,7 +17,7 @@ public class BoxCollider implements Collider {
 	private double width;
 	private double height;
 	
-	public static int vectorDistance = 10; 
+	public static int vectorsPerSide = 5;
 	
 	private Vector2D[] vectors;
 	
@@ -53,20 +53,24 @@ public class BoxCollider implements Collider {
 	}
 	
 	private void recalculateVectors() {
+		int vectorXDistance = (int) (this.width/(3+1));
+		int vectorYDistance = (int) (this.height/(3+1));
 		List<Vector2D> vectorList = new ArrayList<>();
 		int length = 0;
 		while(length<this.width) {
 			vectorList.add(makeVectorAbsolute(new Vector2D(length,0)));
 			vectorList.add(makeVectorAbsolute(new Vector2D(length,height)));
-			length+=vectorDistance;
+			length+=vectorXDistance;
 		}
 		
 		length = 0;
 		while(length<this.height) {
 			vectorList.add(makeVectorAbsolute(new Vector2D(0,length)));
 			vectorList.add(makeVectorAbsolute(new Vector2D(width,length)));
-			length+=vectorDistance;
+			length+=vectorYDistance;
 		}
+		vectorList.add(position.translated(width/2,height/2));
+		
 		this.vectors = new Vector2D[vectorList.size()];
 		vectorList.toArray(this.vectors);
 

@@ -33,7 +33,16 @@ public abstract class Enemy<D extends Drawable> extends CustomEntity<D, BoxColli
 	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
+	
+	private Vector2D movement = new Vector2D();
+	
+	protected Vector2D getMovementDirection(Vector2D goal) {
+		movement.set(this.getPosition().getX(), this.getPosition().getY());
+		movement.scale(-1);
+		movement.translate(goal);
+		return movement;
 
+	}
 
 	public abstract void hit(PlayerProjectile p);
 
