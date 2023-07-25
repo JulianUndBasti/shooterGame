@@ -5,7 +5,7 @@ import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.math.Vector2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public abstract class Entity<D extends Drawable, C extends Collider,T extends Enum<?>> implements Drawable,Collider,Updatable{
+public abstract class Entity<D extends Drawable, C extends Collider,T extends Enum<?>>  implements Drawable,Collider,Updatable{
 	private Vector2D position;
 	private C collider;
 	private D drawable;

@@ -1,7 +1,7 @@
 package de.julian_und_basti.shootergame.entities.player_projectiles;
 
 import de.basti.game_framework.collision.BoxCollider;
-import de.basti.game_framework.controls.Game;
+import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.math.Vector2D;
@@ -15,7 +15,7 @@ public class SimplePlayerProjectile extends PlayerProjectile {
 	private double width = 5;
 
 
-	public SimplePlayerProjectile(Vector2D shootPosition, Vector2D direction, PlayerProjectileStats stats,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+	public SimplePlayerProjectile(Vector2D shootPosition, Vector2D direction, PlayerProjectileStats stats,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(shootPosition, null, null, stats,game);
 
 		Rectangle rect = new Rectangle(shootPosition.clone(), width, height);
@@ -37,12 +37,12 @@ public class SimplePlayerProjectile extends PlayerProjectile {
 
 	@Override
 	public void hit(Enemy<?> enemy) {
-		this.getGame().removeEntity(this);
+		this.getEngine().removeEntity(this);
 	}
 
 	@Override
 	public void hitWall() {
-		this.getGame().removeEntity(this);
+		this.getEngine().removeEntity(this);
 	}
 
 }

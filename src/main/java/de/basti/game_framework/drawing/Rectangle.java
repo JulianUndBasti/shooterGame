@@ -27,9 +27,9 @@ public class Rectangle extends Shape {
 		gc.setLineWidth(lineWidth);
 
 		if (this.isShouldFill()) {
-			gc.fillRect(this.position.getX(), this.position.getY(), width, height);
+			gc.fillRect(this.position.getX()-width/2, this.position.getY()-width/2, width, height);
 		} else {
-			gc.strokeRect(this.position.getX(), this.position.getY(), width, height);
+			gc.strokeRect(this.position.getX()-width/2, this.position.getY()-width/2, width, height);
 		}
 
 		gc.closePath();

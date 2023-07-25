@@ -1,7 +1,7 @@
 package de.julian_und_basti.shootergame.weapons;
 
 import de.basti.game_framework.collision.BoxCollider;
-import de.basti.game_framework.controls.Game;
+import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.math.Vector2D;
@@ -16,13 +16,13 @@ public class MachineGun extends Weapon{
 	
 	
 	
-	public MachineGun(PlayerProjectileFactory factory,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+	public MachineGun(PlayerProjectileFactory factory,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(60,factory,DEFAULT_STATS,game);
 		this.setRadiansSpread(Math.toRadians(8));
 		
 	}
 	
-	public MachineGun(PlayerProjectileFactory factory, PlayerProjectileStats stats,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+	public MachineGun(PlayerProjectileFactory factory, PlayerProjectileStats stats,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(60, factory, stats,game);
 		this.setRadiansSpread(Math.toRadians(8));
 
@@ -32,7 +32,7 @@ public class MachineGun extends Weapon{
 	protected void shoot(Vector2D shootPosition, Vector2D direction) {
 		PlayerProjectile projectile = this.getNewProjectile(shootPosition, direction);
 		
-		this.getGame().addEntity(DrawingLayer.MIDDLE, projectile);
+		this.getEngine().addEntity(DrawingLayer.MIDDLE, projectile);
 	}
 	
 

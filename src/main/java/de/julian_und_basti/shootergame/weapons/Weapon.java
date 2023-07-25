@@ -1,7 +1,7 @@
 package de.julian_und_basti.shootergame.weapons;
 
 import de.basti.game_framework.collision.BoxCollider;
-import de.basti.game_framework.controls.Game;
+import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.math.Vector2D;
@@ -12,7 +12,7 @@ import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProject
 
 public abstract class Weapon implements Updatable {
 	
-	private Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game;
+	private Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> engine;
 	
 	private int shotDelay;
 	private int timeSinceLastShot;
@@ -23,11 +23,11 @@ public abstract class Weapon implements Updatable {
 	private double radiansSpread = 0;
 	
 	
-	public Weapon(int shotDelay, PlayerProjectileFactory factory, PlayerProjectileStats stats,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+	public Weapon(int shotDelay, PlayerProjectileFactory factory, PlayerProjectileStats stats,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> engine) {
 		this.shotDelay = shotDelay;
 		this.timeSinceLastShot = shotDelay;
 		this.factory = factory;
-		this.game = game;
+		this.engine = engine;
 		this.setStats(stats);
 		
 	}
@@ -62,7 +62,7 @@ public abstract class Weapon implements Updatable {
 	}
 	
 	protected PlayerProjectile getNewProjectile(Vector2D shootPosition, Vector2D direction) {
-		return factory.getNew(shootPosition, direction, this.stats,this.game);
+		return factory.getNew(shootPosition, direction, this.stats,this.engine);
 	}
 
 	public PlayerProjectileStats getStats() {
@@ -97,12 +97,12 @@ public abstract class Weapon implements Updatable {
 		this.radiansSpread = radiansSpread;
 	}
 
-	public Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> getGame() {
-		return game;
+	public Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> getEngine() {
+		return engine;
 	}
 
-	public void setGame(Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
-		this.game = game;
+	public void setGame(Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> engine) {
+		this.engine = engine;
 	}
 	
 	

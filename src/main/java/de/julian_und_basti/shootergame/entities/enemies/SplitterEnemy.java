@@ -1,7 +1,7 @@
 package de.julian_und_basti.shootergame.entities.enemies;
 
 import de.basti.game_framework.collision.BoxCollider;
-import de.basti.game_framework.controls.Game;
+import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.Rectangle;
@@ -24,7 +24,7 @@ public class SplitterEnemy extends Enemy<Rectangle> {
 	
 	private Player playerToFollow;
 	
-	public SplitterEnemy(Vector2D position, Player playerToFollow,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+	public SplitterEnemy(Vector2D position, Player playerToFollow,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(position, null, null,game);
 
 		Rectangle rect = new Rectangle(position.clone(), width, height);
@@ -78,13 +78,13 @@ public class SplitterEnemy extends Enemy<Rectangle> {
 	public void hit(PlayerProjectile p) {
 		this.setHealth(this.getHealth()-p.getDamage());
 		if (this.getHealth() <= 0) {
-			this.getGame().removeEntity(this);
-			WalkerEnemy e1 = new WalkerEnemy(this.getPosition().clone(), playerToFollow,this.getGame());
-			WalkerEnemy e2 = new WalkerEnemy(this.getPosition().clone(), playerToFollow,this.getGame());
+			this.getEngine().removeEntity(this);
+			WalkerEnemy e1 = new WalkerEnemy(this.getPosition().clone(), playerToFollow,this.getEngine());
+			WalkerEnemy e2 = new WalkerEnemy(this.getPosition().clone(), playerToFollow,this.getEngine());
 			e1.translate(new Vector2D(0.01,0));//translating a little bit, so they get unstuck through collision
-			this.getGame().addTaskForEndOfUpdate(() -> {
-				getGame().addEntity(DrawingLayer.MIDDLE, e1);
-				getGame().addEntity(DrawingLayer.MIDDLE, e2);
+			this.getEngine().addTaskForEndOfUpdate(() -> {
+				getEngine().addEntity(DrawingLayer.MIDDLE, e1);
+				getEngine().addEntity(DrawingLayer.MIDDLE, e2);
 
 			});
 		}

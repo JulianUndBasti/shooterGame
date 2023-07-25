@@ -25,7 +25,7 @@ public class CircleCollider implements Collider {
 			a = a * 2 * Math.PI;
 			Vector2D v = new Vector2D();
 			v.set(Math.sin(a) * radius, Math.cos(a) * radius);
-			v.translate(this.position.getX() + radius, this.position.getY() + radius);
+			v.translate(this.position.getX(), this.position.getY());
 			this.vectors[i] = v;
 		}
 	}

@@ -32,8 +32,8 @@ public class BoxCollider implements Collider {
 
 	@Override
 	public boolean collidesWith(Vector2D vector) {
-		double x = position.getX();
-		double y = position.getY();
+		double x = position.getX()-width/2;
+		double y = position.getY()-height/2;
 
 		double x1 = vector.getX();
 		double y1 = vector.getY();
@@ -75,6 +75,7 @@ public class BoxCollider implements Collider {
 	private Vector2D makeVectorAbsolute(Vector2D vector) {
 		Vector2D newVector = vector.clone();
 		newVector.translate(this.position);
+		newVector.translate(-this.width/2,-this.height/2);
 		return newVector;
 	}
 

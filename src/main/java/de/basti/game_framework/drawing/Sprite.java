@@ -48,7 +48,10 @@ public class Sprite implements Drawable {
 			this.updateImage();
 			spriteChanged = false;
 		}
-		gc.drawImage(image, position.getX(), position.getY());
+		gc.drawImage(image, position.getX()-image.getWidth()/2, position.getY()-image.getWidth()/2);
+		System.out.println(this.imageView.getFitWidth());
+		
+
 	}
 	
 	@Override

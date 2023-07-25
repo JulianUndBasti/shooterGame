@@ -3,7 +3,7 @@ package de.julian_und_basti.shootergame.entities.player_projectiles;
 import java.net.URL;
 
 import de.basti.game_framework.collision.BoxCollider;
-import de.basti.game_framework.controls.Game;
+import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.math.Vector2D;
@@ -26,7 +26,7 @@ public class RocketExplosion extends PlayerProjectile{
 	
 	
 
-	public RocketExplosion(Vector2D position, int damage, Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+	public RocketExplosion(Vector2D position, int damage, Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(position, null, null, new PlayerProjectileStats(damage, 0),game);
 		position.translate(-width/2, -height/2);
 		
@@ -44,7 +44,7 @@ public class RocketExplosion extends PlayerProjectile{
 		
 		if(timeAlive >= lifespan) {
 			
-			this.getGame().removeEntity(this);
+			this.getEngine().removeEntity(this);
 			return;
 		}
 		
@@ -54,7 +54,7 @@ public class RocketExplosion extends PlayerProjectile{
 	@Override
 	public void hit(Enemy<?> enemy) {
 		
-		this.getGame().getCollisionSystem().remove(this);
+		this.getEngine().getCollisionSystem().remove(this);
 
 	}
 

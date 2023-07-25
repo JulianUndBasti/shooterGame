@@ -2,7 +2,7 @@ package de.basti.game_framework.controls;
 
 
 /**
- * @see GameLoop
+ * @see Loop
  * @see Updater
  */
 public interface Updatable {

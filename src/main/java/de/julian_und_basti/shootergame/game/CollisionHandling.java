@@ -1,4 +1,4 @@
-package de.julian_und_basti.shootergame;
+package de.julian_und_basti.shootergame.game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,11 +129,11 @@ public class CollisionHandling {
 		}
 
 		private Vector2D getDisplacement(BoxCollider box1, BoxCollider box2) {
-			double rightLeftDiff = box1.getPosition().getX() + box1.getWidth() - box2.getPosition().getX();
-			double leftRightDiff = box1.getPosition().getX() - (box2.getPosition().getX() + box2.getWidth());
+			double rightLeftDiff = box1.getPosition().getX() + box1.getWidth()/2 - (box2.getPosition().getX()-box2.getWidth()/2);
+			double leftRightDiff = (box1.getPosition().getX()-box1.getWidth()/2) - (box2.getPosition().getX() + box2.getWidth()/2);
 
-			double bottomTopDiff = box1.getPosition().getY() + box1.getHeight() - box2.getPosition().getY();
-			double topBottomDiff = box1.getPosition().getY() - (box2.getPosition().getY() + box2.getHeight());
+			double bottomTopDiff = box1.getPosition().getY() + box1.getHeight()/2 - (box2.getPosition().getY()-box2.getHeight()/2);
+			double topBottomDiff = (box1.getPosition().getY()-box1.getHeight()/2) - (box2.getPosition().getY() + box2.getHeight()/2);
 
 			double absRightLeftDiff = Math.abs(rightLeftDiff);
 			double absLeftRightDiff = Math.abs(leftRightDiff);

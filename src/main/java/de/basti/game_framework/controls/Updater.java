@@ -6,7 +6,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Implementation of {@code Updatable} which updates all given {@code Updatable} when {@code update(double)}  is called.
  * 
  * @see Updatable
- * @see GameLoop
+ * @see Loop
  */
 public class Updater implements Updatable{
 	private CopyOnWriteArrayList<Updatable> list = new CopyOnWriteArrayList<>();

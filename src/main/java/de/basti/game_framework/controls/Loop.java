@@ -10,13 +10,13 @@ import javafx.animation.AnimationTimer;
  * @see Updatable
  * @see Updater
  */
-public class GameLoop{
+public class Loop{
 	
 	private Updater updater = new Updater();
 	
 	
 	
-	public GameLoop() {
+	public Loop() {
 	}
 	
 	private AnimationTimer animationTimer = new AnimationTimer() {

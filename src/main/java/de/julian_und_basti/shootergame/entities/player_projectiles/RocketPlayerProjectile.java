@@ -1,7 +1,7 @@
 package de.julian_und_basti.shootergame.entities.player_projectiles;
 
 import de.basti.game_framework.collision.BoxCollider;
-import de.basti.game_framework.controls.Game;
+import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.Rectangle;
@@ -20,7 +20,7 @@ public class RocketPlayerProjectile extends PlayerProjectile {
 	private double maxSpeed;
 
 
-	public RocketPlayerProjectile(Vector2D shootPosition, Vector2D direction, PlayerProjectileStats stats,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+	public RocketPlayerProjectile(Vector2D shootPosition, Vector2D direction, PlayerProjectileStats stats,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(shootPosition, null, null, new PlayerProjectileStats(stats.damage, stats.speed/10),game);
 		
 		
@@ -61,13 +61,13 @@ public class RocketPlayerProjectile extends PlayerProjectile {
 	
 	private void explode() {
 		
-		PlayerProjectile projectile = new RocketExplosion(getPosition().clone(), 80,this.getGame());
-		this.getGame().addTaskForEndOfUpdate(() -> {
-			this.getGame().addEntity(DrawingLayer.FOREGROUND, projectile);
+		PlayerProjectile projectile = new RocketExplosion(getPosition().clone(), 80,this.getEngine());
+		this.getEngine().addTaskForEndOfUpdate(() -> {
+			this.getEngine().addEntity(DrawingLayer.FOREGROUND, projectile);
 			Sounds.explosion.seek(Duration.ZERO);
 			Sounds.explosion.play();
 		});
 
-		this.getGame().removeEntity(this);
+		this.getEngine().removeEntity(this);
 	}
 }

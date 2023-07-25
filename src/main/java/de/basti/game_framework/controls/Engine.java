@@ -17,7 +17,7 @@ import de.julian_und_basti.shootergame.entities.CustomEntity;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 
-public class Game<E extends Entity<?, ?, ?>> {
+public class Engine<E extends Entity<?, ?, ?>> {
 
 	public enum UpdatePhase implements Updatable {
 		BEGIN, USER_UPDATE, INPUT_UPDATE, COLLISION_UPDATE, CAMERA_UPDATE, DRAWING_UPDATE, END;
@@ -54,12 +54,12 @@ public class Game<E extends Entity<?, ?, ?>> {
 	private Set<E> entities = new HashSet<>();
 	private GameCollisionSystem<E> collisionSystem = new GameCollisionSystem<E>();
 	private GameDrawing drawing;
-	private GameLoop loop = new GameLoop();
+	private Loop loop = new Loop();
 	private InputListenerData inputData;
 	private List<Runnable> endOfUpdateTasks = new ArrayList<>();
 	private E camera = null;
 	
-	public Game(Scene scene, GraphicsContext gc) {
+	public Engine(Scene scene, GraphicsContext gc) {
 		this.scene = scene;
 		this.gc = gc;
 		this.drawing = new GameDrawing(gc);
@@ -157,6 +157,13 @@ public class Game<E extends Entity<?, ?, ?>> {
 		UpdatePhase.USER_UPDATE.updater.removeAll();
 		
 	}
+	
+	public void removeAll() {
+		this.removeAllEntities();
+		this.removeAllColliders();
+		this.removeAllDrawables();
+		this.removeAllUpdatables();
+	}
 
 	public boolean removeUpdatable(Updatable u) {
 		return UpdatePhase.USER_UPDATE.remove(u);
@@ -214,12 +221,20 @@ public class Game<E extends Entity<?, ?, ?>> {
 		return drawing;
 	}
 
-	public GameLoop getLoop() {
+	public Loop getLoop() {
 		return loop;
 	}
 
 	public InputListenerData getInputData() {
 		return inputData;
+	}
+	
+	public double getWidth() {
+		return gc.getCanvas().getWidth();
+	}
+	
+	public double getHeight() {
+		return gc.getCanvas().getHeight();
 	}
 
 }

@@ -1,7 +1,7 @@
 package de.julian_und_basti.shootergame.entities.enemies;
 
 import de.basti.game_framework.collision.BoxCollider;
-import de.basti.game_framework.controls.Game;
+import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
@@ -14,7 +14,7 @@ public abstract class Enemy<D extends Drawable> extends CustomEntity<D, BoxColli
 	private double speed = 0.2;
 	private int damage = 15; 
 
-	public Enemy(Vector2D position, BoxCollider collider, D drawable,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+	public Enemy(Vector2D position, BoxCollider collider, D drawable,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(position, collider, drawable, EntityType.ENEMY, game);
 	}
 
@@ -34,9 +34,6 @@ public abstract class Enemy<D extends Drawable> extends CustomEntity<D, BoxColli
 		this.speed = speed;
 	}
 
-	public void moveIntoDirection(Vector2D direction, double deltaMillis) {
-		
-	}
 
 	public abstract void hit(PlayerProjectile p);
 

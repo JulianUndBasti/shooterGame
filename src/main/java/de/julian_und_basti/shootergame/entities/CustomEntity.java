@@ -2,20 +2,22 @@ package de.julian_und_basti.shootergame.entities;
 
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Entity;
-import de.basti.game_framework.controls.Game;
+import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.math.Vector2D;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public abstract class CustomEntity<D extends Drawable, C extends BoxCollider> extends Entity<D, C, EntityType> {
 
-	private Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game;
+	private Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> engine;
 	private int weight = 1;
 
 	public CustomEntity(Vector2D position, C collider, D drawable, EntityType type,
-			Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+			Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> engine) {
 		super(position, collider, drawable, type);
-		this.game = game;
+		this.engine = engine;
 	}
 
 	public int getWeight() {
@@ -25,13 +27,24 @@ public abstract class CustomEntity<D extends Drawable, C extends BoxCollider> ex
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
-
-	public Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> getGame() {
-		return game;
+	
+	@Override
+	public void draw(GraphicsContext gc) {
+		super.draw(gc);
+		
+		for(Vector2D v:this.getCollider().getVectors()) {
+			gc.setFill(Color.LIGHTGREEN);
+			gc.fillRect(v.getX(), v.getY(), 3, 3);
+		}
 	}
 
-	public void setGame(Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
-		this.game = game;
+	public Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> getEngine() {
+		return engine;
 	}
+
+	public void setEngine(Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+		this.engine = game;
+	}
+	
 
 }

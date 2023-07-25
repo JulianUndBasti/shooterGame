@@ -1,7 +1,7 @@
 package de.julian_und_basti.shootergame.entities.enemies;
 
 import de.basti.game_framework.collision.BoxCollider;
-import de.basti.game_framework.controls.Game;
+import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.math.Vector2D;
@@ -23,7 +23,7 @@ public class WalkerEnemy extends Enemy<Rectangle> {
 	
 	private Player playerToFollow;
 	
-	public WalkerEnemy(Vector2D position, Player playerToFollow,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+	public WalkerEnemy(Vector2D position, Player playerToFollow,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(position, null, null,game);
 
 		Rectangle rect = new Rectangle(position.clone(), width, height);
@@ -77,7 +77,7 @@ public class WalkerEnemy extends Enemy<Rectangle> {
 	public void hit(PlayerProjectile p) {
 		this.setHealth(this.getHealth()-p.getDamage());
 		if (this.getHealth() <= 0) {
-			this.getGame().removeEntity(this);
+			this.getEngine().removeEntity(this);
 		}
 	}
 

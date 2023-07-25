@@ -1,4 +1,4 @@
-package de.julian_und_basti.shootergame;
+package de.julian_und_basti.shootergame.game;
 
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.Sprite;

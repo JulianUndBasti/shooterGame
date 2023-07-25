@@ -1,7 +1,7 @@
 package de.julian_und_basti.shootergame.entities.player;
 
 import de.basti.game_framework.collision.BoxCollider;
-import de.basti.game_framework.controls.Game;
+import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.drawing.Sprite;
@@ -41,7 +41,7 @@ public class Player extends CustomEntity<Sprite, BoxCollider> {
 	
 	private double rotation = -90;
 
-	public Player(Vector2D position, Weapon weapon,Game<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+	public Player(Vector2D position, Weapon weapon,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(position, null, null, EntityType.PLAYER,game);
 
 		Sprite sprite = new Sprite(position.clone(),Images.player);
@@ -51,8 +51,8 @@ public class Player extends CustomEntity<Sprite, BoxCollider> {
 		this.setDrawable(sprite);
 
 		this.setCollider(new BoxCollider(position.translated(width*0.05,height*0.05), width*0.9, height*0.9));
-		this.mouseData = this.getGame().getInputData().getMouseData();
-		this.keyData = this.getGame().getInputData().getKeyData();
+		this.mouseData = this.getEngine().getInputData().getMouseData();
+		this.keyData = this.getEngine().getInputData().getKeyData();
 
 		this.weapon = weapon;
 
@@ -121,13 +121,13 @@ public class Player extends CustomEntity<Sprite, BoxCollider> {
 	public void hitByEnemy(Enemy<?> enemy) {
 		if(timeSinceHit>hitDelay) {
 			
-			this.getGame().addTaskForEndOfUpdate(() -> {
+			this.getEngine().addTaskForEndOfUpdate(() -> {
 				Sounds.hurt.seek(Duration.ZERO);	
 				Sounds.hurt.play();
 				
 			});
 			
-			this.health-=enemy.getDamage();
+			//this.health-=enemy.getDamage();
 			if(health<0) {
 				health=0;
 				
