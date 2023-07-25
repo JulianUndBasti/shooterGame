@@ -42,7 +42,8 @@ public class TextComponent extends Component{
 		gc.strokeRect(x, y, w, h);
 		
 		gc.setFill(color);
-		gc.fillText(text, x, y+h, w);
+		gc.setFont(font);
+		gc.fillText(text, x+borderWidth, y+h/2+font.getSize()/4, w-borderWidth*2);
 	
 	}
 	

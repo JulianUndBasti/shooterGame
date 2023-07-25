@@ -32,8 +32,13 @@ public abstract class Component implements Drawable {
 
 	@Override
 	public void translate(Vector2D vector) {
-		this.position.translate(vector);
-
+		this.translate(vector.getX(),vector.getY());
+		
+	}
+	
+	public void translate(double x, double y) {
+		this.position.translate(x,y);
+		
 	}
 
 	@Override

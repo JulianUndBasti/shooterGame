@@ -8,6 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 
 public class ButtonComponent extends TextComponent {
 
@@ -28,7 +29,6 @@ public class ButtonComponent extends TextComponent {
 		this.setBackgroundColor(noClickBackgroundColor);
 		this.setBorderColor(noClickBorderColor);
 		this.setBorderWidth(4);
-
 	}
 
 	private MouseListener privateMouseListener = new MouseListener() {
@@ -74,14 +74,14 @@ public class ButtonComponent extends TextComponent {
 
 	private void updateColors() {
 		if (isClickingOnThisButton) {
-			this.setColor(clickColor);
-			this.setBorderColor(clickBorderColor);
-			this.setBackgroundColor(clickBackgroundColor);
+			super.setColor(clickColor);
+			super.setBorderColor(clickBorderColor);
+			super.setBackgroundColor(clickBackgroundColor);
 
 		} else {
-			this.setColor(noClickColor);
-			this.setBorderColor(noClickBorderColor);
-			this.setBackgroundColor(noClickBackgroundColor);
+			super.setColor(noClickColor);
+			super.setBorderColor(noClickBorderColor);
+			super.setBackgroundColor(noClickBackgroundColor);
 
 		}
 	}
@@ -104,5 +104,60 @@ public class ButtonComponent extends TextComponent {
 	public boolean removeActionListener(ActionListener al) {
 		return actionListeners.remove(al);
 	}
+
+	public Paint getColor() {
+		return noClickColor;
+	}
+
+	public void setColor(Paint noClickColor) {
+		this.noClickColor = noClickColor;
+		updateColors();
+	}
+
+	public Paint getBorderColor() {
+		return noClickBorderColor;
+	}
+
+	public void setBorderColor(Paint noClickBorderColor) {
+		this.noClickBorderColor = noClickBorderColor;
+		updateColors();
+	}
+
+	public Paint getBackgroundColor() {
+		return noClickBackgroundColor;
+	}
+
+	public void setBackgroundColor(Paint noClickBackgroundColor) {
+		this.noClickBackgroundColor = noClickBackgroundColor;
+		
+	}
+
+	public Paint getClickColor() {
+		return clickColor;
+	}
+
+	public void setClickColor(Paint clickColor) {
+		this.clickColor = clickColor;
+	}
+
+	public Paint getClickBorderColor() {
+		return clickBorderColor;
+	}
+
+	public void setClickBorderColor(Paint clickBorderColor) {
+		this.clickBorderColor = clickBorderColor;
+	}
+
+	public Paint getClickBackgroundColor() {
+		return clickBackgroundColor;
+	}
+
+	public void setClickBackgroundColor(Paint clickBackgroundColor) {
+		this.clickBackgroundColor = clickBackgroundColor;
+	}
+
+	
+	
+	
 
 }

@@ -68,7 +68,14 @@ public class Game<E extends Entity<?, ?, ?>> {
 			@Override
 			public void update(long deltaMillis) {
 				// transform the camera so the player stays in the middle
-				Vector2D transform = camera.getPosition().clone();
+				Vector2D transform;
+				
+				if(camera == null) {
+					transform = new Vector2D(0,0);
+				}else {
+					transform = camera.getPosition().clone();
+				}
+				
 				transform.scale(-1);
 				transform.translate(width / 2, height / 2);
 				getDrawing().setTransform(transform);
@@ -161,6 +168,10 @@ public class Game<E extends Entity<?, ?, ?>> {
 	public void addCollisionHandler(CollisionHandler<E> collHandler) {
 		this.collisionSystem.addHandler(collHandler);
 	}
+	public boolean removeCollisionHandler(CollisionHandler<E> collHandler) {
+		return this.collisionSystem.removeHandler(collHandler);
+	}
+	
 
 	public GameCollisionSystem<E> getCollisionSystem() {
 		return collisionSystem;
