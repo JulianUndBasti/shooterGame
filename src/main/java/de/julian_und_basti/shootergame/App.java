@@ -123,26 +123,7 @@ public class App extends Application {
 		game.addUpdatable(enemySpawner);
 		game.addUpdatable(textUpdate);
 
-		GUI gui = new GUI(new Vector2D(0, 0), game.getInputData());
-		TextComponent textComp = new TextComponent(new Vector2D(200, 200), 200, 24);
-		textComp.setBackgroundColor(Color.BLUE);
-		textComp.setBorderColor(Color.RED);
-		textComp.setBorderWidth(2);
-		textComp.setColor(Color.WHITE);
-		textComp.setFont(Font.font("Calibri", FontWeight.NORMAL, FontPosture.REGULAR, 20));
-		textComp.setText("TEXT, DER ZU LANG IST FÜR DIE 200 PIXEL!");
 
-		ButtonComponent buttonComp = new ButtonComponent(new Vector2D(500, 500), 100, 24);
-		buttonComp.setText("Button!?");
-
-		buttonComp.addActionListener(() -> buttonComp.getPosition().set(Math.random() * (800 - buttonComp.getWidth()),
-				Math.random() * (600 - buttonComp.getHeight())));
-
-		gui.add(textComp);
-		gui.add(buttonComp);
-
-		game.addDrawable(DrawingLayer.ABSOLUTE, gui);
-		game.addUpdatable(gui);
 
 		game.stickCameraTo(player);
 
