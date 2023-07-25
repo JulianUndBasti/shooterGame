@@ -1,8 +1,7 @@
 package de.basti.game_framework.drawing;
 
-
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -98,7 +97,13 @@ public class GameDrawing implements Updatable{
 
 
 	public void removeAll() {
-		// TODO Auto-generated method stub
+		this.drawingLayers.get(DrawingLayer.BACKGROUND).clear();
+		this.drawingLayers.get(DrawingLayer.BACK_MIDDLE).clear();
+		this.drawingLayers.get(DrawingLayer.MIDDLE).clear();
+		this.drawingLayers.get(DrawingLayer.FORE_MIDDLE).clear();
+		this.drawingLayers.get(DrawingLayer.FOREGROUND).clear();
+		this.drawingLayers.get(DrawingLayer.ABSOLUTE).clear();
+		this.allDrawables.clear();
 		
 	}
 	

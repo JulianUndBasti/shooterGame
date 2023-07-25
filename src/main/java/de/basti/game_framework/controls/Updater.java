@@ -38,6 +38,10 @@ public class Updater implements Updatable{
 		this.list.remove(i);
 	}
 	
+	public void removeAll() {
+		this.list.clear();
+	}
+	
 	
 	
 	

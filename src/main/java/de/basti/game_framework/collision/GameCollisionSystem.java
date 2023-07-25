@@ -107,8 +107,8 @@ public class GameCollisionSystem<T extends Entity<? extends Drawable, ? extends 
 		this.updateIterations = updateIterations;
 	}
 	
-	public Set<T> getAllColliders(){
-		return this.colliders;
+	public void removeAll() {
+		this.colliders.clear();
 	}
 
 }

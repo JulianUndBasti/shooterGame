@@ -140,13 +140,11 @@ public class Game<E extends Entity<?, ?, ?>> {
 			this.removeCollider(e);
 			this.removeUpdatable(e);
 		}
-		this.entities = new HashSet<>();
+		this.entities.clear();
 	}
 	
 	public void removeAllColliders() {
-		int iterations = this.collisionSystem.getUpdateIterations();
-		this.collisionSystem = new GameCollisionSystem<>();
-		this.collisionSystem.setUpdateIterations(iterations);
+		this.collisionSystem.removeAll();
 	}
 	
 	public void removeAllDrawables() {
@@ -156,7 +154,7 @@ public class Game<E extends Entity<?, ?, ?>> {
 	
 	public void removeAllUpdatables() {
 
-		UpdatePhase.USER_UPDATE.updater = new Updater();
+		UpdatePhase.USER_UPDATE.updater.removeAll();
 		
 	}
 
