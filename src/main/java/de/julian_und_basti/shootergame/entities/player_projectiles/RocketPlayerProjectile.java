@@ -64,8 +64,8 @@ public class RocketPlayerProjectile extends PlayerProjectile {
 		PlayerProjectile projectile = new RocketExplosion(getPosition().clone(), 80,this.getEngine());
 		this.getEngine().addTaskForEndOfUpdate(() -> {
 			this.getEngine().addEntity(DrawingLayer.FOREGROUND, projectile);
-			Sounds.explosion.seek(Duration.ZERO);
-			Sounds.explosion.play();
+			Sounds.sounds().explosion.seek(Duration.ZERO);
+			Sounds.sounds().explosion.play();
 		});
 
 		this.getEngine().removeEntity(this);

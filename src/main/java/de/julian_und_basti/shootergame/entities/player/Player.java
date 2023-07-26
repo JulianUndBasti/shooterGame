@@ -121,8 +121,8 @@ public class Player extends CustomEntity<Sprite, BoxCollider> {
 		if(timeSinceHit>hitDelay) {
 			
 			this.getEngine().addTaskForEndOfUpdate(() -> {
-				Sounds.hurt.seek(Duration.ZERO);	
-				Sounds.hurt.play();
+				Sounds.sounds().hurt.seek(Duration.ZERO);	
+				Sounds.sounds().hurt.play();
 				
 			});
 			
