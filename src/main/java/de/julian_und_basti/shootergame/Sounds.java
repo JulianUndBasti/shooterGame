@@ -34,7 +34,7 @@ public class Sounds {
 		return new MediaPlayer(new Media(url.toString()));
 	}
 	
-	public static Sounds sounds() {
+	public static Sounds instance() {
 		if(instance == null) {
 			instance = new Sounds();
 		}

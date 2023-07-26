@@ -102,8 +102,8 @@ public class App extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		Sounds.sounds();
-		Images.images();
+		Sounds.instance();
+		Images.instance();
 		engine.getCollisionSystem().setUpdateIterations(4);
 		CollisionHandling.handler.getClass();//so its loaded beforehand, otherwise there will be a lagspike on first collision
 

@@ -44,7 +44,7 @@ public class Player extends CustomEntity<Sprite, BoxCollider> {
 	public Player(Vector2D position, Weapon weapon,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(position, null, null, EntityType.PLAYER,game);
 
-		Sprite sprite = new Sprite(position.clone(),Images.images().player);
+		Sprite sprite = new Sprite(position.clone(),Images.instance().player);
 		sprite.setWidth(width);
 		sprite.setHeight(height);
 		
@@ -121,8 +121,8 @@ public class Player extends CustomEntity<Sprite, BoxCollider> {
 		if(timeSinceHit>hitDelay) {
 			
 			this.getEngine().addTaskForEndOfUpdate(() -> {
-				Sounds.sounds().hurt.seek(Duration.ZERO);	
-				Sounds.sounds().hurt.play();
+				Sounds.instance().hurt.seek(Duration.ZERO);	
+				Sounds.instance().hurt.play();
 				
 			});
 			

@@ -27,7 +27,7 @@ public class Images {
 		return new Image(stream);
 	}
 
-	public static Images images() {
+	public static Images instance() {
 		if(instance==null) {
 			instance = new Images();
 		}
