@@ -8,16 +8,34 @@ import javafx.scene.image.Image;
 
 public class Images {
 	
-	private Images() {
-	}
-	public static Image background;
-	public static Image player;
+	private static Images instance;
 	
 	
-	static {
-		InputStream stream = Images.class.getClassLoader().getResourceAsStream("background.png");
-		background = new Image(stream);
-		stream = Images.class.getClassLoader().getResourceAsStream("tank.png");
-		player = new Image(stream);
+	private final String prefix = "images/";
+	
+	public final Image background;
+	public final Image player;
+	
+	private Images(){
+		background = loadImage("background.png");
+		player = loadImage("tank.png");
 	}
+	
+	private Image loadImage(String fileName) {
+		InputStream stream = Images.class.getClassLoader().getResourceAsStream(prefix+fileName);
+		
+		return new Image(stream);
+	}
+
+	public static Images images() {
+		if(instance==null) {
+			instance = new Images();
+		}
+		return instance;
+	}
+
+
+	
+
+	
 }

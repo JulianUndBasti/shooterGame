@@ -44,7 +44,7 @@ public class Player extends CustomEntity<Sprite, BoxCollider> {
 	public Player(Vector2D position, Weapon weapon,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(position, null, null, EntityType.PLAYER,game);
 
-		Sprite sprite = new Sprite(position.clone(),Images.player);
+		Sprite sprite = new Sprite(position.clone(),Images.images().player);
 		sprite.setWidth(width);
 		sprite.setHeight(height);
 		

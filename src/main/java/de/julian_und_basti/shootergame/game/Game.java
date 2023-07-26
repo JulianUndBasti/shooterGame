@@ -43,7 +43,7 @@ public class Game {
 	}
 
 
-	private Sprite backgroundSprite = new Sprite(new Vector2D(), Images.background);
+	private Sprite backgroundSprite = new Sprite(new Vector2D(), Images.images().background);
 
 	private Background background;
 
