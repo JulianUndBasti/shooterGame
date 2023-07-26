@@ -90,22 +90,24 @@ public class App extends Application {
 	}
 
 	private void showGui() {
-		engine.removeCollisionHandler(CollisionHandling.handler);		
+		engine.removeCollisionHandler(CollisionHandling.instance().handler);		
 		engine.removeAll();
 
 
 		engine.addDrawable(DrawingLayer.ABSOLUTE, gui);
 		engine.addUpdatable(gui);
+		
 	}
 	
 	
 
 	@Override
 	public void start(Stage stage) {
+		//all Sounds, Images and the CollisionHandler are loaded
 		Sounds.instance();
 		Images.instance();
+		CollisionHandling.instance();
 		engine.getCollisionSystem().setUpdateIterations(4);
-		CollisionHandling.handler.getClass();//so its loaded beforehand, otherwise there will be a lagspike on first collision
 
 		this.showGui();
 
@@ -113,6 +115,7 @@ public class App extends Application {
 
 		stage.setScene(this.scene);
 		stage.show();
+		
 
 	}
 

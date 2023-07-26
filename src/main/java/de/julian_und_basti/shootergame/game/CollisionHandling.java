@@ -13,13 +13,16 @@ import de.julian_und_basti.shootergame.entities.player.Player;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 import javafx.util.Pair;
 import de.julian_und_basti.shootergame.entities.EntityType;
+import de.julian_und_basti.shootergame.Images;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 
 public class CollisionHandling {
+	
+	private static CollisionHandling instance;
 
-	private static List<Pair<EntityType, EntityType>> noCollisions = new ArrayList<>();
+	private List<Pair<EntityType, EntityType>> noCollisions = new ArrayList<>();
 
-	static {
+	private CollisionHandling() {
 		noCollisions.add(new Pair<>(EntityType.WALL, EntityType.WALL));
 		noCollisions.add(new Pair<>(EntityType.PLAYER_PROJECTILE, EntityType.PLAYER_PROJECTILE));
 		noCollisions.add(new Pair<>(EntityType.PLAYER_PROJECTILE, EntityType.PLAYER));
@@ -28,7 +31,7 @@ public class CollisionHandling {
 	
 	
 	//only works with valid input
-	private static boolean swapToTemplate(CollisionPair<CustomEntity<? extends Drawable, ? extends BoxCollider>> pair, EntityType type1, EntityType type2){
+	private boolean swapToTemplate(CollisionPair<CustomEntity<? extends Drawable, ? extends BoxCollider>> pair, EntityType type1, EntityType type2){
 		if(pair.getCollider1().getType()==type1&&pair.getCollider2().getType()==type2) {
 			return true;
 		} 
@@ -45,7 +48,7 @@ public class CollisionHandling {
 	}
 	
 
-	public static CollisionHandler<CustomEntity<? extends Drawable, ? extends BoxCollider>> handler = new CollisionHandler<>() {
+	public final CollisionHandler<CustomEntity<? extends Drawable, ? extends BoxCollider>> handler = new CollisionHandler<>() {
 
 		@Override
 		public void onBegin(CollisionPair<CustomEntity<? extends Drawable, ? extends BoxCollider>> pair) {
@@ -175,4 +178,12 @@ public class CollisionHandling {
 
 		}
 	};
+	
+	
+	public static CollisionHandling instance() {
+		if(instance==null) {
+			instance = new CollisionHandling();
+		}
+		return instance;
+	}
 }

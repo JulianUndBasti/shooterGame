@@ -26,22 +26,21 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
 public class Game {
-	
+
 	private Engine<CustomEntity<?, ?>> engine;
-	
+
 	private Player player;
 	KeyInputListenerData keyData;
-	
+
 	private Text healthText = new Text(new Vector2D(10, 10), "");
 	{
 		healthText.setFont(Font.font("Calibri", FontWeight.BOLD, FontPosture.REGULAR, 36));
 	}
-	
+
 	private Text fpsText = new Text(new Vector2D(750, 10), "");
 	{
 		fpsText.setFont(Font.font("Calibri", FontWeight.BOLD, FontPosture.REGULAR, 36));
 	}
-
 
 	private Sprite backgroundSprite = new Sprite(new Vector2D(), Images.instance().background);
 
@@ -86,7 +85,6 @@ public class Game {
 		}
 	};
 
-	
 	private Updatable healthUpdate = new Updatable() {
 
 		@Override
@@ -98,83 +96,87 @@ public class Game {
 			}
 		}
 	};
-	
-	private Updatable fpsUpdate = new Updatable() {
 
-		@Override
-		public void update(long deltaMillis) {
-			fpsText.setText(""+(int)(1000/deltaMillis));
-		}
-	};
-	
-	
-	
-	private Updatable escapeUpdate = new Updatable() {
+	private Updatable fpsUpdate = new Updatable() {
 		
-		
+		int framesSum = 0;
+		int framesCount = 0;
 		
 		@Override
 		public void update(long deltaMillis) {
-			if(keyData.isDown(KeyCode.ESCAPE)) {
-				gameEnd();
+			
+			framesSum+=deltaMillis;
+			framesCount+=1;
+			
+			if(framesCount>=10) {
+				fpsText.setText("" + (int) (1000*framesCount / framesSum));
+				framesCount = 0;
+				framesSum = 0;
+				
 				
 			}
 			
 		}
+	};
+
+	private Updatable escapeUpdate = new Updatable() {
+
+		@Override
+		public void update(long deltaMillis) {
+			if (keyData.isDown(KeyCode.ESCAPE)) {
+				gameEnd();
+
+			}
+
+		}
 
 	};
-	
+
 	private Updater generalUpdate = new Updater();
 	{
 		generalUpdate.add(healthUpdate);
 		generalUpdate.add(enemySpawner);
 		generalUpdate.add(escapeUpdate);
 		generalUpdate.add(fpsUpdate);
-		
 
 	}
-	
-	private Runnable onGameEnd = ()->{};
-	
-	public Game(Engine<CustomEntity<?,?>> engine) {
+
+	private Runnable onGameEnd = () -> {
+	};
+
+	public Game(Engine<CustomEntity<?, ?>> engine) {
 		this.engine = engine;
 		this.player = new Player(new Vector2D(engine.getWidth() / 2, engine.getHeight() / 2),
 				new RocketLauncher(RocketPlayerProjectile::new, engine), engine);
-		
+
 		keyData = this.engine.getInputData().getKeyData();
-		
+
 		background = new Background(backgroundSprite, player);
-		
-		
+
 	}
-	
 
 	private void gameEnd() {
 		this.onGameEnd.run();
-		
+
 	}
-	
+
 	public void addToEngine() {
 		player.setHealth(100);
 		player.setPosition(new Vector2D(0, 0));
-		
-		this.engine.addCollisionHandler(CollisionHandling.handler);
+
+		this.engine.addCollisionHandler(CollisionHandling.instance().handler);
 		this.engine.addEntity(DrawingLayer.BACK_MIDDLE, player);
 		this.engine.addDrawable(DrawingLayer.BACKGROUND, background);
 		this.engine.addDrawable(DrawingLayer.ABSOLUTE, healthText);
 		this.engine.addDrawable(DrawingLayer.ABSOLUTE, fpsText);
-		
+
 		this.engine.addUpdatable(generalUpdate);
 		this.engine.stickCameraTo(player);
-		
-		
-	}
 
+	}
 
 	public void setOnGameEnd(Runnable onGameEnd) {
 		this.onGameEnd = onGameEnd;
 	}
-	
-	
-	
+
 }

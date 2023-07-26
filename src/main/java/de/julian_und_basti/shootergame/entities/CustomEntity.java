@@ -27,22 +27,19 @@ public abstract class CustomEntity<D extends Drawable, C extends BoxCollider> ex
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
-	
+
 	@Override
 	public void draw(GraphicsContext gc) {
 		super.draw(gc);
-		
-		
-		
-		
+
+		// TODO remove
 		// for debug purposes
 		gc.setFill(Color.LIGHTGREEN);
-		for(Vector2D v:this.getCollider().getVectors()) {
-			
-			gc.fillRect(v.getX()-1.5, v.getY()-1.5, 3, 3);
-			
+		for (Vector2D v : this.getCollider().getVectors()) {
+
+			gc.fillRect(v.getX() - 1.5, v.getY() - 1.5, 3, 3);
+
 		}
-		System.out.println(this.getCollider().getVectors().length);
 	}
 
 	public Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> getEngine() {
@@ -52,6 +49,5 @@ public abstract class CustomEntity<D extends Drawable, C extends BoxCollider> ex
 	public void setEngine(Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		this.engine = game;
 	}
-	
 
 }

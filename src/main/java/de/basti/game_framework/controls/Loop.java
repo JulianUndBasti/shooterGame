@@ -16,7 +16,7 @@ public class Loop{
 	
 	
 	
-	public Loop() {
+	public Loop() {	
 	}
 	
 	private AnimationTimer animationTimer = new AnimationTimer() {
@@ -29,6 +29,7 @@ public class Loop{
 		}
 		
 	};
+	
 	
 	
 	private long previousNanos = 0l;
