@@ -36,6 +36,12 @@ public class Game {
 	{
 		healthText.setFont(Font.font("Calibri", FontWeight.BOLD, FontPosture.REGULAR, 36));
 	}
+	
+	private Text fpsText = new Text(new Vector2D(750, 10), "");
+	{
+		fpsText.setFont(Font.font("Calibri", FontWeight.BOLD, FontPosture.REGULAR, 36));
+	}
+
 
 	private Sprite backgroundSprite = new Sprite(new Vector2D(), Images.background);
 
@@ -93,6 +99,16 @@ public class Game {
 		}
 	};
 	
+	private Updatable fpsUpdate = new Updatable() {
+
+		@Override
+		public void update(long deltaMillis) {
+			fpsText.setText(""+(int)(1000/deltaMillis));
+		}
+	};
+	
+	
+	
 	private Updatable escapeUpdate = new Updatable() {
 		
 		
@@ -113,6 +129,7 @@ public class Game {
 		generalUpdate.add(healthUpdate);
 		generalUpdate.add(enemySpawner);
 		generalUpdate.add(escapeUpdate);
+		generalUpdate.add(fpsUpdate);
 		
 
 	}
@@ -145,6 +162,8 @@ public class Game {
 		this.engine.addEntity(DrawingLayer.BACK_MIDDLE, player);
 		this.engine.addDrawable(DrawingLayer.BACKGROUND, background);
 		this.engine.addDrawable(DrawingLayer.ABSOLUTE, healthText);
+		this.engine.addDrawable(DrawingLayer.ABSOLUTE, fpsText);
+		
 		this.engine.addUpdatable(generalUpdate);
 		this.engine.stickCameraTo(player);
 		

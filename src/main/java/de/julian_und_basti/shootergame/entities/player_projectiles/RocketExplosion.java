@@ -28,7 +28,6 @@ public class RocketExplosion extends PlayerProjectile{
 
 	public RocketExplosion(Vector2D position, int damage, Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(position, null, null, new PlayerProjectileStats(damage, 0),game);
-		position.translate(-width/2, -height/2);
 		
 		Rectangle rect = new Rectangle(position.clone(), width, height);
 		

@@ -27,10 +27,7 @@ public class Background implements Drawable{
 		Vector2D pos = playerToFollow.getPosition();
 		int middleIndexX = (int)Math.round(pos.getX()/sprite.getWidth());
 		int middleIndexY = (int)Math.round(pos.getY()/sprite.getHeight());
-		
-		System.out.println(middleIndexX+"|"+middleIndexY);
-		System.out.println(pos.getX()+"|"+pos.getY());
-		
+
 		drawAround(gc,middleIndexX,middleIndexY);
 		
 

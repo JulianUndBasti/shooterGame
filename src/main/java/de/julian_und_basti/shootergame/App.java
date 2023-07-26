@@ -104,6 +104,7 @@ public class App extends Application {
 	public void start(Stage stage) {
 		Sounds.initMediaPlayers();
 		engine.getCollisionSystem().setUpdateIterations(4);
+		CollisionHandling.handler.getClass();//so its loaded beforehand, otherwise there will be a lagspike on first collision
 
 		this.showGui();
 

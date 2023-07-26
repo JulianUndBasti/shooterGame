@@ -126,7 +126,7 @@ public class Player extends CustomEntity<Sprite, BoxCollider> {
 				
 			});
 			
-			//this.health-=enemy.getDamage();
+			this.health-=enemy.getDamage();
 			if(health<0) {
 				health=0;
 				

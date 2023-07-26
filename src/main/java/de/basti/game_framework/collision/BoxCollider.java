@@ -62,7 +62,7 @@ public class BoxCollider implements Collider {
 		vectors[0].set(x-w/2, y-h/2);
 		vectors[1].set(x-w/2, y+h/2);
 		vectors[2].set(x+w/2, y-h/2);
-		vectors[3].set(x+w/2, y-+h/2);
+		vectors[3].set(x+w/2, y+h/2);
 		
 
 	}
