@@ -1,5 +1,8 @@
 package de.basti.game_framework.collision;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import de.basti.game_framework.math.Vector2D;
 
 /**
@@ -15,6 +18,7 @@ import de.basti.game_framework.math.Vector2D;
  */
 
 public interface Collider {
+	static final Logger LOGGER = Logger.getLogger(Collider.class.getName());
 	
 
 	/***
@@ -25,35 +29,32 @@ public interface Collider {
 	 * @return true, when one vector of c2 is inside this Collider false, when not
 	 */
 	public default boolean collidesWith(Collider c) {
-		if (this == c)
+		LOGGER.setLevel(Level.INFO);
+		
+		if (this == c) {
+			LOGGER.finer("collidesWith() of " + this + "with" + c + " is true");
 			return true;
+		}
 		
 		Vector2D[] vectors = c.getVectors();
 		for(int i = 0;i<vectors.length;i++) {
 			Vector2D v = vectors[i];
 			if(v==null) {
-				System.out.println(v);
+				throw new NullPointerException("Vectors from Colliders cannot be null!");
 			}
 			if (this.collidesWith(v)) {
+				LOGGER.finer("collidesWith() of " + this + "with" + c + " is true");
 				return true;
 			}
 		}
-		
-		/*for (Vector2D v : c.getVectors()) {
-			if(v==null) {
-				System.out.println(v);
-			}
-			if (this.collidesWith(v)) {
-				return true;
-			}
-		}*/
+		LOGGER.finest("collidesWith() of " + this + "with" + c + " is false");
 		return false;
 	}
 
-	public Vector2D[] getVectors();
-	public boolean collidesWith(Vector2D vector);
+	public abstract Vector2D[] getVectors();
+	public abstract boolean collidesWith(Vector2D vector);
 
-	public void translate(Vector2D vector);
+	public abstract void translate(Vector2D vector);
 	
 
 }

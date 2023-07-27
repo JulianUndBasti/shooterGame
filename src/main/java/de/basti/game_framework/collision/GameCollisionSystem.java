@@ -3,10 +3,13 @@ package de.basti.game_framework.collision;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import de.basti.game_framework.controls.Entity;
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.drawing.Drawable;
+import de.julian_und_basti.shootergame.game.Game;
 
 /**
  * Class which checks collisions between multiple {@code Collider}s, which can
@@ -18,6 +21,10 @@ import de.basti.game_framework.drawing.Drawable;
  */
 public class GameCollisionSystem<T extends Entity<? extends Drawable, ? extends Collider, ? extends Enum<?>>>
 		implements Updatable {
+	private static final Logger LOGGER = Logger.getLogger(GameCollisionSystem.class.getName());
+	static {
+		LOGGER.setLevel(Level.INFO);
+	}
 
 	private int updateIterations = 1;
 	private Set<T> colliders = new HashSet<>();
@@ -31,20 +38,21 @@ public class GameCollisionSystem<T extends Entity<? extends Drawable, ? extends 
 	}
 
 	public void update(long deltaMillis) {
+		LOGGER.fine("update()");
 		for (int i = 0; i < updateIterations; i++) {
-			this.updateOnce();
+			this.updateSubstep();
 		}
 	}
 
-	private void updateOnce() {
-
+	private void updateSubstep() {
+		LOGGER.finer("updateSubstep()");
 		Set<CollisionPair<T>> currentCollisions = ConcurrentHashMap.newKeySet(colliders.size() * colliders.size());
 		for (T c1 : this.colliders) {
 			if (c1 == null) {
 				System.out.println(c1 == null);
 			}
 
-			this.colliders.parallelStream().filter(c2 -> ((c1.collidesWith(c2) || c2.collidesWith(c1)) && c1 != c2))
+			this.colliders.parallelStream().filter(c2->c1!=c2).filter(c2 -> c1.collidesWith(c2) || c2.collidesWith(c1))
 					.forEach(c2 -> currentCollisions.add(new CollisionPair<T>(c1, c2)));
 		}
 
@@ -52,7 +60,7 @@ public class GameCollisionSystem<T extends Entity<? extends Drawable, ? extends 
 		
 		
 		for(var handler:this.handlers) {
-			for(var pair:currentCollisions) {
+			for(var pair:toHandle) {
 				handler.onCollision(pair);
 			}
 		}

@@ -1,5 +1,8 @@
 package de.basti.game_framework.collision;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import de.basti.game_framework.math.Vector2D;
 
 /**
@@ -9,11 +12,16 @@ import de.basti.game_framework.math.Vector2D;
  * @see GameCollisionSystem
  */
 public class MultiCollider implements Collider{
+	private static final Logger LOGGER = Logger.getLogger(MultiCollider.class.getName());
+	static {
+		LOGGER.setLevel(Level.INFO);
+	}
 	
 	private Collider[] colliders; 
 	
 	private MultiCollider(Collider... colliders) {
 		super();
+		LOGGER.finer("Constructing " + this);
 		this.colliders = colliders;
 	}
 	
@@ -22,14 +30,17 @@ public class MultiCollider implements Collider{
 	public boolean collidesWith(Vector2D vector) {
 		for(Collider collider:this.colliders) {
 			if(collider.collidesWith(vector)) {
+				LOGGER.finest("collidesWith() of " + this + " with " + vector + " is true");
 				return true;
 			}
 		}
+		LOGGER.finest("collidesWith() of " + this + " with " + vector + " is false");
 		return false;
 	}
 
 	@Override
 	public Vector2D[] getVectors() {
+		LOGGER.finest("getVectors() of " + this);
 		Vector2D[] allVectors = this.colliders[0].getVectors();
 		for(int i = 1;i<colliders.length;i++) {
 			Vector2D[] newVectors = this.colliders[i].getVectors();
@@ -45,6 +56,7 @@ public class MultiCollider implements Collider{
 
 	@Override
 	public void translate(Vector2D vector) {
+		LOGGER.finest("translate() of " + this + " by " + vector);
 		for(Collider collider:this.colliders) {
 			collider.translate(vector);
 		

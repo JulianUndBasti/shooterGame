@@ -1,9 +1,16 @@
 package de.basti.game_framework.collision;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import de.basti.game_framework.math.Vector2D;
 
 public class CircleCollider implements Collider {
-
+	private static final Logger LOGGER = Logger.getLogger(CircleCollider.class.getName());
+	static {
+		LOGGER.setLevel(Level.INFO);
+	}
+	
 	private Vector2D position;
 	private double radius;
 
@@ -12,6 +19,7 @@ public class CircleCollider implements Collider {
 	private Vector2D[] vectors = new Vector2D[precision];
 
 	public CircleCollider(Vector2D position, double radius) {
+		LOGGER.finer("Constructing " + this.toString());
 		this.setPosition(position);
 		this.setRadius(radius);
 		this.recalculateVectors();
@@ -19,6 +27,7 @@ public class CircleCollider implements Collider {
 	}
 
 	private void recalculateVectors() {
+		LOGGER.finer("recalculateVectors() of " + this);
 		for (int i = 0; i < precision; i++) {
 			double a = (double) i;
 			a = a / precision;
@@ -35,10 +44,10 @@ public class CircleCollider implements Collider {
 		Vector2D center = this.position.clone();
 		center.translate(radius, radius);
 		center.translate(vector.scaled(-1));
-		if (center.length() < this.radius) {
-			return true;
-		}
-		return false;
+		boolean collidesWith = center.length() < this.radius;
+		LOGGER.finest("collidesWith() of " + this + " with " + vector + " is " + collidesWith);
+		return collidesWith;
+		
 
 	}
 
@@ -51,6 +60,7 @@ public class CircleCollider implements Collider {
 
 	@Override
 	public void translate(Vector2D vector) {
+		LOGGER.finest("translate() of " + this + " by " + vector);
 		this.position.translate(vector);
 		this.recalculateVectors();
 
@@ -61,6 +71,7 @@ public class CircleCollider implements Collider {
 	}
 
 	public void setRadius(double radius) {
+		LOGGER.finest("setRadius() of " + this + " to " + radius);
 		this.radius = radius;
 		this.recalculateVectors();
 
@@ -71,6 +82,7 @@ public class CircleCollider implements Collider {
 	}
 
 	public void setPosition(Vector2D position) {
+		LOGGER.finest("setPosition() of " + this + " to " + position);
 		this.position = position;
 		this.recalculateVectors();
 	}

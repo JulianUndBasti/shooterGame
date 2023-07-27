@@ -2,6 +2,8 @@ package de.basti.game_framework.collision;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import de.basti.game_framework.math.Vector2D;
 
@@ -13,6 +15,11 @@ import de.basti.game_framework.math.Vector2D;
  * 
  */
 public class BoxCollider implements Collider {
+	private static final Logger LOGGER = Logger.getLogger(BoxCollider.class.getName());
+	static {
+		LOGGER.setLevel(Level.INFO);
+	}
+	
 	private Vector2D position;
 	private double width;
 	private double height;
@@ -24,10 +31,12 @@ public class BoxCollider implements Collider {
 
 	public BoxCollider(Vector2D position, double width, double height) {
 		super();
+		LOGGER.finer("Constructing " + this.toString());
 		this.position = position;
 		this.width = width;
 		this.height = height;
 		this.recalculateVectors();
+		
 	}
 
 	@Override
@@ -41,8 +50,9 @@ public class BoxCollider implements Collider {
 		boolean xCollision = ((x1 >= x) && (x1 <= x + width));
 		boolean yCollision = ((y1 >= y) && (y1 <= y + height));
 		
-		
-		return xCollision&&yCollision;
+		boolean collidesWith = xCollision&&yCollision;
+		LOGGER.finest("collidesWith() of " + this + " with " + vector + " is " + collidesWith);
+		return collidesWith;
 		
 	}
 
@@ -53,6 +63,7 @@ public class BoxCollider implements Collider {
 	}
 	
 	private void recalculateVectors() {
+		LOGGER.finest("recalculateVectors() of " + super.toString());
 		double x = this.position.getX();
 		double y = this.position.getY();
 		double w = this.width;
@@ -70,6 +81,7 @@ public class BoxCollider implements Collider {
 
 	@Override
 	public void translate(Vector2D vector) {
+		LOGGER.finest("translate() of " + super.toString() + " by " + vector);
 		this.position.translate(vector);
 		this.recalculateVectors();
 	}
@@ -80,6 +92,7 @@ public class BoxCollider implements Collider {
 	}
 
 	public void setPosition(Vector2D position) {
+		LOGGER.finest("setPosition() of " + super.toString() + " to " + position);
 		this.position = position;
 		this.recalculateVectors();
 	}
@@ -89,6 +102,7 @@ public class BoxCollider implements Collider {
 	}
 
 	public void setWidth(double width) {
+		LOGGER.finest("setWidth() of " + super.toString() + " to " + width);
 		this.width = width;
 		this.recalculateVectors();
 	}
@@ -98,6 +112,7 @@ public class BoxCollider implements Collider {
 	}
 
 	public void setHeight(double height) {
+		LOGGER.finest("setHeight() of " + super.toString() + " to " + height);
 		this.height = height;
 		this.recalculateVectors();
 	}

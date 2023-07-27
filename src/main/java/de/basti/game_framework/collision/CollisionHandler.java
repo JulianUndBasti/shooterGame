@@ -1,5 +1,8 @@
 package de.basti.game_framework.collision;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import de.basti.game_framework.controls.Entity;
 import de.basti.game_framework.drawing.Drawable;
 
@@ -15,16 +18,24 @@ import de.basti.game_framework.drawing.Drawable;
  * 
  */
 public abstract class CollisionHandler<T extends Entity<? extends Drawable, ? extends Collider, ? extends Enum<?>>> {
+	private static final Logger LOGGER = Logger.getLogger(CollisionHandler.class.getName());
+	static {
+		LOGGER.setLevel(Level.FINER);
+	}
+	
 	
 	public void onCollision(CollisionPair<T> pair) {
 		switch (pair.getType()) {
 		case BEGIN:
+			LOGGER.finer("Collision Begin:"+pair);
 			this.onBegin(pair);
 			break;
 		case ONGOING:
+			LOGGER.finer("Collision Ongoing:"+pair);
 			this.onOngoing(pair);
 			break;
 		case END:
+			LOGGER.finer("Collision End:"+pair);
 			this.onEnd(pair);
 			break;
 

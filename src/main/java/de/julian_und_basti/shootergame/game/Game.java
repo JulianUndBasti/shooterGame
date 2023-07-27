@@ -45,8 +45,10 @@ public class Game {
 	private Sprite backgroundSprite = new Sprite(new Vector2D(), Images.instance().background);
 
 	private Background background;
-
-	private int enemyDelay = 1000;
+	
+	
+	private final int startEnemyDelay = 1000;
+	private int enemyDelay = startEnemyDelay;
 	private int minEnemyDelay = 300;
 
 	private Updatable enemySpawner = new Updatable() {
@@ -163,6 +165,7 @@ public class Game {
 	public void addToEngine() {
 		player.setHealth(100);
 		player.setPosition(new Vector2D(0, 0));
+		enemyDelay = startEnemyDelay;
 
 		this.engine.addCollisionHandler(CollisionHandling.instance().handler);
 		this.engine.addEntity(DrawingLayer.BACK_MIDDLE, player);

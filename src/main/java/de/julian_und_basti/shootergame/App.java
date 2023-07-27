@@ -6,6 +6,7 @@ import java.util.Random;
 
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Engine;
+import de.basti.game_framework.controls.Logging;
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.controls.Updater;
 import de.basti.game_framework.drawing.Drawable;
@@ -48,6 +49,10 @@ import javafx.stage.Stage;
  * JavaFX App
  */
 public class App extends Application {
+	
+	{
+		Logging.init();
+	}
 
 	private final int width = 800;
 	private final int height = 600;
@@ -59,27 +64,27 @@ public class App extends Application {
 
 	private Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> engine = new Engine<>(scene, gc);
 
-	GUI gui = new GUI(new Vector2D(0, 0), engine.getInputData());
-	
-	Game game = new Game(engine);
-	{
-		game.setOnGameEnd(()->{
+	private GUI gui = new GUI(new Vector2D(0, 0), engine.getInputData());
+
+	private Game game = new Game(engine);
+	private ButtonComponent startButton = new ButtonComponent(new Vector2D(width / 2, height / 2), 70, 40);
+
+	public App() {
+		
+		game.setOnGameEnd(() -> {
 			this.showGui();
 		});
-	}
 
-	private ButtonComponent startButton = new ButtonComponent(new Vector2D(width / 2, height / 2), 70, 40);
-	{
 		startButton.setText("Start");
 		startButton.setFont(Font.font("Calibri", FontWeight.BOLD, FontPosture.REGULAR, 36));
 		startButton.setBackgroundColor(Color.BLUE);
-		startButton.translate(-startButton.getWidth()/2,-startButton.getHeight()/2);
+		startButton.translate(-startButton.getWidth() / 2, -startButton.getHeight() / 2);
 		startButton.addActionListener(() -> {
 			showGame();
 		});
 		gui.add(startButton);
-	}
 
+	}
 
 	private void showGame() {
 		engine.removeDrawable(gui);
@@ -90,21 +95,18 @@ public class App extends Application {
 	}
 
 	private void showGui() {
-		engine.removeCollisionHandler(CollisionHandling.instance().handler);		
+		engine.removeCollisionHandler(CollisionHandling.instance().handler);
 		engine.removeAll();
-
 
 		engine.addDrawable(DrawingLayer.ABSOLUTE, gui);
 		engine.addUpdatable(gui);
-		
+
 	}
-	
-	
 
 	@Override
 	public void start(Stage stage) {
-		
-		
+		Logging.LOGGER.getClass();
+
 		engine.getCollisionSystem().setUpdateIterations(4);
 
 		this.showGui();
@@ -113,7 +115,6 @@ public class App extends Application {
 
 		stage.setScene(this.scene);
 		stage.show();
-		
 
 	}
 
