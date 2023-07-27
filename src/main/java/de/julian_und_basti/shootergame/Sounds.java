@@ -13,6 +13,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 public class Sounds {
 	
@@ -31,7 +32,12 @@ public class Sounds {
 	
 	private MediaPlayer loadSound(String fileName) {
 		URL url = Sounds.class.getClassLoader().getResource(prefix+fileName);
-		return new MediaPlayer(new Media(url.toString()));
+		MediaPlayer p = new MediaPlayer(new Media(url.toString()));
+		p.play();
+		p.pause();
+		p.seek(Duration.ZERO);
+		return p;
+		
 	}
 	
 	public static Sounds instance() {

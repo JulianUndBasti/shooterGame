@@ -103,10 +103,8 @@ public class App extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		//all Sounds, Images and the CollisionHandler are loaded
-		Sounds.instance();
-		Images.instance();
-		CollisionHandling.instance();
+		
+		
 		engine.getCollisionSystem().setUpdateIterations(4);
 
 		this.showGui();
