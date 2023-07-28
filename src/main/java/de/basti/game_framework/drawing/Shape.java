@@ -1,5 +1,8 @@
 package de.basti.game_framework.drawing;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import de.basti.game_framework.math.Vector2D;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -12,6 +15,11 @@ import javafx.scene.paint.Paint;
  * @see Rectagle
  */
 public abstract class Shape implements Drawable {
+	private static final Logger LOGGER = Logger.getLogger(Shape.class.getName());
+	static {
+		LOGGER.setLevel(Level.INFO);
+	}
+	
 	protected Vector2D position;
 	protected Paint strokeColor = Color.BLACK;
 	protected Paint fillColor = Color.BLACK;
@@ -21,6 +29,7 @@ public abstract class Shape implements Drawable {
 	
 	public Shape(Vector2D position) {
 		super();
+		LOGGER.finer("Constructing " + this);
 		this.position = position;
 	}
 
@@ -29,6 +38,7 @@ public abstract class Shape implements Drawable {
 	}
 	
 	public void translate(Vector2D vector) {
+		LOGGER.finer("translate() of" + this + " by " + vector);
 		this.position.translate(vector);
 	}
 
@@ -41,6 +51,7 @@ public abstract class Shape implements Drawable {
 
 
 	public void setStrokeColor(Paint strokeColor) {
+		LOGGER.finer("setStrokeColor() of" + this + " to " + strokeColor);
 		this.strokeColor = strokeColor;
 	}
 
@@ -53,6 +64,7 @@ public abstract class Shape implements Drawable {
 
 
 	public void setFillColor(Paint fillColor) {
+		LOGGER.finer("setFillColor() of" + this + " to " + fillColor);
 		this.fillColor = fillColor;
 	}
 
@@ -65,6 +77,7 @@ public abstract class Shape implements Drawable {
 
 
 	public void setLineWidth(double lineWidth) {
+		LOGGER.finer("setLineWidth() of" + this + " to " + lineWidth);
 		this.lineWidth = lineWidth;
 	}
 
@@ -77,6 +90,7 @@ public abstract class Shape implements Drawable {
 
 
 	public void setShouldFill(boolean shouldFill) {
+		LOGGER.finer("setShouldFill() of" + this + " to " + shouldFill);
 		this.shouldFill = shouldFill;
 	}
 	

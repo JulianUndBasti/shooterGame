@@ -24,6 +24,7 @@ public class GameCollisionSystem<T extends Entity<? extends Drawable, ? extends 
 	private static final Logger LOGGER = Logger.getLogger(GameCollisionSystem.class.getName());
 	static {
 		LOGGER.setLevel(Level.INFO);
+		Collider.LOGGER.setLevel(Level.INFO);
 	}
 
 	private int updateIterations = 1;
@@ -49,7 +50,8 @@ public class GameCollisionSystem<T extends Entity<? extends Drawable, ? extends 
 		Set<CollisionPair<T>> currentCollisions = ConcurrentHashMap.newKeySet(colliders.size() * colliders.size());
 		for (T c1 : this.colliders) {
 			if (c1 == null) {
-				System.out.println(c1 == null);
+				LOGGER.severe("Collider in collider list is null!");
+				throw new NullPointerException("Collider cant be null!");
 			}
 
 			this.colliders.parallelStream().filter(c2->c1!=c2).filter(c2 -> c1.collidesWith(c2) || c2.collidesWith(c1))

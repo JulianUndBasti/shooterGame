@@ -29,7 +29,6 @@ public interface Collider {
 	 * @return true, when one vector of c2 is inside this Collider false, when not
 	 */
 	public default boolean collidesWith(Collider c) {
-		LOGGER.setLevel(Level.INFO);
 		
 		if (this == c) {
 			LOGGER.finer("collidesWith() of " + this + "with" + c + " is true");

@@ -36,6 +36,7 @@ public class Sounds {
 		p.play();
 		p.pause();
 		p.seek(Duration.ZERO);
+		
 		return p;
 		
 	}

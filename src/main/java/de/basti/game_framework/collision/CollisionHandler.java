@@ -20,7 +20,7 @@ import de.basti.game_framework.drawing.Drawable;
 public abstract class CollisionHandler<T extends Entity<? extends Drawable, ? extends Collider, ? extends Enum<?>>> {
 	private static final Logger LOGGER = Logger.getLogger(CollisionHandler.class.getName());
 	static {
-		LOGGER.setLevel(Level.FINER);
+		LOGGER.setLevel(Level.INFO);
 	}
 	
 	
