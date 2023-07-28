@@ -15,18 +15,26 @@ public abstract class PlayerProjectile extends CustomEntity<Rectangle, BoxCollid
 	private int damage;
 	
 	private Vector2D movement = new Vector2D(0,0);
+	
+	private int maxLifeTimeMillis = 10000;
+	private int lifeTimeMillis = 0;
 
 	public PlayerProjectile(Vector2D position, BoxCollider collider, Rectangle drawable, PlayerProjectileStats stats,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> engine) {
 		super(position, collider, drawable, EntityType.PLAYER_PROJECTILE,engine);
 		this.setWeight(0);
 		this.setSpeed(stats.speed);
-		this.setDamage(stats.damage);
+		this.setDamage(stats.damage); 
 		
 
 	}
 	
 	@Override
 	public void update(long deltaMillis) {
+		this.lifeTimeMillis+=deltaMillis;
+		if(lifeTimeMillis >maxLifeTimeMillis) {
+			this.getEngine().removeEntity(this);
+			return;
+		}
 		this.translate(movement.scaled(deltaMillis*speed));
 		
 	}
@@ -55,6 +63,16 @@ public abstract class PlayerProjectile extends CustomEntity<Rectangle, BoxCollid
 
 	public void setMovement(Vector2D movement) {
 		this.movement = movement;
+	}
+	
+	
+
+	public int getLifeTimeMillis() {
+		return lifeTimeMillis;
+	}
+
+	public void setLifeTimeMillis(int lifeTimeMillis) {
+		this.lifeTimeMillis = lifeTimeMillis;
 	}
 
 	public abstract void hit(Enemy<?> enemy);
