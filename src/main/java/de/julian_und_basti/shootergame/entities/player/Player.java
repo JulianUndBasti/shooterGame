@@ -123,6 +123,8 @@ public class Player extends CustomEntity<Sprite, BoxCollider> {
 			this.getEngine().addTaskForEndOfUpdate(() -> {
 				Sounds.instance().hurt.seek(Duration.ZERO);	
 				Sounds.instance().hurt.play();
+				System.out.println(Sounds.instance().hurt.getStatus());
+				
 				
 			});
 			

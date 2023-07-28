@@ -102,6 +102,23 @@ public class App extends Application {
 		engine.addUpdatable(gui);
 
 	}
+	
+	private Runnable waitForLoadingThenStart = () -> {
+		System.out.println("Loading sounds!");
+		Sounds sounds = Sounds.instance();
+		boolean soundsHaveLoaded = false;
+		while(!soundsHaveLoaded) {
+			soundsHaveLoaded = sounds.haveAllLoaded();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+
+			}
+		}
+		System.out.println("Sounds loaded!");
+		engine.start();
+		
+	};
 
 	@Override
 	public void start(Stage stage) {
@@ -112,8 +129,10 @@ public class App extends Application {
 
 		this.showGui();
 
-		engine.start();
-
+		Thread waiterThread = new Thread(waitForLoadingThenStart);
+		waiterThread.start();
+		
+		System.out.println("Showing stage!");
 		stage.setScene(this.scene);
 		stage.show();
 

@@ -158,11 +158,16 @@ public class Engine<E extends Entity<?, ?, ?>> {
 		
 	}
 	
+	public void removeAllCollisionHandlers() {
+		collisionSystem.removeAll();
+	}
+	
 	public void removeAll() {
 		this.removeAllEntities();
 		this.removeAllColliders();
 		this.removeAllDrawables();
 		this.removeAllUpdatables();
+		this.removeAllCollisionHandlers();
 	}
 
 	public boolean removeUpdatable(Updatable u) {
