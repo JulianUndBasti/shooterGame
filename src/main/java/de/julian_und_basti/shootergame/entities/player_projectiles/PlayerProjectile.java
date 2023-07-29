@@ -16,7 +16,7 @@ public abstract class PlayerProjectile extends CustomEntity<Rectangle, BoxCollid
 	
 	private Vector2D movement = new Vector2D(0,0);
 	
-	private int maxLifeTimeMillis = 10000;
+	private int maxLifeTimeMillis = 2500;
 	private int lifeTimeMillis = 0;
 
 	public PlayerProjectile(Vector2D position, BoxCollider collider, Rectangle drawable, PlayerProjectileStats stats,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> engine) {

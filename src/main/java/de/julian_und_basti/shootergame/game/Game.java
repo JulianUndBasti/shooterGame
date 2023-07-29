@@ -19,6 +19,8 @@ import de.julian_und_basti.shootergame.entities.enemies.Enemy;
 import de.julian_und_basti.shootergame.entities.enemies.WalkerEnemy;
 import de.julian_und_basti.shootergame.entities.player.Player;
 import de.julian_und_basti.shootergame.entities.player_projectiles.RocketPlayerProjectile;
+import de.julian_und_basti.shootergame.entities.player_projectiles.SimplePlayerProjectile;
+import de.julian_und_basti.shootergame.weapons.MachineGun;
 import de.julian_und_basti.shootergame.weapons.RocketLauncher;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
@@ -82,7 +84,7 @@ public class Game {
 			enemyPos.translate(player.getPosition());
 
 			Enemy<?> enemy = new WalkerEnemy(enemyPos, player, engine);
-			engine.addEntity(DrawingLayer.MIDDLE, enemy);
+			//engine.addEntity(DrawingLayer.MIDDLE, enemy);
 
 		}
 	};
@@ -149,7 +151,7 @@ public class Game {
 	public Game(Engine<CustomEntity<?, ?>> engine) {
 		this.engine = engine;
 		this.player = new Player(new Vector2D(engine.getWidth() / 2, engine.getHeight() / 2),
-				new RocketLauncher(RocketPlayerProjectile::new, engine), engine);
+				new MachineGun(RocketPlayerProjectile::new, engine), engine);
 
 		keyData = this.engine.getInputData().getKeyData();
 

@@ -20,7 +20,7 @@ public class RocketPlayerProjectile extends PlayerProjectile {
 	private double maxSpeed;
 
 
-	public RocketPlayerProjectile(Vector2D shootPosition, Vector2D direction, PlayerProjectileStats stats,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+	public RocketPlayerProjectile(Vector2D shootPosition,Vector2D movement, PlayerProjectileStats stats,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(shootPosition, null, null, new PlayerProjectileStats(stats.damage, stats.speed/10),game);
 		
 		
@@ -30,9 +30,7 @@ public class RocketPlayerProjectile extends PlayerProjectile {
 		this.getDrawable().setShouldFill(true);
 		this.setCollider(new BoxCollider(shootPosition.clone(), width, height));
 
-		this.translate(new Vector2D(-width / 2, -height / 2));
-
-		this.setMovement(direction);
+		this.setMovement(movement);
 		this.maxSpeed = stats.speed;
 
 	}

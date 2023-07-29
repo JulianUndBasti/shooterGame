@@ -5,14 +5,18 @@ import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.math.Vector2D;
+import de.julian_und_basti.shootergame.Images;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectileFactory;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectileStats;
+import javafx.scene.image.Image;
 
 public class MachineGun extends Weapon{
 	
-	public static final PlayerProjectileStats DEFAULT_STATS = new PlayerProjectileStats(5, 0.6);
+	
+	
+	public static final PlayerProjectileStats DEFAULT_STATS = new PlayerProjectileStats(5, 1.2);
 	
 	
 	
@@ -28,11 +32,10 @@ public class MachineGun extends Weapon{
 
 	}
 
+
 	@Override
-	protected void shoot(Vector2D shootPosition, Vector2D direction) {
-		PlayerProjectile projectile = this.getNewProjectile(shootPosition, direction);
-		
-		this.getEngine().addEntity(DrawingLayer.MIDDLE, projectile);
+	public Image getImage() {
+		return Images.instance().background;
 	}
 	
 

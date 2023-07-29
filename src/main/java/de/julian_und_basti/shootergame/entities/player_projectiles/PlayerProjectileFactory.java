@@ -7,5 +7,5 @@ import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 
 public interface PlayerProjectileFactory{
-	public PlayerProjectile getNew(Vector2D shootPosition, Vector2D direction, PlayerProjectileStats stats,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game);
+	public PlayerProjectile getNew(Vector2D shootPosition, Vector2D movement, PlayerProjectileStats stats,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game);
 }

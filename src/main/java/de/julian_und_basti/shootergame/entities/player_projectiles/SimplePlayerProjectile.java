@@ -14,9 +14,9 @@ public class SimplePlayerProjectile extends PlayerProjectile {
 	private double height = 5;
 	private double width = 5;
 
-
-	public SimplePlayerProjectile(Vector2D shootPosition, Vector2D direction, PlayerProjectileStats stats,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
-		super(shootPosition, null, null, stats,game);
+	public SimplePlayerProjectile(Vector2D shootPosition, Vector2D movement, PlayerProjectileStats stats,
+			Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
+		super(shootPosition, null, null, stats, game);
 
 		Rectangle rect = new Rectangle(shootPosition.clone(), width, height);
 
@@ -25,9 +25,8 @@ public class SimplePlayerProjectile extends PlayerProjectile {
 		this.getDrawable().setShouldFill(true);
 
 		this.setCollider(new BoxCollider(shootPosition.clone(), width, height));
-		this.translate(new Vector2D(0 - width / 2, 0 - height / 2));
 
-		this.setMovement(direction);
+		this.setMovement(movement);
 	}
 
 	@Override
