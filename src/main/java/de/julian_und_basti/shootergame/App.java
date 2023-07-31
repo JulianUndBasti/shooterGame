@@ -68,7 +68,7 @@ public class App extends Application {
 	private GUI gui = new GUI(new Vector2D(0, 0), engine.getInputData());
 
 	private Game game = new Game(engine);
-	private ButtonComponent startButton = new ButtonComponent(new Vector2D(width / 2, height / 2), 70, 40);
+	private ButtonComponent startButton = new ButtonComponent(new Vector2D(width / 2 - 35, height / 2 - 20), 70, 40);
 
 	public App() {
 		
