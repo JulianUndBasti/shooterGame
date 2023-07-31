@@ -71,8 +71,8 @@ public class Game {
 			} else {
 				enemyDelay = minEnemyDelay;
 			}
-
-			Vector2D enemyPos = new Vector2D(random.nextDouble() * 600 + 200, random.nextDouble() * 600 + 200);
+			
+			Vector2D enemyPos = new Vector2D(random.nextDouble() * 800 + 200, random.nextDouble() * 800 + 200);
 
 			if (random.nextBoolean()) {
 				enemyPos.setX(enemyPos.getX() * -1);
@@ -84,7 +84,7 @@ public class Game {
 			enemyPos.translate(player.getPosition());
 
 			Enemy<?> enemy = new WalkerEnemy(enemyPos, player, engine);
-			//engine.addEntity(DrawingLayer.MIDDLE, enemy);
+			engine.addEntity(DrawingLayer.MIDDLE, enemy);
 
 		}
 	};

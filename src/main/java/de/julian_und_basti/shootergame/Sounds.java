@@ -33,7 +33,7 @@ public class Sounds {
 	
 	private Sounds() {
 		explosion = loadSound("explosion.wav");
-		hurt = loadSound("hurt.wav");
+		hurt = loadSound("player_hurt.wav");
 		
 		startLoadingPlayers();
 	}

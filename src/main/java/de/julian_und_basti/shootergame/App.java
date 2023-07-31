@@ -43,6 +43,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
@@ -54,8 +55,8 @@ public class App extends Application {
 		Logging.init();
 	}
 
-	private final int width = 800;
-	private final int height = 600;
+	private final int width = (int) Screen.getPrimary().getBounds().getMaxX();
+	private final int height = (int) Screen.getPrimary().getBounds().getMaxY();
 
 	private Canvas canvas = new Canvas(width, height);
 	private Group root = new Group(canvas);
@@ -122,6 +123,7 @@ public class App extends Application {
 
 	@Override
 	public void start(Stage stage) {
+		stage.setFullScreen(true);
 		Sounds.instance();	
 		Logging.LOGGER.getClass();
 
