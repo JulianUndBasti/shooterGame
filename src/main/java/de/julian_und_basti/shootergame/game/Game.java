@@ -32,7 +32,7 @@ public class Game {
 	private Engine<CustomEntity<?, ?>> engine;
 
 	private Player player;
-	KeyInputListenerData keyData;
+	private KeyInputListenerData keyData;
 
 	private Text healthText = new Text(new Vector2D(10, 10), "");
 	{
