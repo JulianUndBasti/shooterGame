@@ -6,6 +6,8 @@ import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.MultiDrawable;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.drawing.Sprite;
+import de.basti.game_framework.drawing.animation.AnimatedSprite;
+import de.basti.game_framework.drawing.animation.AnimationFrame;
 import de.basti.game_framework.input.KeyInputListenerData;
 import de.basti.game_framework.input.MouseInputListenerData;
 import de.basti.game_framework.math.Vector2D;
@@ -22,7 +24,7 @@ import javafx.util.Duration;
 
 public class Player extends CustomEntity<MultiDrawable, BoxCollider> {
 
-	private Sprite playerSprite;
+	private AnimatedSprite playerSprite;
 	private Sprite weaponSprite;
 
 	private double width = 48;
@@ -53,8 +55,14 @@ public class Player extends CustomEntity<MultiDrawable, BoxCollider> {
 		super(position, null, null, EntityType.PLAYER, engine);
 
 		this.weapon = weapon;
-
-		playerSprite = new Sprite(position.clone(), Images.instance().player);
+		
+		AnimationFrame frame1 =new AnimationFrame(100,new Sprite(null,Images.instance().player));
+		AnimationFrame frame2 =new AnimationFrame(100,new Sprite(null,Images.instance().background));
+		
+		
+		playerSprite = new AnimatedSprite(position.clone(),frame1, frame2 );
+		
+		
 		playerSprite.setWidth(width);
 		playerSprite.setHeight(height);
 
@@ -71,6 +79,9 @@ public class Player extends CustomEntity<MultiDrawable, BoxCollider> {
 		this.keyData = this.getEngine().getInputData().getKeyData();
 
 		this.setWeight(DEFAULT_WEIGHT);
+		
+		
+		
 
 	}
 
@@ -78,6 +89,8 @@ public class Player extends CustomEntity<MultiDrawable, BoxCollider> {
 
 	@Override
 	public void update(long deltaMillis) {
+		playerSprite.update(deltaMillis);
+		
 		if (timeSinceHit <= hitDelay) {
 			timeSinceHit += deltaMillis;
 		}
