@@ -8,7 +8,7 @@ import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.controls.Entity;
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.controls.Updater;
-import de.basti.game_framework.drawing.DrawingLayer;
+import de.basti.game_framework.drawing.GameDrawing;
 import de.basti.game_framework.drawing.Sprite;
 import de.basti.game_framework.drawing.Text;
 import de.basti.game_framework.input.KeyInputListenerData;
@@ -84,7 +84,7 @@ public class Game {
 			enemyPos.translate(player.getPosition());
 
 			Enemy<?> enemy = new WalkerEnemy(enemyPos, player, engine);
-			engine.addEntity(DrawingLayer.MIDDLE, enemy);
+			engine.addEntity(GameDrawing.MIDDLE, enemy);
 
 		}
 	};
@@ -138,10 +138,11 @@ public class Game {
 
 	private Updater generalUpdate = new Updater();
 	{
-		generalUpdate.add(healthUpdate);
+		
 		generalUpdate.add(enemySpawner);
 		generalUpdate.add(escapeUpdate);
 		generalUpdate.add(fpsUpdate);
+		generalUpdate.add(healthUpdate);
 
 	}
 
@@ -170,10 +171,10 @@ public class Game {
 		enemyDelay = startEnemyDelay;
 
 		this.engine.addCollisionHandler(CollisionHandling.instance().handler);
-		this.engine.addEntity(DrawingLayer.BACK_MIDDLE, player);
-		this.engine.addDrawable(DrawingLayer.BACKGROUND, background);
-		this.engine.addDrawable(DrawingLayer.ABSOLUTE, healthText);
-		this.engine.addDrawable(DrawingLayer.ABSOLUTE, fpsText);
+		this.engine.addEntity(GameDrawing.BACK_MIDDLE, player);
+		this.engine.addDrawableRelative(GameDrawing.BACKGROUND, background);
+		this.engine.addDrawableAbsolute(healthText);
+		this.engine.addDrawableAbsolute(fpsText);
 
 		this.engine.addUpdatable(generalUpdate);
 		this.engine.stickCameraTo(player);

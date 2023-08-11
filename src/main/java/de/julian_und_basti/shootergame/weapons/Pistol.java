@@ -3,7 +3,6 @@ package de.julian_und_basti.shootergame.weapons;
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
-import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.Images;
 import de.julian_und_basti.shootergame.entities.CustomEntity;

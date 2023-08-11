@@ -6,7 +6,7 @@ import java.util.List;
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
-import de.basti.game_framework.drawing.DrawingLayer;
+import de.basti.game_framework.drawing.GameDrawing;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
 import de.julian_und_basti.shootergame.entities.player.Player;
@@ -25,10 +25,10 @@ public abstract class Level {
 	}
 
 	public void buildLevel() {
-		this.engine.addEntity(DrawingLayer.MIDDLE, player);
+		this.engine.addEntity(GameDrawing.MIDDLE, player);
 
 		for (Wall wall : this.walls) {
-			this.engine.addEntity(DrawingLayer.FORE_MIDDLE, wall);
+			this.engine.addEntity(GameDrawing.FORE_MIDDLE, wall);
 
 		}
 

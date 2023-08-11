@@ -10,7 +10,6 @@ import de.basti.game_framework.controls.Logging;
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.controls.Updater;
 import de.basti.game_framework.drawing.Drawable;
-import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.Sprite;
 import de.basti.game_framework.drawing.Text;
 import de.basti.game_framework.drawing.gui.ButtonComponent;
@@ -99,7 +98,7 @@ public class App extends Application {
 		engine.removeCollisionHandler(CollisionHandling.instance().handler);
 		engine.removeAll();
 
-		engine.addDrawable(DrawingLayer.ABSOLUTE, gui);
+		engine.addDrawableAbsolute(gui);
 		engine.addUpdatable(gui);
 
 	}

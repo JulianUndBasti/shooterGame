@@ -3,7 +3,7 @@ package de.julian_und_basti.shootergame.entities.enemies;
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
-import de.basti.game_framework.drawing.DrawingLayer;
+import de.basti.game_framework.drawing.GameDrawing;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
@@ -72,8 +72,8 @@ public class SplitterEnemy extends Enemy<Rectangle> {
 			WalkerEnemy e2 = new WalkerEnemy(this.getPosition().clone(), playerToFollow, this.getEngine());
 			e1.translate(new Vector2D(0.01, 0));// translating a little bit, so they get unstuck through collision
 			this.getEngine().addTaskForEndOfUpdate(() -> {
-				getEngine().addEntity(DrawingLayer.MIDDLE, e1);
-				getEngine().addEntity(DrawingLayer.MIDDLE, e2);
+				getEngine().addEntity(GameDrawing.MIDDLE, e1);
+				getEngine().addEntity(GameDrawing.MIDDLE, e2);
 
 			});
 		}

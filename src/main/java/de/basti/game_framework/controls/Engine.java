@@ -9,7 +9,6 @@ import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.collision.CollisionHandler;
 import de.basti.game_framework.collision.GameCollisionSystem;
 import de.basti.game_framework.drawing.Drawable;
-import de.basti.game_framework.drawing.DrawingLayer;
 import de.basti.game_framework.drawing.GameDrawing;
 import de.basti.game_framework.input.InputListenerData;
 import de.basti.game_framework.math.Vector2D;
@@ -119,8 +118,8 @@ public class Engine<E extends Entity<?, ?, ?>> {
 
 	}
 
-	public void addEntity(DrawingLayer l, E e) {
-		this.addDrawable(l, e);
+	public void addEntity(int layer, E e) {
+		this.addDrawableRelative(layer, e);
 		this.addCollider(e);
 		this.addUpdatable(e);
 		this.entities.add(e);
@@ -182,8 +181,12 @@ public class Engine<E extends Entity<?, ?, ?>> {
 		return this.drawing.remove(d);
 	}
 
-	public void addDrawable(DrawingLayer l, Drawable d) {
-		this.drawing.add(l, d);
+	public void addDrawableRelative(int layer, Drawable d) {
+		this.drawing.addRelative(layer, d);
+	}
+	
+	public void addDrawableAbsolute(Drawable d) {
+		this.drawing.addAbsolute(d);
 	}
 
 	public boolean removeCollider(E e) {

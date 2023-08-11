@@ -1,10 +1,12 @@
 package de.basti.game_framework.drawing;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.math.Vector2D;
@@ -12,9 +14,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
 
 /**
- * Wrapper around {@code GraphicsContext} and {@code Drawable}, which draws all added {@code Drawable} onto the {@code GraphicsContext} with their {@code draw(GraphicsContext)} method.
- * The {@code Drawable}s have to be added together with a {@code DrawingLayer}, which determines the order in which they are drawn.
- *  
+ * Wrapper around {@code GraphicsContext} and {@code Drawable}, which draws all
+ * added {@code Drawable} onto the {@code GraphicsContext} with their
+ * {@code draw(GraphicsContext)} method. The {@code Drawable}s have to be added
+ * together with a {@code DrawingLayer}, which determines the order in which
+ * they are drawn.
+ * 
  * 
  * @see javafx.scene.canvas.GraphicsContext
  * @see javafx.scene.canvas.Canvas
@@ -23,70 +28,78 @@ import javafx.scene.transform.Affine;
  * 
  * 
  */
-public class GameDrawing implements Updatable{
-	
+public class GameDrawing implements Updatable {
+
+	public static final int BACKGROUND = 100;
+	public static final int BACK_MIDDLE = 200;
+	public static final int MIDDLE = 300;
+	public static final int FORE_MIDDLE = 400;
+	public static final int FOREGROUND = 500;
+
 	private GraphicsContext graphicsContext;
+
+	private Vector2D cameraTransform = new Vector2D(0, 0);
+
+	private List<Integer> priorities = new ArrayList<>();
+	private List<Set<Drawable>> drawingLayers = new ArrayList<>();
 	
-	private Vector2D cameraTransform = new Vector2D(0,0);
-	
-	
-	private Set<Drawable> allDrawables = new HashSet<>();
-	
-	private Map<DrawingLayer,Set<Drawable>> drawingLayers = new HashMap<>();
-	
+	private Set<Drawable> absoluteLayer = new HashSet<Drawable>();
+
 	public GameDrawing(GraphicsContext graphicsContext) {
 		super();
 		this.graphicsContext = graphicsContext;
-		this.drawingLayers.put(DrawingLayer.BACKGROUND,new HashSet<Drawable>());
-		this.drawingLayers.put(DrawingLayer.BACK_MIDDLE,new HashSet<Drawable>());
-		this.drawingLayers.put(DrawingLayer.MIDDLE,new HashSet<Drawable>());
-		this.drawingLayers.put(DrawingLayer.FORE_MIDDLE,new HashSet<Drawable>());
-		this.drawingLayers.put(DrawingLayer.FOREGROUND,new HashSet<Drawable>());
-		this.drawingLayers.put(DrawingLayer.ABSOLUTE,new HashSet<Drawable>());
-		
+
 	}
-	
-	
-	public boolean add(DrawingLayer layer, Drawable drawable) {
-		if(this.allDrawables.add(drawable)) {
-			this.drawingLayers.get(layer).add(drawable);
-			return true;
+
+	public boolean addRelative(int layer, Drawable drawable) {
+		int index = Collections.binarySearch(priorities, layer);// negative if not found
+
+		if (index < 0) {
+			index = -index - 1; // insertion point
+			this.priorities.add(index, layer);
+			this.drawingLayers.add(index, new HashSet<Drawable>());
 		}
-		return false;
+
+		return this.drawingLayers.get(index).add(drawable);
+
 	}
 	
+	public boolean addAbsolute(Drawable drawable) {
+		return absoluteLayer.add(drawable);
+	}
+	
+	
+
 	public boolean remove(Drawable drawable) {
-		if(this.allDrawables.remove(drawable)) {
-			for(Set<Drawable> set:drawingLayers.values()) {
-				if(set.remove(drawable))return true;
+
+		for (Set<Drawable> set : drawingLayers) {
+			if (set.remove(drawable)) {
+				return true;
 			}
+				
 		}
-		return false;
+		return absoluteLayer.remove(drawable);
 	}
 
 	@Override
 	public void update(long deltaMillis) {
-		graphicsContext.clearRect(0, 0, graphicsContext.getCanvas().getWidth(), graphicsContext.getCanvas().getHeight());
+		graphicsContext.clearRect(0, 0, graphicsContext.getCanvas().getWidth(),
+				graphicsContext.getCanvas().getHeight());
 		this.graphicsContext.save();
 		this.graphicsContext.setTransform(new Affine(Affine.translate(cameraTransform.getX(), cameraTransform.getY())));
-		drawingLayers.get(DrawingLayer.BACKGROUND).stream().forEach((d)->d.draw(graphicsContext));
-		drawingLayers.get(DrawingLayer.BACK_MIDDLE).stream().forEach((d)->d.draw(graphicsContext));
-		drawingLayers.get(DrawingLayer.MIDDLE).stream().forEach((d)->d.draw(graphicsContext));
-		drawingLayers.get(DrawingLayer.FORE_MIDDLE).stream().forEach((d)->d.draw(graphicsContext));
-		drawingLayers.get(DrawingLayer.FOREGROUND).stream().forEach((d)->d.draw(graphicsContext));
 		
-		this.graphicsContext.restore();
-		
-		drawingLayers.get(DrawingLayer.ABSOLUTE).stream().forEach((d)->d.draw(graphicsContext));
-		
-		
-	}
+		this.drawingLayers.forEach(t -> t.forEach(d -> d.draw(graphicsContext)));
 
+		this.graphicsContext.restore();
+
+		this.absoluteLayer.forEach(d -> d.draw(graphicsContext));
+
+	}
 
 	public Vector2D getTransform() {
 		return cameraTransform;
 	}
-	
+
 	public void translateTransform(Vector2D translation) {
 		this.cameraTransform.translate(translation);
 	}
@@ -95,18 +108,11 @@ public class GameDrawing implements Updatable{
 		this.cameraTransform = cameraTransform;
 	}
 
-
 	public void removeAll() {
-		this.drawingLayers.get(DrawingLayer.BACKGROUND).clear();
-		this.drawingLayers.get(DrawingLayer.BACK_MIDDLE).clear();
-		this.drawingLayers.get(DrawingLayer.MIDDLE).clear();
-		this.drawingLayers.get(DrawingLayer.FORE_MIDDLE).clear();
-		this.drawingLayers.get(DrawingLayer.FOREGROUND).clear();
-		this.drawingLayers.get(DrawingLayer.ABSOLUTE).clear();
-		this.allDrawables.clear();
-		
+		this.priorities.clear();
+		this.drawingLayers.clear();
+		this.absoluteLayer.clear();
+
 	}
-	
-	
-	
+
 }

@@ -4,7 +4,7 @@ import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.controls.Updatable;
 import de.basti.game_framework.drawing.Drawable;
-import de.basti.game_framework.drawing.DrawingLayer;
+import de.basti.game_framework.drawing.GameDrawing;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
@@ -52,7 +52,7 @@ public abstract class Weapon implements Updatable {
 	private void shoot(Vector2D shootPosition,Vector2D movement) {
 		PlayerProjectile projectile = factory.getNew(shootPosition, movement, this.stats, this.engine);
 
-		this.getEngine().addEntity(DrawingLayer.MIDDLE, projectile);
+		this.getEngine().addEntity(GameDrawing.MIDDLE, projectile);
 
 	}
 

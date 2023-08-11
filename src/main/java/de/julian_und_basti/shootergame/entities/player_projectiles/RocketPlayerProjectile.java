@@ -3,7 +3,7 @@ package de.julian_und_basti.shootergame.entities.player_projectiles;
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
-import de.basti.game_framework.drawing.DrawingLayer;
+import de.basti.game_framework.drawing.GameDrawing;
 import de.basti.game_framework.drawing.Rectangle;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.Sounds;
@@ -61,7 +61,7 @@ public class RocketPlayerProjectile extends PlayerProjectile {
 		
 		PlayerProjectile projectile = new RocketExplosion(getPosition().clone(), 80,this.getEngine());
 		this.getEngine().addTaskForEndOfUpdate(() -> {
-			this.getEngine().addEntity(DrawingLayer.FOREGROUND, projectile);
+			this.getEngine().addEntity(GameDrawing.FOREGROUND, projectile);
 			Sounds.instance().explosion.seek(Duration.ZERO);
 			Sounds.instance().explosion.play();
 		});
