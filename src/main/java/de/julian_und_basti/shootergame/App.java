@@ -68,7 +68,9 @@ public class App extends Application {
 
 	private Game game = new Game(engine);
 	private ButtonComponent startButton = new ButtonComponent(new Vector2D(width / 2 - 35, height / 2 - 20), 70, 40);
-
+	
+	
+	
 	public App() {
 		
 		game.setOnGameEnd(() -> {
@@ -83,6 +85,10 @@ public class App extends Application {
 			showGame();
 		});
 		gui.add(startButton);
+		
+		engine.addSizeChangeListener((width, height) -> {
+			startButton.setPosition(new Vector2D(width / 2 - startButton.getWidth()/2, height / 2 - startButton.getHeight()/2));
+		});
 
 	}
 
@@ -122,6 +128,8 @@ public class App extends Application {
 
 	@Override
 	public void start(Stage stage) {
+		stage.resizableProperty().set(true);
+		
 		stage.setFullScreenExitHint("");
 		stage.setFullScreen(true);
 		Sounds.instance();	

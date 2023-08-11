@@ -58,6 +58,13 @@ public class Engine<E extends Entity<?, ?, ?>> {
 	private List<Runnable> endOfUpdateTasks = new ArrayList<>();
 	private E camera = null;
 	
+	
+	public static interface SizeChangeListener {
+		public void onSizeChange(double width, double height);
+	}
+	
+	private List<SizeChangeListener> sizeChangeListeners = new ArrayList<>();
+	
 	public Engine(Scene scene, GraphicsContext gc) {
 		this.scene = scene;
 		this.gc = gc;
@@ -115,8 +122,32 @@ public class Engine<E extends Entity<?, ?, ?>> {
 
 		this.width = gc.getCanvas().getWidth();
 		this.height = gc.getCanvas().getHeight();
-
+		
+		
+		this.scene.widthProperty().addListener((observable, oldValue, newValue) ->{
+			this.width = (double) newValue;
+			fireSizeChange();
+		});
+		
+		this.scene.heightProperty().addListener((observable, oldValue, newValue) ->{
+			this.height = (double) newValue;
+			fireSizeChange();
+		});
 	}
+	
+	private void fireSizeChange() {
+		this.sizeChangeListeners.forEach(scl -> scl.onSizeChange(width, height));
+	}
+	
+	
+	public void addSizeChangeListener(SizeChangeListener scl) {
+		this.sizeChangeListeners.add(scl);
+	}
+	
+	public boolean removeSizeChangeListener(SizeChangeListener scl) {
+		return this.sizeChangeListeners.remove(scl);
+	}
+	
 
 	public void addEntity(int layer, E e) {
 		this.addDrawableRelative(layer, e);
