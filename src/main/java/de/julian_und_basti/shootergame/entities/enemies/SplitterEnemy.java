@@ -42,8 +42,9 @@ public class SplitterEnemy extends Enemy<DrawableRectangle> {
 
 	}
 
-	//defined here for memory management
-		private Vector2D movement;
+	// defined here for memory management
+	private Vector2D movement;
+
 	@Override
 	public void update(long deltaMillis) {
 
@@ -63,8 +64,7 @@ public class SplitterEnemy extends Enemy<DrawableRectangle> {
 		this.playerToFollow = playerToFollow;
 	}
 
-	@Override
-	public void hit(PlayerProjectile p) {
+	public void hitPlayerProjectile(PlayerProjectile p) {
 		this.setHealth(this.getHealth() - p.getDamage());
 		if (this.getHealth() <= 0) {
 			this.getEngine().removeEntity(this);
@@ -76,7 +76,17 @@ public class SplitterEnemy extends Enemy<DrawableRectangle> {
 				getEngine().addEntity(GameDrawing.MIDDLE, e2);
 
 			});
+
 		}
+	}
+
+	@Override
+	public void collidedWith(CustomEntity<?, ?> other) {
+		if (other.getType() == EntityType.PLAYER_PROJECTILE) {
+			PlayerProjectile p = (PlayerProjectile) other;
+			this.hitPlayerProjectile(p);
+		}
+		
 	}
 
 }

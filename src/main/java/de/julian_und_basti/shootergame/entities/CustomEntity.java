@@ -49,5 +49,8 @@ public abstract class CustomEntity<D extends Drawable, C extends BoxCollider> ex
 	public void setEngine(Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		this.engine = game;
 	}
+	
+	public abstract void collidedWith(CustomEntity<?,?> other);
+
 
 }

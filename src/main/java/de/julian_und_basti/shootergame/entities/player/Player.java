@@ -55,14 +55,12 @@ public class Player extends CustomEntity<MultiDrawable, BoxCollider> {
 		super(position, null, null, EntityType.PLAYER, engine);
 
 		this.weapon = weapon;
-		
-		AnimationFrame frame1 =new AnimationFrame(100,new Sprite(null,Images.instance().player));
-		AnimationFrame frame2 =new AnimationFrame(100,new Sprite(null,Images.instance().background));
-		
-		
-		playerSprite = new AnimatedSprite(position.clone(),frame1, frame2 );
-		
-		
+
+		AnimationFrame frame1 = new AnimationFrame(100, new Sprite(null, Images.instance().player));
+		AnimationFrame frame2 = new AnimationFrame(100, new Sprite(null, Images.instance().background));
+
+		playerSprite = new AnimatedSprite(position.clone(), frame1, frame2);
+
 		playerSprite.setWidth(width);
 		playerSprite.setHeight(height);
 
@@ -79,9 +77,6 @@ public class Player extends CustomEntity<MultiDrawable, BoxCollider> {
 		this.keyData = this.getEngine().getInputData().getKeyData();
 
 		this.setWeight(DEFAULT_WEIGHT);
-		
-		
-		
 
 	}
 
@@ -90,7 +85,7 @@ public class Player extends CustomEntity<MultiDrawable, BoxCollider> {
 	@Override
 	public void update(long deltaMillis) {
 		playerSprite.update(deltaMillis);
-		
+
 		if (timeSinceHit <= hitDelay) {
 			timeSinceHit += deltaMillis;
 		}
@@ -134,11 +129,11 @@ public class Player extends CustomEntity<MultiDrawable, BoxCollider> {
 		if (mouseData.isDown(MouseButton.PRIMARY)) {
 			Vector2D shootPosition = this.getPosition().clone();
 
-			double yTranslation = -Math.sin(Math.toRadians(weaponRotation))*weaponWidth/2;
-			double xTranslation = -Math.cos(Math.toRadians(weaponRotation))*weaponWidth/2;
+			double yTranslation = -Math.sin(Math.toRadians(weaponRotation)) * weaponWidth / 2;
+			double xTranslation = -Math.cos(Math.toRadians(weaponRotation)) * weaponWidth / 2;
 
 			shootPosition.translate(xTranslation, yTranslation);
-			
+
 			this.weapon.shootIfPossible(shootPosition,
 					this.calculateRelativeMousePosition(mouseData.getRelativeMousePosition()));
 		}
@@ -170,8 +165,9 @@ public class Player extends CustomEntity<MultiDrawable, BoxCollider> {
 
 			timeSinceHit = 0;
 		}
-
 	}
+
+	
 
 	public double getWidth() {
 		return width;
@@ -203,6 +199,14 @@ public class Player extends CustomEntity<MultiDrawable, BoxCollider> {
 
 	public void setHealth(int health) {
 		this.health = health;
+	}
+
+	@Override
+	public void collidedWith(CustomEntity<?, ?> other) {
+		if (other.getType() == EntityType.ENEMY) {
+			this.hitByEnemy((Enemy<?>) other);
+		}
+
 	}
 
 }

@@ -17,83 +17,72 @@ import de.julian_und_basti.shootergame.Images;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 
 public class CollisionHandling {
-	
-	private static CollisionHandling instance;
 
+	private static CollisionHandling instance;
+	
 	private List<Pair<EntityType, EntityType>> noCollisions = new ArrayList<>();
 
 	private CollisionHandling() {
 		noCollisions.add(new Pair<>(EntityType.WALL, EntityType.WALL));
 		noCollisions.add(new Pair<>(EntityType.PLAYER_PROJECTILE, EntityType.PLAYER_PROJECTILE));
 		noCollisions.add(new Pair<>(EntityType.PLAYER_PROJECTILE, EntityType.PLAYER));
+		noCollisions.add(new Pair<>(EntityType.PLAYER_PROJECTILE, EntityType.ENEMY));
+		noCollisions.add(new Pair<>(EntityType.PLAYER_PROJECTILE, EntityType.WALL));
+		
+
+		
 
 	}
 	
-	
-	//only works with valid input
-	private boolean swapToTemplate(CollisionPair<CustomEntity<? extends Drawable, ? extends BoxCollider>> pair, EntityType type1, EntityType type2){
-		if(pair.getCollider1().getType()==type1&&pair.getCollider2().getType()==type2) {
-			return true;
-		} 
-		
-		if(pair.getCollider2().getType()==type1&&pair.getCollider1().getType()==type2) {
-			CustomEntity<? extends Drawable, ? extends BoxCollider> temp = pair.getCollider1();
-			pair.setCollider1(pair.getCollider2());
-			pair.setCollider2(temp);
+	private boolean isCollision(CollisionPair<CustomEntity<? extends Drawable, ? extends BoxCollider>> pair,
+			EntityType type1, EntityType type2) {
+		if (pair.getCollider1().getType() == type1 && pair.getCollider2().getType() == type2) {
 			return true;
 		}
-		
+
+		if (pair.getCollider2().getType() == type1 && pair.getCollider1().getType() == type2) {
+
+			return true;
+		}
+
 		return false;
-		
+
 	}
-	
 
 	public final CollisionHandler<CustomEntity<? extends Drawable, ? extends BoxCollider>> handler = new CollisionHandler<>() {
 
 		@Override
 		public void onBegin(CollisionPair<CustomEntity<? extends Drawable, ? extends BoxCollider>> pair) {
 
-			for (Pair<EntityType, EntityType> noCollision : noCollisions) {
-				if (pair.getCollider1().getType() == noCollision.getKey() && pair.getCollider2().getType() == noCollision.getValue()) {
+			pair.getCollider1().collidedWith(pair.getCollider2());
+			pair.getCollider2().collidedWith(pair.getCollider1());
+
+			if (isCollision(pair, EntityType.ENEMY, EntityType.PLAYER_PROJECTILE)) {
+
+				return;// no physics
+			}
+
+			if (isCollision(pair, EntityType.PLAYER, EntityType.PLAYER_PROJECTILE)) {
+				return;// no physics
+			}
+
+			if (isCollision(pair, EntityType.PLAYER_PROJECTILE, EntityType.WALL)) {
+
+				return;// no physics
+
+			}
+			
+			for (Pair<EntityType, EntityType> noPhysics : noCollisions) {
+				if (pair.getCollider1().getType() == noPhysics.getKey() && pair.getCollider2().getType() == noPhysics.getValue()) {
 					return;
 				}
-				if (pair.getCollider2().getType() == noCollision.getKey() && pair.getCollider1().getType() == noCollision.getValue()) {
+				if (pair.getCollider2().getType() == noPhysics.getKey() && pair.getCollider1().getType() == noPhysics.getValue()) {
 					return;
 				}
 			}
 
-			
-			if (swapToTemplate(pair, EntityType.ENEMY, EntityType.PLAYER_PROJECTILE)) {
-
-				Enemy<?> enemy = (Enemy<?>) pair.getCollider1();
-				PlayerProjectile projectile = (PlayerProjectile) pair.getCollider2();
-
-				enemyProjectileCollision(enemy, projectile);
-
-				return;
-			}
-
-
-			if (swapToTemplate(pair, EntityType.PLAYER_PROJECTILE, EntityType.WALL)) {
-				PlayerProjectile projectile = (PlayerProjectile) pair.getCollider1();
-
-				wallProjectileCollision(projectile);
-				return;
-
-			}
-			
-			if (swapToTemplate(pair, EntityType.ENEMY, EntityType.PLAYER)) {
-				Enemy<?> enemy = (Enemy<?>) pair.getCollider1();
-				Player player = (Player) pair.getCollider2();
-
-				player.hitByEnemy(enemy);
-				//dont return here
-
-			}
-			
 			BoxCollider box1 = pair.getCollider1().getCollider();
 			BoxCollider box2 = pair.getCollider2().getCollider();
-
 
 			Vector2D displacement = this.getDisplacement(box1, box2);
 
@@ -120,23 +109,17 @@ public class CollisionHandling {
 
 		}
 
-		private void enemyProjectileCollision(Enemy<?> enemy, PlayerProjectile projectile) {
-			projectile.hit(enemy);
-			enemy.hit(projectile);
-
-		}
-
-		private void wallProjectileCollision(PlayerProjectile projectile) {
-			projectile.hitWall();
-
-		}
 
 		private Vector2D getDisplacement(BoxCollider box1, BoxCollider box2) {
-			double rightLeftDiff = box1.getPosition().getX() + box1.getWidth()/2 - (box2.getPosition().getX()-box2.getWidth()/2);
-			double leftRightDiff = (box1.getPosition().getX()-box1.getWidth()/2) - (box2.getPosition().getX() + box2.getWidth()/2);
+			double rightLeftDiff = box1.getPosition().getX() + box1.getWidth() / 2
+					- (box2.getPosition().getX() - box2.getWidth() / 2);
+			double leftRightDiff = (box1.getPosition().getX() - box1.getWidth() / 2)
+					- (box2.getPosition().getX() + box2.getWidth() / 2);
 
-			double bottomTopDiff = box1.getPosition().getY() + box1.getHeight()/2 - (box2.getPosition().getY()-box2.getHeight()/2);
-			double topBottomDiff = (box1.getPosition().getY()-box1.getHeight()/2) - (box2.getPosition().getY() + box2.getHeight()/2);
+			double bottomTopDiff = box1.getPosition().getY() + box1.getHeight() / 2
+					- (box2.getPosition().getY() - box2.getHeight() / 2);
+			double topBottomDiff = (box1.getPosition().getY() - box1.getHeight() / 2)
+					- (box2.getPosition().getY() + box2.getHeight() / 2);
 
 			double absRightLeftDiff = Math.abs(rightLeftDiff);
 			double absLeftRightDiff = Math.abs(leftRightDiff);
@@ -178,10 +161,9 @@ public class CollisionHandling {
 
 		}
 	};
-	
-	
+
 	public static CollisionHandling instance() {
-		if(instance==null) {
+		if (instance == null) {
 			instance = new CollisionHandling();
 		}
 		return instance;

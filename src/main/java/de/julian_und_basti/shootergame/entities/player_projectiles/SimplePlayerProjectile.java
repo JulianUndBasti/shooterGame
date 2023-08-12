@@ -6,6 +6,7 @@ import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawableRectangle;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
+import de.julian_und_basti.shootergame.entities.EntityType;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
 import javafx.scene.paint.Color;
 
@@ -35,13 +36,12 @@ public class SimplePlayerProjectile extends PlayerProjectile {
 	}
 
 	@Override
-	public void hit(Enemy<?> enemy) {
-		this.getEngine().removeEntity(this);
-	}
-
-	@Override
-	public void hitWall() {
-		this.getEngine().removeEntity(this);
+	public void collidedWith(CustomEntity<?, ?> other) {
+		if (other.getType() == EntityType.ENEMY) {
+			this.getEngine().removeEntity(this);
+		} else if (other.getType() == EntityType.WALL) {
+			this.getEngine().removeEntity(this);
+		}
 	}
 
 }

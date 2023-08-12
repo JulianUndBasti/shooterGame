@@ -75,8 +75,4 @@ public abstract class PlayerProjectile extends CustomEntity<DrawableRectangle, B
 		this.lifeTimeMillis = lifeTimeMillis;
 	}
 
-	public abstract void hit(Enemy<?> enemy);
-	public abstract void hitWall();
-	
-
 }

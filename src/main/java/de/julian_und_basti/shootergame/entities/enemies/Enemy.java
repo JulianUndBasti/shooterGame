@@ -44,8 +44,6 @@ public abstract class Enemy<D extends Drawable> extends CustomEntity<D, BoxColli
 
 	}
 
-	public abstract void hit(PlayerProjectile p);
-
 	public int getDamage() {
 		return damage;
 	}

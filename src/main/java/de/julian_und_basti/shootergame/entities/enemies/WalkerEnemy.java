@@ -63,11 +63,15 @@ public class WalkerEnemy extends Enemy<DrawableRectangle> {
 		this.playerToFollow = playerToFollow;
 	}
 
+
 	@Override
-	public void hit(PlayerProjectile p) {
-		this.setHealth(this.getHealth() - p.getDamage());
-		if (this.getHealth() <= 0) {
-			this.getEngine().removeEntity(this);
+	public void collidedWith(CustomEntity<?, ?> other) {
+		if(other.getType()==EntityType.PLAYER_PROJECTILE) {
+			PlayerProjectile p = (PlayerProjectile) other;
+			this.setHealth(this.getHealth()-p.getDamage());
+			if (this.getHealth() <= 0) {
+				this.getEngine().removeEntity(this);
+			}
 		}
 	}
 

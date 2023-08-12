@@ -30,4 +30,12 @@ public class Wall extends CustomEntity<DrawableRectangle, BoxCollider> {
 		
 	}
 
+	
+
+	@Override
+	public void collidedWith(CustomEntity<?, ?> other) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
