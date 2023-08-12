@@ -13,10 +13,10 @@ public class Text extends Shape{
 	
 	private Font font = Font.font("Calibri", FontWeight.NORMAL, FontPosture.REGULAR, 12);
 
-	
+	private Vector2D position;
 	
 	public Text(Vector2D pos,String text) {
-		super(pos);
+		this.position = pos;
 		this.text = text;
 		
 	}

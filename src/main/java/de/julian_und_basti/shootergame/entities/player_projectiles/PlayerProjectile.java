@@ -3,13 +3,13 @@ package de.julian_und_basti.shootergame.entities.player_projectiles;
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
-import de.basti.game_framework.drawing.Rectangle;
+import de.basti.game_framework.drawing.DrawableRectangle;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.EntityType;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
 
-public abstract class PlayerProjectile extends CustomEntity<Rectangle, BoxCollider>{
+public abstract class PlayerProjectile extends CustomEntity<DrawableRectangle, BoxCollider>{
 
 	private double speed;
 	private int damage;
@@ -19,7 +19,7 @@ public abstract class PlayerProjectile extends CustomEntity<Rectangle, BoxCollid
 	private int maxLifeTimeMillis = 2500;
 	private int lifeTimeMillis = 0;
 
-	public PlayerProjectile(Vector2D position, BoxCollider collider, Rectangle drawable, PlayerProjectileStats stats,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> engine) {
+	public PlayerProjectile(Vector2D position, BoxCollider collider, DrawableRectangle drawable, PlayerProjectileStats stats,Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> engine) {
 		super(position, collider, drawable, EntityType.PLAYER_PROJECTILE,engine);
 		this.setWeight(0);
 		this.setSpeed(stats.speed);

@@ -3,7 +3,7 @@ package de.julian_und_basti.shootergame.entities.enemies;
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
-import de.basti.game_framework.drawing.Rectangle;
+import de.basti.game_framework.drawing.DrawableRectangle;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.EntityType;
@@ -11,7 +11,7 @@ import de.julian_und_basti.shootergame.entities.player.Player;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 import javafx.scene.paint.Color;
 
-public class WalkerEnemy extends Enemy<Rectangle> {
+public class WalkerEnemy extends Enemy<DrawableRectangle> {
 
 	public static final double DEFAULT_SPEED = 0.15;
 	public static final int DEFAULT_HEALTH = 40;
@@ -26,7 +26,7 @@ public class WalkerEnemy extends Enemy<Rectangle> {
 			Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(position, null, null, game);
 
-		Rectangle rect = new Rectangle(position.clone(), width, height);
+		DrawableRectangle rect = new DrawableRectangle(position.clone(), width, height);
 		this.setDrawable(rect);
 		this.getDrawable().setFillColor(Color.RED);
 		this.getDrawable().setShouldFill(true);

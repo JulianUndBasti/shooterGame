@@ -4,7 +4,7 @@ import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.MultiDrawable;
-import de.basti.game_framework.drawing.Rectangle;
+import de.basti.game_framework.drawing.DrawableRectangle;
 import de.basti.game_framework.drawing.Sprite;
 import de.basti.game_framework.drawing.animation.AnimatedSprite;
 import de.basti.game_framework.drawing.animation.AnimationFrame;

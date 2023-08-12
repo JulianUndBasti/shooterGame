@@ -4,7 +4,7 @@ import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.GameDrawing;
-import de.basti.game_framework.drawing.Rectangle;
+import de.basti.game_framework.drawing.DrawableRectangle;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.Sounds;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
@@ -24,7 +24,7 @@ public class RocketPlayerProjectile extends PlayerProjectile {
 		super(shootPosition, null, null, new PlayerProjectileStats(stats.damage, stats.speed/10),game);
 		
 		
-		Rectangle rect = new Rectangle(shootPosition.clone(), width, height);
+		DrawableRectangle rect = new DrawableRectangle(shootPosition.clone(), width, height);
 		this.setDrawable(rect);
 		this.getDrawable().setFillColor(Color.BLACK);
 		this.getDrawable().setShouldFill(true);

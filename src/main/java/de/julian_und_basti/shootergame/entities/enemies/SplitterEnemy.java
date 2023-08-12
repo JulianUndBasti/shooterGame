@@ -4,7 +4,7 @@ import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.GameDrawing;
-import de.basti.game_framework.drawing.Rectangle;
+import de.basti.game_framework.drawing.DrawableRectangle;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.EntityType;
@@ -12,7 +12,7 @@ import de.julian_und_basti.shootergame.entities.player.Player;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 import javafx.scene.paint.Color;
 
-public class SplitterEnemy extends Enemy<Rectangle> {
+public class SplitterEnemy extends Enemy<DrawableRectangle> {
 
 	public static final double DEFAULT_SPEED = 0.12;
 	public static final int DEFAULT_HEALTH = 60;
@@ -27,7 +27,7 @@ public class SplitterEnemy extends Enemy<Rectangle> {
 			Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(position, null, null, game);
 
-		Rectangle rect = new Rectangle(position.clone(), width, height);
+		DrawableRectangle rect = new DrawableRectangle(position.clone(), width, height);
 		this.setDrawable(rect);
 		this.getDrawable().setFillColor(Color.YELLOW);
 		this.getDrawable().setShouldFill(true);

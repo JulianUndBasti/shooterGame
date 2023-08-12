@@ -3,7 +3,7 @@ package de.julian_und_basti.shootergame.entities.player_projectiles;
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
-import de.basti.game_framework.drawing.Rectangle;
+import de.basti.game_framework.drawing.DrawableRectangle;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.enemies.Enemy;
@@ -18,7 +18,7 @@ public class SimplePlayerProjectile extends PlayerProjectile {
 			Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(shootPosition, null, null, stats, game);
 
-		Rectangle rect = new Rectangle(shootPosition.clone(), width, height);
+		DrawableRectangle rect = new DrawableRectangle(shootPosition.clone(), width, height);
 
 		this.setDrawable(rect);
 		this.getDrawable().setFillColor(Color.BLUE);

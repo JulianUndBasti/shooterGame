@@ -5,7 +5,7 @@ import java.net.URL;
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
-import de.basti.game_framework.drawing.Rectangle;
+import de.basti.game_framework.drawing.DrawableRectangle;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.Sounds;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
@@ -29,7 +29,7 @@ public class RocketExplosion extends PlayerProjectile{
 	public RocketExplosion(Vector2D position, int damage, Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(position, null, null, new PlayerProjectileStats(damage, 0),game);
 		
-		Rectangle rect = new Rectangle(position.clone(), width, height);
+		DrawableRectangle rect = new DrawableRectangle(position.clone(), width, height);
 		
 		this.setDrawable(rect);
 		this.getDrawable().setFillColor(Color.BLACK);
