@@ -2,7 +2,7 @@ package de.basti.game_framework.math;
 
 import java.util.Objects;
 
-public class Vector2D {
+public class Vector2D{
 	private double x = 0d;
 	private double y = 0d;
 	
@@ -114,6 +114,8 @@ public class Vector2D {
 	public String toString() {
 		return "Vector2D [x=" + x + ", y=" + y + "]";
 	}
+
+
 	
 	
 	
