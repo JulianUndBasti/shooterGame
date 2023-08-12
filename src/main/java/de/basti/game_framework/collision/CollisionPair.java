@@ -1,5 +1,6 @@
 package de.basti.game_framework.collision;
 
+import de.basti.game_framework.collision.system.NaiveCollisionSystem;
 import de.basti.game_framework.controls.Entity;
 import de.basti.game_framework.drawing.Drawable;
 
@@ -9,12 +10,12 @@ import de.basti.game_framework.drawing.Drawable;
  *
  * @param <T> type of {@code Collider}  to use
  * 
- * @see GameCollisionSystem
+ * @see NaiveCollisionSystem
  * @see Collider
  * @see CollisionHandler
  *  
  */
-public class CollisionPair<T extends Entity<? extends Drawable,? extends Collider,? extends Enum<?>>> {
+public class CollisionPair<T extends Collider> {
 	private T collider1;
 	private T collider2;
 	private CollisionType type = null;

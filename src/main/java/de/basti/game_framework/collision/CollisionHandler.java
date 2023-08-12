@@ -3,6 +3,7 @@ package de.basti.game_framework.collision;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.basti.game_framework.collision.system.NaiveCollisionSystem;
 import de.basti.game_framework.controls.Entity;
 import de.basti.game_framework.drawing.Drawable;
 
@@ -12,12 +13,12 @@ import de.basti.game_framework.drawing.Drawable;
  * 
  * @param <T> type of {@code Collider} to use
  * 
- * @see GameCollisionSystem
+ * @see NaiveCollisionSystem
  * @see CollisionPair
  * @see Collider
  * 
  */
-public abstract class CollisionHandler<T extends Entity<? extends Drawable, ? extends Collider, ? extends Enum<?>>> {
+public abstract class CollisionHandler<T extends Collider> {
 	private static final Logger LOGGER = Logger.getLogger(CollisionHandler.class.getName());
 	static {
 		LOGGER.setLevel(Level.INFO);

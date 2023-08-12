@@ -7,7 +7,8 @@ import java.util.Set;
 
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.collision.CollisionHandler;
-import de.basti.game_framework.collision.GameCollisionSystem;
+import de.basti.game_framework.collision.system.CollisionSystem;
+import de.basti.game_framework.collision.system.NaiveCollisionSystem;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.GameDrawing;
 import de.basti.game_framework.input.InputListenerData;
@@ -51,7 +52,7 @@ public class Engine<E extends Entity<?, ?, ?>> {
 	private GraphicsContext gc;
 	
 	private Set<E> entities = new HashSet<>();
-	private GameCollisionSystem<E> collisionSystem = new GameCollisionSystem<E>();
+	private NaiveCollisionSystem<E> collisionSystem = new NaiveCollisionSystem<E>();
 	private GameDrawing drawing;
 	private Loop loop = new Loop();
 	private InputListenerData inputData;
@@ -252,7 +253,7 @@ public class Engine<E extends Entity<?, ?, ?>> {
 	}
 	
 
-	public GameCollisionSystem<E> getCollisionSystem() {
+	public CollisionSystem<E> getCollisionSystem() {
 		return collisionSystem;
 	}
 

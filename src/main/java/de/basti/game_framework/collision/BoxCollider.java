@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.basti.game_framework.collision.system.NaiveCollisionSystem;
 import de.basti.game_framework.math.Vector2D;
 
 /**
  * A {@code Collider} representing a Rectangle collider.
  * 
  * @see Collider
- * @see GameCollisionSystem
+ * @see NaiveCollisionSystem
  * 
  */
 public class BoxCollider implements Collider {

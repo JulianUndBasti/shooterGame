@@ -3,13 +3,14 @@ package de.basti.game_framework.collision;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.basti.game_framework.collision.system.NaiveCollisionSystem;
 import de.basti.game_framework.math.Vector2D;
 
 /**
  * Represents an Object which can collide with other {@code Collider}s in the {@code GameCollisionSystem} class.
  * Gives out all its Vectors(should be its corners) via {@code getVectors()} and has a method {@code collidesWith(Vector2D)} which determines if a position is inside this {@code Collider} 
  * 
- * @see GameCollisionSystem
+ * @see NaiveCollisionSystem
  * @see CollisionPair
  * @see CollisionHandler
  * @see Vector2D
@@ -54,6 +55,8 @@ public interface Collider {
 	public abstract boolean collidesWith(Vector2D vector);
 
 	public abstract void translate(Vector2D vector);
+	
+	
 	
 
 }
