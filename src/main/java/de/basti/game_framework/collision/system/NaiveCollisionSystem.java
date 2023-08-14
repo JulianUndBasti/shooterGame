@@ -22,7 +22,7 @@ import de.julian_und_basti.shootergame.game.Game;
  * 
  * @param <T> type of {@code Collider} to use
  */
-public class NaiveCollisionSystem<T extends Entity<?, ?, ?>> extends CollisionSystem<T>
+public class NaiveCollisionSystem<T extends Collider> extends CollisionSystem<T>
 		implements Updatable {
 	private static final Logger LOGGER = Logger.getLogger(NaiveCollisionSystem.class.getName());
 	static {

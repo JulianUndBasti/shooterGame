@@ -77,7 +77,16 @@ public class Engine<E extends Entity<?, ?, ?>> {
 		
 		UpdatePhase.INPUT_UPDATE.add(inputData);
 		
-		UpdatePhase.COLLISION_UPDATE.add(collisionSystem);
+		UpdatePhase.COLLISION_UPDATE.add(new Updatable() {
+			
+			@Override
+			public void update(long deltaMillis) {
+				long time = System.currentTimeMillis();
+				collisionSystem.update(deltaMillis);
+				time = System.currentTimeMillis()-time;
+				System.out.println(time+"/"+entities.size());
+			}
+		});
 		
 		UpdatePhase.CAMERA_UPDATE.add(new Updatable() {
 

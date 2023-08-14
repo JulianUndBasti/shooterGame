@@ -7,9 +7,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import de.basti.game_framework.collision.Collider;
 import de.basti.game_framework.controls.Entity;
 
-public class SpatialHashGrid<T extends Entity<?, ?, ?>> {
+public class SpatialHashGrid<T extends Collider> {
 	private Map<Integer, Map<Integer, Set<T>>> grid;
 
 	public SpatialHashGrid() {
