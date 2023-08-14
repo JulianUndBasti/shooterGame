@@ -54,8 +54,8 @@ public class App extends Application {
 		Logging.init();
 	}
 
-	private final int width = (int) Screen.getPrimary().getBounds().getMaxX();
-	private final int height = (int) Screen.getPrimary().getBounds().getMaxY();
+	private final int width = (int) 800;
+	private final int height = (int) 600;
 
 	private Canvas canvas = new Canvas(width, height);
 	private Group root = new Group(canvas);
@@ -131,7 +131,7 @@ public class App extends Application {
 		stage.resizableProperty().set(true);
 		
 		stage.setFullScreenExitHint("");
-		stage.setFullScreen(true);
+		stage.setFullScreen(false);
 		Sounds.instance();	
 		Logging.LOGGER.getClass();
 

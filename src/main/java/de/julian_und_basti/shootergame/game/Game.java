@@ -173,6 +173,7 @@ public class Game {
 		this.engine.addCollisionHandler(CollisionHandling.instance().handler);
 		this.engine.addEntity(GameDrawing.BACK_MIDDLE, player);
 		this.engine.addDrawableRelative(GameDrawing.BACKGROUND, background);
+		
 		this.engine.addDrawableAbsolute(healthText);
 		this.engine.addDrawableAbsolute(fpsText);
 

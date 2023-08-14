@@ -64,7 +64,7 @@ public class NaiveCollisionSystem<T extends Entity<?, ?, ?>> extends CollisionSy
 		return this.colliders.remove(collider);
 	}
 	
-	public void removeAll() {
+	public void clear() {
 		this.colliders.clear();
 	}
 	

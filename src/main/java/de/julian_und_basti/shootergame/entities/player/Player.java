@@ -57,7 +57,7 @@ public class Player extends CustomEntity<MultiDrawable, BoxCollider> {
 		this.weapon = weapon;
 
 		AnimationFrame frame1 = new AnimationFrame(100, new Sprite(null, Images.instance().player));
-		AnimationFrame frame2 = new AnimationFrame(100, new Sprite(null, Images.instance().background));
+		AnimationFrame frame2 = new AnimationFrame(100, new Sprite(null, Images.instance().player));
 
 		playerSprite = new AnimatedSprite(position.clone(), frame1, frame2);
 

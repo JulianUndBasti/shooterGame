@@ -9,6 +9,7 @@ import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.collision.CollisionHandler;
 import de.basti.game_framework.collision.system.CollisionSystem;
 import de.basti.game_framework.collision.system.NaiveCollisionSystem;
+import de.basti.game_framework.collision.system.SpatialHashGridCollisionSystem;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.GameDrawing;
 import de.basti.game_framework.input.InputListenerData;
@@ -52,7 +53,7 @@ public class Engine<E extends Entity<?, ?, ?>> {
 	private GraphicsContext gc;
 	
 	private Set<E> entities = new HashSet<>();
-	private NaiveCollisionSystem<E> collisionSystem = new NaiveCollisionSystem<E>();
+	private CollisionSystem<E> collisionSystem = new SpatialHashGridCollisionSystem<E>();
 	private GameDrawing drawing;
 	private Loop loop = new Loop();
 	private InputListenerData inputData;
@@ -175,7 +176,7 @@ public class Engine<E extends Entity<?, ?, ?>> {
 	}
 	
 	public void removeAllColliders() {
-		this.collisionSystem.removeAll();
+		this.collisionSystem.clear();
 	}
 	
 	public void removeAllDrawables() {
@@ -190,7 +191,7 @@ public class Engine<E extends Entity<?, ?, ?>> {
 	}
 	
 	public void removeAllCollisionHandlers() {
-		collisionSystem.removeAll();
+		collisionSystem.clear();
 	}
 	
 	public void removeAll() {

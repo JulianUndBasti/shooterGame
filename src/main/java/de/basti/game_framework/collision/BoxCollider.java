@@ -27,13 +27,12 @@ public class BoxCollider implements Collider {
 	public static int vectorsPerSide = 5;
 
 	private Vector2D[] vectors = { new Vector2D(), new Vector2D(), new Vector2D(), new Vector2D(), };
-	
+
 	public BoxCollider(Vector2D position, double width, double height) {
-		this(new Rectangle(position,width,height));
-		
+		this(new Rectangle(position, width, height));
 
 	}
-	
+
 	public BoxCollider(Rectangle bounds) {
 		super();
 		LOGGER.finer("Constructing " + this.toString());
@@ -44,15 +43,15 @@ public class BoxCollider implements Collider {
 
 	@Override
 	public boolean collidesWith(Vector2D vector) {
-		double x = this.bounds.getPosition().getX()-this.bounds.getWidth()/2;
-		double y = this.bounds.getPosition().getY()-this.bounds.getHeight()/2;
+		double x = this.bounds.getPosition().getX() - this.bounds.getWidth() / 2;
+		double y = this.bounds.getPosition().getY() - this.bounds.getHeight() / 2;
 
 		double x1 = vector.getX();
 		double y1 = vector.getY();
 
 		boolean xCollision = ((x1 >= x) && (x1 <= x + this.bounds.getWidth()));
 		boolean yCollision = ((y1 >= y) && (y1 <= y + this.bounds.getHeight()));
-		
+
 		boolean collidesWith = xCollision && yCollision;
 		LOGGER.finest("collidesWith() of " + this + " with " + vector + " is " + collidesWith);
 		return collidesWith;
@@ -117,14 +116,9 @@ public class BoxCollider implements Collider {
 		this.recalculateVectors();
 	}
 
-	public Rectangle getBounds() {
-		return bounds;
+	@Override
+	public Rectangle getEnclosingBounds() {
+		return this.bounds;
 	}
-
-	public void setBounds(Rectangle bounds) {
-		this.bounds = bounds;
-	}
-	
-	
 
 }

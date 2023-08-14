@@ -90,7 +90,7 @@ public abstract class CollisionSystem<T extends Collider> implements Updatable {
 		this.updateIterations = updateIterations;
 	}
 
-	public abstract void removeAll();
+	public abstract void clear();
 
 	public abstract boolean add(T collider);
 

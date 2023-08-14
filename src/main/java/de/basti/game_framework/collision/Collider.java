@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.basti.game_framework.collision.system.NaiveCollisionSystem;
+import de.basti.game_framework.math.Rectangle;
 import de.basti.game_framework.math.Vector2D;
 
 /**
@@ -53,8 +54,9 @@ public interface Collider {
 
 	public abstract Vector2D[] getVectors();
 	public abstract boolean collidesWith(Vector2D vector);
-
 	public abstract void translate(Vector2D vector);
+	public abstract Rectangle getEnclosingBounds();
+	
 	
 	
 	

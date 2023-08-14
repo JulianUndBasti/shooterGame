@@ -3,6 +3,7 @@ package de.basti.game_framework.collision;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.basti.game_framework.math.Rectangle;
 import de.basti.game_framework.math.Vector2D;
 
 public class CircleCollider implements Collider {
@@ -86,5 +87,13 @@ public class CircleCollider implements Collider {
 		this.position = position;
 		this.recalculateVectors();
 	}
+
+	@Override
+	public Rectangle getEnclosingBounds() {
+		return new Rectangle(this.position.translated(-this.radius,-this.radius),this.radius*2, this.radius*2);
+		
+	}
+	
+	
 
 }

@@ -4,6 +4,7 @@ import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawableRectangle;
+import de.basti.game_framework.math.Rectangle;
 import de.basti.game_framework.math.Vector2D;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.EntityType;
@@ -77,6 +78,7 @@ public class HeavyEnemy extends Enemy<DrawableRectangle> {
 		}
 		
 	}
+
 
 	
 	
