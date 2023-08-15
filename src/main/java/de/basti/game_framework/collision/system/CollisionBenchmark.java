@@ -37,10 +37,16 @@ public class CollisionBenchmark {
 	public static void main(String[] args) {
 		CollisionSystem<Collider> naive = new NaiveCollisionSystem<Collider>();
 		CollisionSystem<Collider> hash = new SpatialHashGridCollisionSystem<Collider>(150,20.0);
+		CollisionSystem<Collider> threadedHash = new SpatialHashGridCollisionSystem<Collider>(150,20.0);
+		
 		benchMarkSystem(naive);
 		printStats();
 		benchMarkSystem(hash);
 		printStats();
+		benchMarkSystem(threadedHash);
+		printStats();
+		
+		
 		
 		
 		
@@ -57,8 +63,8 @@ public class CollisionBenchmark {
 		
 	}
 
-	private static int colliderCount = 300;
-	private static int updateCount = 100;
+	private static int colliderCount = 600;
+	private static int updateCount = 20;
 
 	private static void benchMarkSystem(CollisionSystem<Collider> collSystem) {
 		avgMillisPerUpdate = 0;

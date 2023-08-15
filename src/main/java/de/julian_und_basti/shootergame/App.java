@@ -94,7 +94,7 @@ public class App extends Application {
 
 	private void showGame() {
 		engine.removeDrawable(gui);
-		engine.removeUpdatable(gui);
+		engine.removeUserUpdatable(gui);
 
 		game.addToEngine();
 
@@ -105,7 +105,7 @@ public class App extends Application {
 		engine.removeAll();
 
 		engine.addDrawableAbsolute(gui);
-		engine.addUpdatable(gui);
+		engine.addUserUpdatable(gui);
 
 	}
 	

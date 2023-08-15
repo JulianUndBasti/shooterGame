@@ -177,7 +177,7 @@ public class Game {
 		this.engine.addDrawableAbsolute(healthText);
 		this.engine.addDrawableAbsolute(fpsText);
 
-		this.engine.addUpdatable(generalUpdate);
+		this.engine.addUserUpdatable(generalUpdate);
 		this.engine.stickCameraTo(player);
 
 	}

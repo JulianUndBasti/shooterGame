@@ -1,15 +1,18 @@
 package de.basti.game_framework.controls;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeMap;
 
 import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.collision.CollisionHandler;
 import de.basti.game_framework.collision.system.CollisionSystem;
 import de.basti.game_framework.collision.system.NaiveCollisionSystem;
 import de.basti.game_framework.collision.system.SpatialHashGridCollisionSystem;
+import de.basti.game_framework.collision.system.ThreadedSpatialHashGridCollisionSystem;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.GameDrawing;
 import de.basti.game_framework.input.InputListenerData;
@@ -20,98 +23,65 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Engine<E extends Entity<?, ?, ?>> {
 
-	public enum UpdatePhase implements Updatable {
-		BEGIN, USER_UPDATE, INPUT_UPDATE, COLLISION_UPDATE, CAMERA_UPDATE, DRAWING_UPDATE, END;
-
-		private Updater updater;
-
-		private UpdatePhase() {
-			this.updater = new Updater();
-		}
-
-		@Override
-		public void update(long deltaMillis) {
-			this.updater.update(deltaMillis);
-
-		}
-		
-		public void add(Updatable u) {
-			this.updater.add(u);
-		}
-		
-		public boolean remove(Updatable u) {
-			return this.updater.remove(u);
-		}
-		
-
-	}
+	public static final int BEGIN = 100;
+	public static final int USER_UPDATE = 200;
+	public static final int INPUT_UPDATE = 300;
+	public static final int COLLISION_UPDATE = 400;
+	public static final int CAMERA_UPDATE = 500;
+	public static final int DRAWING_UPDATE = 600;
+	public static final int END = 700;
+	private HashMap<Integer, Updater> updatePhases = new HashMap<>();
 
 	private double width;
 	private double height;
-	
+
 	private Scene scene;
 	private GraphicsContext gc;
-	
+
 	private Set<E> entities = new HashSet<>();
-	private CollisionSystem<E> collisionSystem = new SpatialHashGridCollisionSystem<E>();
+	private CollisionSystem<E> collisionSystem = new ThreadedSpatialHashGridCollisionSystem<E>();
 	private GameDrawing drawing;
 	private Loop loop = new Loop();
 	private InputListenerData inputData;
 	private List<Runnable> endOfUpdateTasks = new ArrayList<>();
 	private E camera = null;
-	
-	
+
 	public static interface SizeChangeListener {
 		public void onSizeChange(double width, double height);
 	}
-	
+
 	private List<SizeChangeListener> sizeChangeListeners = new ArrayList<>();
-	
+
 	public Engine(Scene scene, GraphicsContext gc) {
 		this.scene = scene;
 		this.gc = gc;
 		this.drawing = new GameDrawing(gc);
 		this.inputData = new InputListenerData(scene);
 
-		
-		
-		UpdatePhase.INPUT_UPDATE.add(inputData);
-		
-		UpdatePhase.COLLISION_UPDATE.add(new Updatable() {
-			
-			@Override
-			public void update(long deltaMillis) {
-				long time = System.currentTimeMillis();
-				collisionSystem.update(deltaMillis);
-				time = System.currentTimeMillis()-time;
-				System.out.println(time+"/"+entities.size());
-			}
-		});
-		
-		UpdatePhase.CAMERA_UPDATE.add(new Updatable() {
+		this.addUpdatable(inputData, INPUT_UPDATE);
+		this.addUpdatable(collisionSystem, COLLISION_UPDATE);
+		this.addUpdatable(new Updatable() {
 
 			@Override
 			public void update(long deltaMillis) {
 				// transform the camera so the player stays in the middle
 				Vector2D transform;
-				
-				if(camera == null) {
-					transform = new Vector2D(0,0);
-				}else {
+
+				if (camera == null) {
+					transform = new Vector2D(0, 0);
+				} else {
 					transform = camera.getPosition().clone();
 				}
-				
+
 				transform.scale(-1);
 				transform.translate(width / 2, height / 2);
 				getDrawing().setTransform(transform);
 				getInputData().getMouseData().setTransform(transform);
 
 			}
-		});
-		
-		UpdatePhase.DRAWING_UPDATE.add(drawing);
-		
-		UpdatePhase.END.add( new Updatable() {
+		}, CAMERA_UPDATE);
+		this.addUpdatable(drawing, DRAWING_UPDATE);
+		this.addUpdatable(new Updatable() {
 
 			@Override
 			public void update(long deltaMillis) {
@@ -121,49 +91,50 @@ public class Engine<E extends Entity<?, ?, ?>> {
 				endOfUpdateTasks = new ArrayList<>();
 
 			}
-		});
-		
-		loop.getUpdater().add(UpdatePhase.BEGIN);
-		loop.getUpdater().add(UpdatePhase.USER_UPDATE);
-		loop.getUpdater().add(UpdatePhase.INPUT_UPDATE);
-		loop.getUpdater().add(UpdatePhase.COLLISION_UPDATE);
-		loop.getUpdater().add(UpdatePhase.CAMERA_UPDATE);
-		loop.getUpdater().add(UpdatePhase.DRAWING_UPDATE);
-		loop.getUpdater().add(UpdatePhase.END);
+		}, END);
+
+		Updatable topLevelUpdate = new Updatable() {
+
+			@Override
+			public void update(long deltaMillis) {
+				for (Updater upd : updatePhases.values()) {
+					upd.update(deltaMillis);
+				}
+			}
+		};
+
+		this.loop.getUpdater().add(topLevelUpdate);
 
 		this.width = gc.getCanvas().getWidth();
 		this.height = gc.getCanvas().getHeight();
-		
-		
-		this.scene.widthProperty().addListener((observable, oldValue, newValue) ->{
+
+		this.scene.widthProperty().addListener((observable, oldValue, newValue) -> {
 			this.width = (double) newValue;
 			fireSizeChange();
 		});
-		
-		this.scene.heightProperty().addListener((observable, oldValue, newValue) ->{
+
+		this.scene.heightProperty().addListener((observable, oldValue, newValue) -> {
 			this.height = (double) newValue;
 			fireSizeChange();
 		});
 	}
-	
+
 	private void fireSizeChange() {
 		this.sizeChangeListeners.forEach(scl -> scl.onSizeChange(width, height));
 	}
-	
-	
+
 	public void addSizeChangeListener(SizeChangeListener scl) {
 		this.sizeChangeListeners.add(scl);
 	}
-	
+
 	public boolean removeSizeChangeListener(SizeChangeListener scl) {
 		return this.sizeChangeListeners.remove(scl);
 	}
-	
 
 	public void addEntity(int layer, E e) {
 		this.addDrawableRelative(layer, e);
 		this.addCollider(e);
-		this.addUpdatable(e);
+		this.addUserUpdatable(e);
 		this.entities.add(e);
 
 	}
@@ -171,52 +142,77 @@ public class Engine<E extends Entity<?, ?, ?>> {
 	public boolean removeEntity(E e) {
 		this.removeDrawable(e);
 		this.removeCollider(e);
-		this.removeUpdatable(e);
+		this.removeUserUpdatable(e);
 		return this.entities.remove(e);
 	}
-	
+
 	public void removeAllEntities() {
-		for(E e:this.entities) {
+		for (E e : this.entities) {
 			this.removeDrawable(e);
 			this.removeCollider(e);
-			this.removeUpdatable(e);
+			this.removeUserUpdatable(e);
 		}
 		this.entities.clear();
 	}
-	
+
 	public void removeAllColliders() {
 		this.collisionSystem.clear();
 	}
-	
+
 	public void removeAllDrawables() {
 		this.drawing.removeAll();
-		
-	}
-	
-	public void removeAllUpdatables() {
 
-		UpdatePhase.USER_UPDATE.updater.removeAll();
-		
 	}
-	
+
+	public void removeAllUpdatables(int updatePhase) {
+
+		Updater updater = this.updatePhases.get(updatePhase);
+		if (updater == null) {
+			return;
+		}
+		updater.removeAll();
+	}
+
+	public void removeAllUserUpdatables() {
+
+		this.removeAllUpdatables(USER_UPDATE);
+	}
+
 	public void removeAllCollisionHandlers() {
 		collisionSystem.clear();
 	}
-	
+
 	public void removeAll() {
 		this.removeAllEntities();
 		this.removeAllColliders();
 		this.removeAllDrawables();
-		this.removeAllUpdatables();
+		this.removeAllUserUpdatables();
 		this.removeAllCollisionHandlers();
 	}
 
-	public boolean removeUpdatable(Updatable u) {
-		return UpdatePhase.USER_UPDATE.remove(u);
+	public boolean removeUpdatable(Updatable u, int updatePhase) {
+		Updater updater = this.updatePhases.get(updatePhase);
+		if (updater == null) {
+			return false;
+		}
+		return updater.remove(u);
 	}
 
-	public void addUpdatable(Updatable u) {
-		UpdatePhase.USER_UPDATE.add(u);
+	public boolean removeUserUpdatable(Updatable u) {
+		return this.removeUpdatable(u, USER_UPDATE);
+	}
+
+	public void addUpdatable(Updatable u, int updatePhase) {
+		Updater updater = this.updatePhases.get(updatePhase);
+		if (updater == null) {
+			updater = new Updater();
+			this.updatePhases.put(updatePhase, updater);
+		}
+		updater.add(u);
+	}
+
+	public void addUserUpdatable(Updatable u) {
+		this.addUpdatable(u, USER_UPDATE);
 	}
 
 	public boolean removeDrawable(Drawable d) {
@@ -226,7 +222,7 @@ public class Engine<E extends Entity<?, ?, ?>> {
 	public void addDrawableRelative(int layer, Drawable d) {
 		this.drawing.addRelative(layer, d);
 	}
-	
+
 	public void addDrawableAbsolute(Drawable d) {
 		this.drawing.addAbsolute(d);
 	}
@@ -258,10 +254,10 @@ public class Engine<E extends Entity<?, ?, ?>> {
 	public void addCollisionHandler(CollisionHandler<E> collHandler) {
 		this.collisionSystem.addHandler(collHandler);
 	}
+
 	public boolean removeCollisionHandler(CollisionHandler<E> collHandler) {
 		return this.collisionSystem.removeHandler(collHandler);
 	}
-	
 
 	public CollisionSystem<E> getCollisionSystem() {
 		return collisionSystem;
@@ -278,11 +274,11 @@ public class Engine<E extends Entity<?, ?, ?>> {
 	public InputListenerData getInputData() {
 		return inputData;
 	}
-	
+
 	public double getWidth() {
 		return gc.getCanvas().getWidth();
 	}
-	
+
 	public double getHeight() {
 		return gc.getCanvas().getHeight();
 	}
