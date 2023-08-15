@@ -4,14 +4,16 @@ import de.basti.game_framework.collision.BoxCollider;
 import de.basti.game_framework.controls.Engine;
 import de.basti.game_framework.drawing.Drawable;
 import de.basti.game_framework.drawing.DrawableRectangle;
+import de.basti.game_framework.drawing.Sprite;
 import de.basti.game_framework.math.Vector2D;
+import de.julian_und_basti.shootergame.Images;
 import de.julian_und_basti.shootergame.entities.CustomEntity;
 import de.julian_und_basti.shootergame.entities.EntityType;
 import de.julian_und_basti.shootergame.entities.player.Player;
 import de.julian_und_basti.shootergame.entities.player_projectiles.PlayerProjectile;
 import javafx.scene.paint.Color;
 
-public class WalkerEnemy extends Enemy<DrawableRectangle> {
+public class WalkerEnemy extends Enemy<Sprite> {
 
 	public static final double DEFAULT_SPEED = 0.15;
 	public static final int DEFAULT_HEALTH = 40;
@@ -26,10 +28,11 @@ public class WalkerEnemy extends Enemy<DrawableRectangle> {
 			Engine<CustomEntity<? extends Drawable, ? extends BoxCollider>> game) {
 		super(position, null, null, game);
 
-		DrawableRectangle rect = new DrawableRectangle(position.clone(), width, height);
-		this.setDrawable(rect);
-		this.getDrawable().setFillColor(Color.RED);
-		this.getDrawable().setShouldFill(true);
+		Sprite sprite = new Sprite(position.clone(), Images.instance().walker);
+		sprite.setWidth(width);
+		sprite.setHeight(height);
+
+		this.setDrawable(sprite);
 
 		this.setCollider(new BoxCollider(position.clone(), width, height));
 
